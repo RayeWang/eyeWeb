@@ -44,5 +44,4 @@ drop table if exists res_link;
 drop table if exists alert;
 drop table if exists alertType;
 
-select CURRENT_TIMESTAMP
 
