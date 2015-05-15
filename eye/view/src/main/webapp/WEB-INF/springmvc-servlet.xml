@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+     http://www.springframework.org/schema/context  
+     http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+     http://www.springframework.org/schema/mvc  
+     http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+
+		<!-- 数据库驱动 -->
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<!-- 连接URL串 -->
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1/ray" />
+		<!-- 连接用户名 -->
+		<property name="user" value="ray" />
+		<!-- 连接密码 -->
+		<property name="password" value="123456" />
+		<!-- 初始化连接池时连接数量为5个 -->
+		<property name="initialPoolSize" value="5" />
+		<!-- 允许最小连接数量为5个 -->
+		<property name="minPoolSize" value="5" />
+		<!-- 允许最大连接数量为20个 -->
+		<property name="maxPoolSize" value="20" />
+		<!-- 允许连接池最大生成100个PreparedStatement对象 -->
+		<property name="maxStatements" value="100" />
+		<!-- 连接有效时间，连接超过3600秒未使用，则该连接丢弃 -->
+		<property name="maxIdleTime" value="3600" />
+		<!-- 连接用完时，一次产生的新连接步进值为2 -->
+		<property name="acquireIncrement" value="2" />
+		<!-- 获取连接失败后再尝试10次，再失败则返回DAOException异常 -->
+		<property name="acquireRetryAttempts" value="10" />
+		<!-- 获取下一次连接时最短间隔600毫秒，有助于提高性能 -->
+		<property name="acquireRetryDelay" value="600" />
+		<!-- 检查连接的有效性，此处小弟不是很懂什么意思 -->
+		<property name="testConnectionOnCheckin" value="true" />
+		<!-- 每个1200秒检查连接对象状态 -->
+		<property name="idleConnectionTestPeriod" value="1200" />
+		<!-- 获取新连接的超时时间为10000毫秒 -->
+		<property name="checkoutTimeout" value="10000" />
+
+	</bean>
+
+	<!-- 创建SqlSessionFactory，同时指定数据源 -->
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:configuration.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 自动创建mybatis的代理类的配置 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.ray.model.mapper" />
+    </bean>
+    
+
+
+	<mvc:annotation-driven />
+	<!-- 把标记了@Controller注解的类转换为bean -->
+	<context:component-scan base-package="com.ray.services" />
+	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	<!-- Spring MVC的跳转配置（我猜的） -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+</beans>  
