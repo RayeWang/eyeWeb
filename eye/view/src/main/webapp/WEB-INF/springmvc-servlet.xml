@@ -15,7 +15,7 @@
 		<!-- 数据库驱动 -->
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<!-- 连接URL串 -->
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1/ray" />
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1/eyedata" />
 		<!-- 连接用户名 -->
 		<property name="user" value="ray" />
 		<!-- 连接密码 -->
@@ -53,14 +53,14 @@
 	</bean>
 	<!-- 自动创建mybatis的代理类的配置 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.ray.model.mapper" />
+        <property name="basePackage" value="com.ray.entity.mapper" />
     </bean>
     
 
 
 	<mvc:annotation-driven />
 	<!-- 把标记了@Controller注解的类转换为bean -->
-	<context:component-scan base-package="com.ray.services" />
+	<context:component-scan base-package="com.ray.controller" />
 	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />

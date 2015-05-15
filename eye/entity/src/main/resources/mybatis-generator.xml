@@ -16,7 +16,7 @@
 	</commentGenerator>
 
 	<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-		connectionURL="jdbc:mysql://127.0.0.1/ray" userId="ray"
+		connectionURL="jdbc:mysql://127.0.0.1/eyedata" userId="ray"
 		password="123456">
 	</jdbcConnection>
 
@@ -46,7 +46,13 @@
 		<property name="enableSubPackages" value="true" />
 	</javaClientGenerator>
 
-	<table tableName="user" domainObjectName="User">
+	<table tableName="res" domainObjectName="Res">
+	</table>
+	<table tableName="res_link" domainObjectName="ResLink">
+	</table>
+	<table tableName="alert" domainObjectName="Alert">
+	</table>
+	<table tableName="alertType" domainObjectName="AlertType">
 	</table>
 
 	</context>
