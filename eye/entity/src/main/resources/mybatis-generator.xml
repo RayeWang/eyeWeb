@@ -16,7 +16,7 @@
 	</commentGenerator>
 
 	<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-		connectionURL="jdbc:mysql://127.0.0.1/eyedata" userId="ray"
+		connectionURL="jdbc:mysql://192.168.159.139/eyedata" userId="ray"
 		password="123456">
 	</jdbcConnection>
 
@@ -45,7 +45,9 @@
 		targetProject="${entity.target.dir}">
 		<property name="enableSubPackages" value="true" />
 	</javaClientGenerator>
+	<table tableName="tem" ></table>
 
+<!-- 
 	<table tableName="res" domainObjectName="Res">
 	</table>
 	<table tableName="res_link" domainObjectName="ResLink">
@@ -53,7 +55,7 @@
 	<table tableName="alert" domainObjectName="Alert">
 	</table>
 	<table tableName="alertType" domainObjectName="AlertType">
-	</table>
+	</table> -->
 
 	</context>
 </generatorConfiguration>  

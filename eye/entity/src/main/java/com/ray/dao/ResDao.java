@@ -1,5 +1,7 @@
 package com.ray.dao;
 
+import java.util.List;
+
 import com.ray.entity.Res;
 
 
@@ -17,4 +19,10 @@ public interface ResDao {
 	 * @return 时候添加成功
 	 */
 	public boolean addRes(Res res);
+	
+	/**
+	 * 查询所有来源
+	 * @return
+	 */
+	public List<Res> findAll();
 }

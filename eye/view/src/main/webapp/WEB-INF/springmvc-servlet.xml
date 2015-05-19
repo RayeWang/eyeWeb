@@ -15,7 +15,7 @@
 		<!-- 数据库驱动 -->
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<!-- 连接URL串 -->
-		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1/eyedata" />
+		<property name="jdbcUrl" value="jdbc:mysql://192.168.159.139/eyedata?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<!-- 连接用户名 -->
 		<property name="user" value="ray" />
 		<!-- 连接密码 -->
@@ -61,13 +61,15 @@
 	<mvc:annotation-driven />
 	<!-- 把标记了@Controller注解的类转换为bean -->
 	<context:component-scan base-package="com.ray.controller" />
+	<context:component-scan base-package="com.ray.dao.impl" />
+	<context:component-scan base-package="com.ray.eye" />
 	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
 	<!-- Spring MVC的跳转配置（我猜的） -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/" />
+		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 </beans>  

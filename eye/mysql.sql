@@ -21,9 +21,10 @@ create table if not exists alert(
     res_link_id integer not null,-- 从网站的那个地址进行爬取的
     res_id integer not null,-- 网站的id,为了效率所以这样设计
     atype_id integer not null, -- 文章的分类
-    hot integer not null default 0,
-    createtime timestamp not null default CURRENT_TIMESTAMP,
-    alerttime varchar(20) not null,
+    hot integer  default 0,
+    createtime timestamp default CURRENT_TIMESTAMP,
+    img varchar(300), -- 图片地址
+    alerttime varchar(20),
     param1 varchar(200), -- 保留参数1
     param2 varchar(200), -- 保留参数2
     param3 varchar(200), -- 保留参数3

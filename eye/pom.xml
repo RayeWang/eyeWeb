@@ -26,5 +26,6 @@
     <module>entity</module>
     <module>controller</module>
     <module>view</module>
+    <module>../eyebug</module>
   </modules>
 </project>

@@ -52,5 +52,10 @@
 			<artifactId>entity</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>eye</groupId>
+			<artifactId>eye</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
   </dependencies>
 </project>
