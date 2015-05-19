@@ -1,9 +1,11 @@
 package com.ray.dao.impl;
 
+import java.beans.Transient;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ray.dao.AlertDao;
 import com.ray.entity.Alert;
@@ -22,7 +24,7 @@ public class AlertDaoImpl implements AlertDao {
 	@Autowired
 	private AlertMapper mapper;
 
-	
+	@Transactional
 	public boolean add(List<Alert> list) {
 		try {
 			for(Alert alert : list){

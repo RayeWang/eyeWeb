@@ -33,9 +33,11 @@ public class InfoqMain {
 			Document document = Jsoup.parse(url, 10000);
 			Element element = document.getElementsByClass("text_info").first();
 			StringBuffer sb = new StringBuffer();
-			
 			for(int i = 0; i < element.childNodeSize();i++){
 				Node node = element.childNode(i);
+				if(node.attr("class").equals("related_sponsors visible stacked")){
+					continue;
+				}
 				if(node.attr("class").equals("random_links")){
 					break;
 				}
@@ -68,6 +70,9 @@ public class InfoqMain {
 				Element temp = es.get(i);
 				
 				q.setTitle(temp.getElementsByTag("a").get(0).html());
+				//移除时间里面的<a>标签
+				temp.getElementsByClass("author").get(0).select("a").remove();
+				
 				String time = temp.getElementsByClass("author").get(0).html();
 				q.setAlerttime(time.substring(time.indexOf("发布于")+3));
 				q.setImg(temp.getElementsByTag("p").get(0).getElementsByTag("img").attr("src"));
@@ -93,6 +98,9 @@ public class InfoqMain {
 				Element temp = es1.get(i);
 				
 				q.setTitle(temp.getElementsByTag("a").get(0).html());
+				//移除时间里面的<a>标签
+				temp.getElementsByClass("author").get(0).select("a").remove();
+				
 				String time = temp.getElementsByClass("author").get(0).html();
 				q.setAlerttime(time.substring(time.indexOf("发布于")+3));
 				

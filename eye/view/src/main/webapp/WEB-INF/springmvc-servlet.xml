@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans  
      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
      http://www.springframework.org/schema/context  
      http://www.springframework.org/schema/context/spring-context-4.0.xsd  
      http://www.springframework.org/schema/mvc  
-     http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+     http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+     http://www.springframework.org/schema/tx  
+     http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
@@ -15,7 +17,8 @@
 		<!-- 数据库驱动 -->
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<!-- 连接URL串 -->
-		<property name="jdbcUrl" value="jdbc:mysql://192.168.159.139/eyedata?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="jdbcUrl"
+			value="jdbc:mysql://52.24.121.154/eyedata?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<!-- 连接用户名 -->
 		<property name="user" value="ray" />
 		<!-- 连接密码 -->
@@ -41,7 +44,7 @@
 		<!-- 每个1200秒检查连接对象状态 -->
 		<property name="idleConnectionTestPeriod" value="1200" />
 		<!-- 获取新连接的超时时间为10000毫秒 -->
-		<property name="checkoutTimeout" value="10000" />
+		<property name="checkoutTimeout" value="100000" />
 
 	</bean>
 
@@ -53,10 +56,14 @@
 	</bean>
 	<!-- 自动创建mybatis的代理类的配置 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.ray.entity.mapper" />
-    </bean>
-    
-
+		<property name="basePackage" value="com.ray.entity.mapper" />
+	</bean>
+	
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+   		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 启用注解事物 -->
+	<tx:annotation-driven transaction-manager="txManager" />
 
 	<mvc:annotation-driven />
 	<!-- 把标记了@Controller注解的类转换为bean -->
