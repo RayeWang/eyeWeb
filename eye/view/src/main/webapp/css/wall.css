@@ -9,7 +9,8 @@
     .wf-main .wall-item{
         position: absolute;
         margin: 20px;
-        width: 320px;
+        width: 28%;
+        min-width:230px;
         left: -9999px;
         top: -9999px;
         line-height:18px;

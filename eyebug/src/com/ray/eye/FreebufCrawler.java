@@ -27,19 +27,22 @@ public class FreebufCrawler implements Crawler {
 		try {
 			URL url = new URL(link.getUrl());
 			Document document = Jsoup.parse(url, TIMEOUT);
-			Elements es = document.getElementsByClass("news_inner news-list");
+			Elements es = document.getElementsByClass("news-list");
 			for(int i = 0;i < es.size();i++){
 				Alert temp = new Alert();
 				Element e = es.get(i);
 				
-				temp.setTitle(e.getElementsByClass("news-info col-sm-9 col-md-8").get(0).
+				temp.setTitle(e.getElementsByClass("news-info").get(0).
 						getElementsByTag("a").get(0).html());
 				temp.setImg(e.getElementsByTag("img").attr("src"));
 				temp.setDesc1(e.getElementsByClass("text").get(0).html());
 				temp.setAlerttime(e.getElementsByClass("time").get(0).html());
-				temp.setUrl(e.getElementsByClass("").get(0).getElementsByTag("a").
+				temp.setUrl(e.getElementsByClass("news-info").get(0).getElementsByTag("a").
 						get(0).attr("href"));
-				
+				if(temp.getUrl().indexOf("http://www.freebuf.com/jobs") == 0){
+					//招聘信息，跳过
+					continue;
+				}
 				if(!crawlerAlert(temp)){
 					//爬取失败或者不允许转载
 					continue;
@@ -63,12 +66,11 @@ public class FreebufCrawler implements Crawler {
 		try {
 			URL url = new URL(alert.getUrl());
 			Document document = Jsoup.parse(url, TIMEOUT);
-			Element check = document.getElementsByAttributeValue("style", 
-					"color: rgb(0, 176, 80);").get(0);
-			if(check.html().indexOf("未经许可禁止转载") >= 0){
+			String str = document.getElementById("contenttxt").html();
+			if(str.indexOf("未经许可禁止转载") > 0){
 				return false;
 			}
-			alert.setContent(document.getElementById("contenttxt").html());
+			alert.setContent(str);
 			return true;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
