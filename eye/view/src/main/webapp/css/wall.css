@@ -2,7 +2,8 @@
  .wf-main{
         position: relative;
         margin: 0 auto;
-        width: 1024px;
+        width: 90%;
+        min-width:720px;
         overflow: hidden;
     }
     .wf-main .wall-item{

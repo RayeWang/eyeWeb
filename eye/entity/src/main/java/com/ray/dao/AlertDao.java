@@ -3,7 +3,6 @@ package com.ray.dao;
 import java.util.List;
 
 import com.ray.entity.Alert;
-import com.ray.entity.AlertCriteria;
 
 /**
  * 文章相关操作的数据库接口
@@ -16,9 +15,8 @@ public interface AlertDao {
 	/**
 	 * 添加文章
 	 * @param list 列表
-	 * @return 是否添加成功
 	 */
-	public boolean add(List<Alert> list);
+	public void add(List<Alert> list);
 	
 	/**
 	 * 根据模板查询文章

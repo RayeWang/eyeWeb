@@ -1,5 +1,7 @@
 package com.ray.dao;
 
+import java.util.List;
+
 import com.ray.entity.ResLink;
 
 /**
@@ -16,4 +18,9 @@ public interface ResLinkDao {
 	 * @return
 	 */
 	public boolean addLink(ResLink link);
+	/**
+	 * 查询所有分类来源
+	 * @return 所有分类来源
+	 */
+	public List<ResLink> findAll();
 }

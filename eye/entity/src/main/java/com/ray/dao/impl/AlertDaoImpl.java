@@ -1,6 +1,5 @@
 package com.ray.dao.impl;
 
-import java.beans.Transient;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ray.dao.AlertDao;
 import com.ray.entity.Alert;
-import com.ray.entity.AlertCriteria;
 import com.ray.entity.mapper.AlertMapper;
 import com.ray.entity.mapper.DynamicSql;
 /**
@@ -25,21 +23,20 @@ public class AlertDaoImpl implements AlertDao {
 	private AlertMapper mapper;
 
 	@Transactional
-	public boolean add(List<Alert> list) {
-		try {
-			for(Alert alert : list){
-				mapper.insert(alert);
+	public void add(List<Alert> list) {
+		if(list != null && list.size() > 0){
+			for(int i = list.size() - 1;i > -1 ;i--){
+				mapper.insert(list.get(i));
 			}
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		return false;
 	}
 
 	public List<Alert> findByAlert(int page,int pageSize) {
 		
-		String sql = "select id,title,desc1,url from alert limit "+(page - 1)*pageSize+","+pageSize;
+		String sql = "select a.id,a.title,a.desc1,a.url,r.name as name,r.url as url1"
+				+ " from alert a left join res r "
+				+ " on a.res_id=r.id order by id desc limit "+
+				(page - 1)*pageSize+","+pageSize;
 		
 		new DynamicSql().setSql(sql);
 		

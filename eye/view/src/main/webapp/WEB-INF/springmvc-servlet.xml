@@ -44,7 +44,7 @@
 		<!-- 每个1200秒检查连接对象状态 -->
 		<property name="idleConnectionTestPeriod" value="1200" />
 		<!-- 获取新连接的超时时间为10000毫秒 -->
-		<property name="checkoutTimeout" value="100000" />
+		<property name="checkoutTimeout" value="10000" />
 
 	</bean>
 

@@ -75,6 +75,10 @@ public class ResLinkSqlProvider {
             VALUES("resid", "#{resid,jdbcType=INTEGER}");
         }
         
+        if (record.getTypeid() != null) {
+            VALUES("typeid", "#{typeid,jdbcType=INTEGER}");
+        }
+        
         return SQL();
     }
 
@@ -94,6 +98,7 @@ public class ResLinkSqlProvider {
         SELECT("name");
         SELECT("url");
         SELECT("resid");
+        SELECT("typeid");
         FROM("res_link");
         applyWhere(example, false);
         
@@ -133,6 +138,10 @@ public class ResLinkSqlProvider {
             SET("resid = #{record.resid,jdbcType=INTEGER}");
         }
         
+        if (record.getTypeid() != null) {
+            SET("typeid = #{record.typeid,jdbcType=INTEGER}");
+        }
+        
         applyWhere(example, true);
         return SQL();
     }
@@ -151,6 +160,7 @@ public class ResLinkSqlProvider {
         SET("name = #{record.name,jdbcType=VARCHAR}");
         SET("url = #{record.url,jdbcType=VARCHAR}");
         SET("resid = #{record.resid,jdbcType=INTEGER}");
+        SET("typeid = #{record.typeid,jdbcType=INTEGER}");
         
         ResLinkCriteria example = (ResLinkCriteria) parameter.get("example");
         applyWhere(example, true);
@@ -177,6 +187,10 @@ public class ResLinkSqlProvider {
         
         if (record.getResid() != null) {
             SET("resid = #{resid,jdbcType=INTEGER}");
+        }
+        
+        if (record.getTypeid() != null) {
+            SET("typeid = #{typeid,jdbcType=INTEGER}");
         }
         
         WHERE("id = #{id,jdbcType=INTEGER}");

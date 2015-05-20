@@ -1,10 +1,13 @@
 package com.ray.dao.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ray.dao.ResLinkDao;
 import com.ray.entity.ResLink;
+import com.ray.entity.mapper.DynamicSql;
 import com.ray.entity.mapper.ResLinkMapper;
 /**
  * 来源分类的数据库操作实现类
@@ -27,6 +30,19 @@ public class ResLinkDaoImpl implements ResLinkDao {
 		}
 		return false;
 	}
+	
+	
+
+	public List<ResLink> findAll() {
+		String sql = "select r.id,r.name,r.url,r.resid,r.typeid,(select title"
+				+ " from alert where res_link_id=r.id "+
+				"order by id desc limit 0,1) as title from res_link r";
+		DynamicSql dynameic = new DynamicSql();
+		dynameic.setSql(sql);
+		return mapper.selectAll();
+	}
+
+
 
 	public ResLinkMapper getMapper() {
 		return mapper;

@@ -3,16 +3,18 @@
 <%@ page isELIgnored="false"%>
 <html>
 <head>
-<title>Title</title>
+<title>程序员之眼，我就是你的眼</title>
 <link href="css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/wall.css" rel="stylesheet" />
 <link href="css/loading.css" rel="stylesheet" />
 <script src="js/jquery-2.1.3.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-	function loadClick(id,title) {
+	function loadClick(id,title,resname,url,url1) {
 		$('#myModal').modal('toggle');
-		$("#myModalLabel").html(title);
+		$("#myModalLabel").html(title+"&nbsp;&nbsp;来自：<a href='"+url1+"' target='_blank'>"+resname+"</a>"+
+			"&nbsp;&nbsp;<a href='"+url+"' target='_blank'>查看原文</a>");
+		
 		var fra = $("#iframe1");
 		if (fra.attr('src') == 'getalert.do?id='+id) {
 			return;
@@ -45,7 +47,9 @@
 	<div class="wf-main" id="wf-main">
 		<c:forEach items="${alerts }" var="alert">
 			<div class="wall-item">
-				<a onclick="loadClick('${alert.id}','${alert.title }')"><h3>${alert.title }</h3></a>
+				<a  onclick="loadClick('${alert.id}','${alert.title }','${alert.param1 }','${alert.url }','${alert.param2 }')">
+					<h3>${alert.title }</h3>
+				</a>
 				<p>${alert.desc1 }</p>
 			</div>
 		</c:forEach>

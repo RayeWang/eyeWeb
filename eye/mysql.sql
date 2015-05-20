@@ -9,7 +9,8 @@ create table if not exists res_link(
 	id integer primary key auto_increment,
     name varchar(20) not null,
     url varchar(200) not null,
-    resid integer not null -- 来源网站的id
+    resid integer not null, -- 来源网站的id
+    typeid integer 
 	);
 -- alert 文章表
 create table if not exists alert(

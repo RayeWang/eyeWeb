@@ -150,8 +150,8 @@ public interface AlertMapper {
         @Result(column="createtime", property="createtime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="img", property="img", jdbcType=JdbcType.VARCHAR),
         @Result(column="alerttime", property="alerttime", jdbcType=JdbcType.VARCHAR),
-        @Result(column="param1", property="param1", jdbcType=JdbcType.VARCHAR),
-        @Result(column="param2", property="param2", jdbcType=JdbcType.VARCHAR),
+        @Result(column="name", property="param1", jdbcType=JdbcType.VARCHAR),
+        @Result(column="url1", property="param2", jdbcType=JdbcType.VARCHAR),
         @Result(column="param3", property="param3", jdbcType=JdbcType.VARCHAR),
         @Result(column="param4", property="param4", jdbcType=JdbcType.VARCHAR),
         @Result(column="param5", property="param5", jdbcType=JdbcType.VARCHAR)
