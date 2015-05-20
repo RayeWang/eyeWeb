@@ -12,6 +12,8 @@ import com.ray.entity.ResLink;
  * @version 1.0
  */
 public interface Crawler {
+	
+	public static final int TIMEOUT = 60000;
 
 	/**
 	 * 爬取文章列表的方法
@@ -25,5 +27,5 @@ public interface Crawler {
 	 * 爬取文章内容
 	 * @param alert 文章对象
 	 */
-	public void crawlerAlert(Alert alert);
+	public boolean crawlerAlert(Alert alert);
 }

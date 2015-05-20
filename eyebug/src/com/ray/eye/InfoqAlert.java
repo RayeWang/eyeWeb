@@ -29,7 +29,7 @@ public class InfoqAlert implements Crawler {
 		
 		try {
 			URL url = new URL(link.getUrl());
-			Document document = Jsoup.parse(url,10000);
+			Document document = Jsoup.parse(url,TIMEOUT);
 			Elements es = document.getElementsByClass("news_type1");
 			
 			for(int i = 0;i < es.size();i++){
@@ -107,10 +107,10 @@ public class InfoqAlert implements Crawler {
 		return list;
 	}
 
-	public void crawlerAlert(Alert alert) {
+	public boolean crawlerAlert(Alert alert) {
 		try {
 			URL url = new URL(alert.getUrl());
-			Document document = Jsoup.parse(url, 10000);
+			Document document = Jsoup.parse(url, TIMEOUT);
 			Element element = document.getElementsByClass("text_info").first();
 			StringBuffer sb = new StringBuffer();
 			for(int i = 0; i < element.childNodeSize();i++){
@@ -124,11 +124,13 @@ public class InfoqAlert implements Crawler {
 				sb.append(element.childNode(i).outerHtml());
 			}
 			alert.setContent(sb.toString());
+			return true;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 }
