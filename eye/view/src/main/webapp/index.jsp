@@ -14,7 +14,17 @@
 	margin: 0px;
 	padding: 0px;
 }
+	.head{
+		height: 70px;
+		width: 100%;
+		box-shadow: #e5e5e5 0px 1px 4px;
+		z-index: 9999;
+		position: fixed; 
+		top: 0px;
+		background: #ffffff;
+	}
 </style>
+
 <script type="text/javascript">
 	function loadClick(id, title, resname, url, url1) {
 		$('#myModal').modal('toggle');
@@ -62,6 +72,9 @@
 
 <body>
 
+	<div class="head">
+		
+	</div>
 	<div class="wf-main" id="wf-main">
 		<c:forEach items="${alerts }" var="alert">
 			<div class="wall-item">

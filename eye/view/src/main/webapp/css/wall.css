@@ -1,10 +1,11 @@
 @CHARSET "UTF-8";
  .wf-main{
         position: relative;
-        margin: 0 auto;
+        margin: 80 auto 0 auto;
         width: 90%;
         min-width:720px;
         overflow: hidden;
+        
     }
     .wf-main .wall-item{
         position: absolute;

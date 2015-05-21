@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ray.dao.AlertDao;
+import com.ray.dao.TypeDao;
 import com.ray.entity.Alert;
+import com.ray.entity.AlertType;
 
 /**
  * 文章的客户浏览的主要控制器
@@ -28,6 +30,10 @@ public class AlertController {
 	@Autowired
 	private AlertDao dao;
 	
+	/** 分类的数据库操作接口*/
+	@Autowired
+	private TypeDao typeDao;
+	
 //	response.setContentType("application/json;charset=UTF-8");//防止数据传递乱码
 	/**
 	 * 获取文章列表
@@ -37,15 +43,12 @@ public class AlertController {
 	@RequestMapping("/alert.do")
 	public String getAlerts(@RequestParam(defaultValue="1")int page,HttpServletRequest request){
 		List<Alert> list = dao.findByAlert( page, pageSize);
+		List<AlertType> types = typeDao.findAll();
+		request.setAttribute("types", types);
 		request.setAttribute("alerts", list);
 		return "index";
 	}
-	public AlertDao getDao() {
-		return dao;
-	}
-	public void setDao(AlertDao dao) {
-		this.dao = dao;
-	}
+	
 	
 	/**
 	 * 根据id显示文章
@@ -59,5 +62,21 @@ public class AlertController {
 		request.setAttribute("alert", alert);
 		return "alert";
 	}
+	
+	
+	public AlertDao getDao() {
+		return dao;
+	}
+	public void setDao(AlertDao dao) {
+		this.dao = dao;
+	}
+	public TypeDao getTypeDao() {
+		return typeDao;
+	}
+	public void setTypeDao(TypeDao typeDao) {
+		this.typeDao = typeDao;
+	}
+	
+	
 	
 }
