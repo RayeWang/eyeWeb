@@ -34,6 +34,10 @@ public class FreebufCrawler implements Crawler {
 				
 				temp.setTitle(e.getElementsByClass("news-info").get(0).
 						getElementsByTag("a").get(0).html());
+				if(temp.getTitle().equals(link.getTitle())){
+					//已经爬取到爬取过的文章了
+					return alerts;
+				}
 				temp.setImg(e.getElementsByTag("img").attr("src"));
 				temp.setDesc1(e.getElementsByClass("text").get(0).html());
 				temp.setAlerttime(e.getElementsByClass("time").get(0).html());
@@ -66,10 +70,21 @@ public class FreebufCrawler implements Crawler {
 		try {
 			URL url = new URL(alert.getUrl());
 			Document document = Jsoup.parse(url, TIMEOUT);
-			String str = document.getElementById("contenttxt").html();
-			if(str.indexOf("未经许可禁止转载") > 0){
+//			String str = document.getElementById("contenttxt").html();
+//			if(str.indexOf("未经许可禁止转载") > 0){
+//				return false;
+//			}
+			Element content = document.getElementById("contenttxt");
+			
+			Elements ps = content.getElementsByTag("p");
+			if(ps.get(ps.size() - 1).html().indexOf("未经许可禁止转载") > 0){
 				return false;
 			}
+			String str = null;
+			//移除转载提示
+			content.getElementsByTag("p").get(ps.size() - 1).remove();
+			
+			str = content.html();
 			alert.setContent(str);
 			return true;
 		} catch (MalformedURLException e) {
