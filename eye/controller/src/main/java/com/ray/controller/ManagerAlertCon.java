@@ -16,7 +16,6 @@ import com.ray.dao.ResLinkDao;
 import com.ray.entity.Alert;
 import com.ray.entity.ResLink;
 import com.ray.eye.CrawlerFactory;
-import com.ray.eye.InfoqMain;
 
 /**
  * 文章的管理控制器

@@ -41,9 +41,17 @@ create table if not exists alertType(
     param2 varchar(200) -- 保留参数2
 );
 
+-- 相应的css样式表
+create table if not exists css(
+	id integer primary key auto_increment, -- 主键	
+	res_link_id integer not null,-- 分类来源的id
+	csslink varchar(500) not null-- css link语句
+);
+
 drop table if exists res;
 drop table if exists res_link;
 drop table if exists alert;
 drop table if exists alertType;
+drop table if exists css;
 
 

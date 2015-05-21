@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper>
+
+	<resultMap type="Alert" id="findAndCssByKey">
+		<id column="id" property="id"/>
+		<result column="title" property="title" jdbcType="JdbcType.VARCHAR"/>
+		<result column="desc1" property="desc1" jdbcType="JdbcType.VARCHAR"/>
+		<result column="url" property="url" jdbcType="JdbcType.VARCHAR"/>
+		<result column="res_link_id" property="resLinkId" jdbcType="JdbcType.INTEGER"/>
+		<result column="res_id" property="resId" jdbcType="JdbcType.INTEGER"/>
+		<result column="atype_id" property="atypeId" jdbcType="JdbcType.INTEGER"/>
+		
+		<result column="hot" property="hot" jdbcType="JdbcType.INTEGER"/>
+		<result column="createtime" property="createtime" jdbcType="JdbcType.TIMESTAMP"/>
+		<result column="img" property="img" jdbcType="JdbcType.VARCHAR"/>
+		<result column="alerttime" property="alerttime" jdbcType="JdbcType.INTEGER"/>
+		<result column="content" property="content" jdbcType="JdbcType.INTEGER"/>
+		<collection property=""></collection>
+	</resultMap>
+</mapper>

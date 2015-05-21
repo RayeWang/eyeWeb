@@ -85,7 +85,7 @@ public class FreebufCrawler implements Crawler {
 			content.getElementsByTag("p").get(ps.size() - 1).remove();
 			
 			str = content.html();
-			alert.setContent(str);
+			alert.setContent("<div id=\"contenttxt\">"+str+"</div>");
 			return true;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

@@ -47,8 +47,8 @@
 	<div class="wf-main" id="wf-main">
 		<c:forEach items="${alerts }" var="alert">
 			<div class="wall-item">
-				<a  onclick="loadClick('${alert.id}','${alert.title }','${alert.param1 }','${alert.url }','${alert.param2 }')">
-					<h3>${alert.title }</h3>
+				<a href="#" onclick="loadClick('${alert.id}','${alert.title }','${alert.param1 }','${alert.url }','${alert.param2 }')">
+					<h4>${alert.title }</h4>
 				</a>
 				<p>${alert.desc1 }</p>
 			</div>

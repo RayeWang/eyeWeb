@@ -7,8 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>${alert.title }</title>
 
-        <link rel="stylesheet" type="text/css" media="screen" href="http://cdn.infoqstatic.com/statics_s1_20150514-0128/styles/site.css"/>
-<link rel="stylesheet" type="text/css" media="screen" href="http://cdn.infoqstatic.com/statics_s1_20150514-0128/styles/site_zh.css"/>
+<c:forEach items="${alert.csss }" var="css">
+	${css.csslink }
+</c:forEach>
+
 </head>
 <body>
 ${alert.content }

@@ -48,6 +48,8 @@
 	<table tableName="tem" ></table>
 
 <!-- 
+<table tableName="css" domainObjectName="Css">
+	</table>
 	<table tableName="res" domainObjectName="Res">
 	</table>
 	<table tableName="res_link" domainObjectName="ResLink">
