@@ -18,7 +18,7 @@
 		height: 70px;
 		width: 100%;
 		box-shadow: #e5e5e5 0px 1px 4px;
-		z-index: 9999;
+		z-index: 1;
 		position: fixed; 
 		top: 0px;
 		background: #ffffff;
