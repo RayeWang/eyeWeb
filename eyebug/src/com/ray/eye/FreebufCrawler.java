@@ -10,6 +10,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.DomNodeList;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.ray.entity.Alert;
 import com.ray.entity.ResLink;
 /**
@@ -68,14 +73,25 @@ public class FreebufCrawler implements Crawler {
 
 	public boolean crawlerAlert(Alert alert) {
 		try {
-			URL url = new URL(alert.getUrl());
-			Document document = Jsoup.parse(url, TIMEOUT);
+			WebClient wc = new WebClient(BrowserVersion.CHROME);
+		    wc.getOptions().setUseInsecureSSL(true);
+		    wc.getOptions().setJavaScriptEnabled(true); // 启用JS解释器，默认为true
+		    wc.getOptions().setCssEnabled(false); // 禁用css支持
+		    wc.getOptions().setThrowExceptionOnScriptError(false); // js运行错误时，是否抛出异常
+		    wc.getOptions().setTimeout(TIMEOUT); // 设置连接超时时间 ，这里是10S。如果为0，则无限期等待
+		    wc.getOptions().setDoNotTrackEnabled(false);
+		    HtmlPage page = wc.getPage(alert.getUrl());  
+//	        String pageXml = page.asXml(); //以xml的形式获取响应文本  
+	        
+	        DomElement context = page.getElementsByTagName("body").get(0);
+	        
+			Document document = Jsoup.parseBodyFragment(context.asXml());
 //			String str = document.getElementById("contenttxt").html();
 //			if(str.indexOf("未经许可禁止转载") > 0){
 //				return false;
 //			}
+			wc.close();
 			Element content = document.getElementById("contenttxt");
-			
 			Elements ps = content.getElementsByTag("p");
 			if(ps.get(ps.size() - 1).html().indexOf("未经许可禁止转载") > 0){
 				return false;
@@ -85,7 +101,9 @@ public class FreebufCrawler implements Crawler {
 			content.getElementsByTag("p").get(ps.size() - 1).remove();
 			
 			str = content.html();
-			alert.setContent("<div id=\"contenttxt\">"+str+"</div>");
+			
+			alert.setContent(HtmlUtil.encode("<div id=\"contenttxt\">"+str+"</div>"));
+			System.out.println(alert.getContent());
 			return true;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

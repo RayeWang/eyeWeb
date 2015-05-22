@@ -33,7 +33,7 @@ public class AlertDaoImpl implements AlertDao {
 
 	public List<Alert> findByAlert(int page,int pageSize) {
 		
-		String sql = "select a.id,a.title,a.desc1,a.url,r.name as name,r.url as url1"
+		String sql = "select a.id,a.title,a.desc1,a.url,r.name as name,a.img,r.url as url1"
 				+ " from alert a left join res r "
 				+ " on a.res_id=r.id order by id desc limit "+
 				(page - 1)*pageSize+","+pageSize;

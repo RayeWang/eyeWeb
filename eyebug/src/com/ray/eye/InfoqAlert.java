@@ -121,6 +121,10 @@ public class InfoqAlert implements Crawler {
 				if(node.attr("class").equals("random_links")){
 					break;
 				}
+				String temp = node.outerHtml();
+				if(temp.indexOf("给InfoQ中文站投稿或者参与内容翻译工作，请邮件至") >= 0){
+					break;
+				}
 				sb.append(element.childNode(i).outerHtml());
 			}
 			alert.setContent(sb.toString());
