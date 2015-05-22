@@ -15,13 +15,26 @@
 	padding: 0px;
 }
 	.head{
-		height: 70px;
+		height: 60px;
 		width: 100%;
 		box-shadow: #e5e5e5 0px 1px 4px;
 		z-index: 1;
 		position: fixed; 
 		top: 0px;
 		background: #ffffff;
+	}
+	#headcontent{
+		width: 90%;
+		height: 100%;
+		margin: 0 auto;
+	}
+	#headcontent span{
+		font-size: 14px;
+  		padding: 4px 0 6px 14px;
+  		margin: 8px 10px 0 16px;
+  		border-left: solid 1px #d9d9d9;
+  		color: #363636;
+  		font-family: "微软雅黑";
 	}
 </style>
 
@@ -73,7 +86,10 @@
 <body>
 
 	<div class="head">
-		
+		<div id="headcontent">
+			<img src="img/icon.jpg" width="56" height="56" style="margin: 2 20;" />
+			<span>程序员眼中的世界</span>
+		</div>
 	</div>
 	<div class="wf-main" id="wf-main">
 		<c:forEach items="${alerts }" var="alert">
