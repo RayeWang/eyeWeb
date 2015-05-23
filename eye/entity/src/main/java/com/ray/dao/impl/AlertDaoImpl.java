@@ -31,11 +31,15 @@ public class AlertDaoImpl implements AlertDao {
 		}
 	}
 
-	public List<Alert> findByAlert(int page,int pageSize) {
+	public List<Alert> findByAlert(int page,int pageSize,int typeid,String key) {
 		
 		String sql = "select a.id,a.title,a.desc1,a.url,r.name as name,a.img,r.url as url1"
 				+ " from alert a left join res r "
-				+ " on a.res_id=r.id order by id desc limit "+
+				+ " on a.res_id=r.id where a.title like '%"+key+"%'";
+		if(typeid != 0){
+			sql += " and atype_id="+typeid;
+		}
+		sql += " order by id desc limit "+
 				(page - 1)*pageSize+","+pageSize;
 		
 		new DynamicSql().setSql(sql);

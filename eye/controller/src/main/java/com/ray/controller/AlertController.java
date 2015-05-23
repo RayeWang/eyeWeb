@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -41,11 +42,18 @@ public class AlertController {
 	 * @param response
 	 */
 	@RequestMapping("/alert.do")
-	public String getAlerts(@RequestParam(defaultValue="1")int page,HttpServletRequest request){
-		List<Alert> list = dao.findByAlert( page, pageSize);
+	public String getAlerts(@RequestParam(defaultValue="1")int page,
+			@RequestParam(defaultValue="0")int typeid,@RequestParam(defaultValue="")String key,
+			ModelMap map){
+		List<Alert> list = dao.findByAlert( page, pageSize,typeid,key);
 		List<AlertType> types = typeDao.findAll();
-		request.setAttribute("types", types);
-		request.setAttribute("alerts", list);
+		//添加一个全部的分类
+		types.add(0,new AlertType(0, "全部分类"));
+		
+		//传递参数到页面
+		map.addAttribute("types", types);
+		map.addAttribute("alerts", list);
+		map.addAttribute("typeid", typeid);
 		return "index";
 	}
 	

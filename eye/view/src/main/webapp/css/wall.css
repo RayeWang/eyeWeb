@@ -1,4 +1,7 @@
 @CHARSET "UTF-8";
+body,html{
+	min-width: 720px;
+}
  .wf-main{
         position: relative;
         margin: 70 auto 0 auto;

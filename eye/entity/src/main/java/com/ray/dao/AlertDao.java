@@ -9,6 +9,10 @@ import com.ray.entity.Alert;
  * @author Ray Wang
  * @date 2015年5月16日21:08:03
  * @version 1.0
+ * 
+ * 查询添加了type字段和key关键字
+ * @date 2015年5月23日23:35:47
+ * @version 1.1
  */
 public interface AlertDao {
 
@@ -20,10 +24,13 @@ public interface AlertDao {
 	
 	/**
 	 * 根据模板查询文章
-	 * @param alert 文章模板
+	 * @param page 当前页的索引
+	 * @param pageSize 每页显示的大小
+	 * @param typeid 分类的id，0则查询所有'
+	 * @param key 关键字（目前只是标题）
 	 * @return 文章集合
 	 */
-	public List<Alert> findByAlert(int page,int pageSize);
+	public List<Alert> findByAlert(int page,int pageSize,int typedid,String key);
 	
 	/**
 	 * 根据ID查询文章

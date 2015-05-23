@@ -31,10 +31,17 @@
 	#headcontent span{
 		font-size: 14px;
   		padding: 4px 0 6px 14px;
-  		margin: 8px 10px 0 16px;
+  		margin: 15px 10px 0 16px;
   		border-left: solid 1px #d9d9d9;
   		color: #363636;
   		font-family: "微软雅黑";
+  		float: left;
+	}
+	#headcontent ul{
+	
+  		margin: 9px 10px 0 100px;
+  		float: left;
+  		
 	}
 </style>
 
@@ -87,8 +94,20 @@
 
 	<div class="head">
 		<div id="headcontent">
-			<img src="img/icon.jpg" width="56" height="56" style="margin: 2 20;" />
-			<span>程序员眼中的世界</span>
+			<img src="img/logo.png"  style="margin: 2 20;float: left;" />
+			<span >程序员眼中的世界</span>
+			<form class="navbar-form navbar-left" role="search">
+			  <div class="form-group">
+			    <input type="text" class="form-control" placeholder="Search">
+			  </div>
+			  <button type="submit" class="btn btn-default">Submit</button>
+			</form>
+			<ul class="nav nav-pills">
+				<c:forEach items="${types}" var="type">
+					<li role="presentation" <c:if test="${type.id==typeid }">class="active"</c:if> ><a href='<c:out value="alert.do?typeid=${type.id }"></c:out>'><b>${type.name }</b></a></li>
+				</c:forEach>
+			</ul>
+			
 		</div>
 	</div>
 	<div class="wf-main" id="wf-main">
