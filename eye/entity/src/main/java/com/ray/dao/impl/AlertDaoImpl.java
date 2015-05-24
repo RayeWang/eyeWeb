@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ray.dao.AlertDao;
 import com.ray.entity.Alert;
+import com.ray.entity.AlertCriteria;
 import com.ray.entity.mapper.AlertMapper;
 import com.ray.entity.mapper.DynamicSql;
 /**
@@ -48,6 +49,17 @@ public class AlertDaoImpl implements AlertDao {
 	}
 
 	
+	
+	public int findCount(int typeid, String key) {
+		String sql = "select count(*) from alert where title like '%"+key+"%'";
+		if(typeid != 0){
+			sql += " and atype_id="+typeid;
+		}
+		new DynamicSql().setSql(sql);
+		
+		return mapper.countByDynamicSQL();
+	}
+
 	public Alert findById(int id) {
 		return mapper.selectByPrimaryKey(id);
 	}

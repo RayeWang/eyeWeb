@@ -9,6 +9,7 @@
 <link href="css/loading.css" rel="stylesheet" />
 <script src="js/jquery-2.1.3.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/page.js"></script>
 <style type="text/css">
 	body {
 	margin: 0px;
@@ -26,6 +27,7 @@
 	#headcontent{
 		width: 90%;
 		height: 100%;
+		min-width:720px;
 		margin: 0 auto;
 	}
 	#headcontent span{
@@ -39,7 +41,7 @@
 	}
 	#headcontent ul{
 	
-  		margin: 9px 10px 0 100px;
+  		margin: 9px 10px 0 10px;
   		float: left;
   		
 	}
@@ -87,6 +89,8 @@
 	    
 	    //$("#img"+id).attr("src","img.jsp?url="+url);
 	}
+	
+	
 	</script>
 </head>
 
@@ -94,13 +98,13 @@
 
 	<div class="head">
 		<div id="headcontent">
-			<img src="img/logo.png"  style="margin: 2 20;float: left;" />
+			<a href='<c:out value="alert.do"></c:out>'><img src="img/logo.png"  style="margin: 2 20;float: left;" /></a>
 			<span >程序员眼中的世界</span>
-			<form class="navbar-form navbar-left" role="search">
+			<form class="navbar-form navbar-left" style="margin-top: 14px;" action='<c:out value="alert.do"></c:out>' role="search">
 			  <div class="form-group">
-			    <input type="text" class="form-control" placeholder="Search">
+			    <input type="text" class="form-control" name="key" value="${key }" placeholder="输入关键字搜索">
 			  </div>
-			  <button type="submit" class="btn btn-default">Submit</button>
+			  <button type="submit" class="btn btn-default">搜索</button>
 			</form>
 			<ul class="nav nav-pills">
 				<c:forEach items="${types}" var="type">
@@ -126,7 +130,21 @@
 		</c:forEach>
 
 	</div>
-
+	
+	<nav style="text-align: center;">
+	  <ul class="pagination"   id="pageMain">
+	  </ul>
+	 </nav>
+	<script type="text/javascript">
+	new page({
+		'pageMain':'pageMain',
+		'nowPage':${page},
+		'maxPage':${maxPage},
+		'url':'alert.do?',
+		'params':'typeid=${typeid}&key=${key}',
+		'pakey':'page'
+	});
+	</script>
 	<!-- 瀑布了脚本 -->
 	<script type="text/javascript" src="js/wall.js"></script>
 

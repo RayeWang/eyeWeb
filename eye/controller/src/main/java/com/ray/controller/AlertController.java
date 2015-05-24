@@ -54,6 +54,17 @@ public class AlertController {
 		map.addAttribute("types", types);
 		map.addAttribute("alerts", list);
 		map.addAttribute("typeid", typeid);
+		map.addAttribute("key", key);
+		map.addAttribute("page", page);
+		//查询出总数量，以此来计算最大分页
+		int allCount = dao.findCount(typeid, key);
+		//最大页数
+		int maxPage = allCount / pageSize;
+		if(allCount % pageSize > 0){
+			maxPage ++;
+		}
+		map.addAttribute("maxPage", maxPage);
+		
 		return "index";
 	}
 	

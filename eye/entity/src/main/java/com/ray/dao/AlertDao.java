@@ -38,4 +38,12 @@ public interface AlertDao {
 	 * @return
 	 */
 	public Alert findById(int id);
+	
+	/**
+	 * 查询文章数量，用于分页
+	 * @param typeid 分类的ID，0则查询所有
+	 * @param key 关键字（目前只是标题）
+	 * @return 总数量
+	 */
+	public int findCount(int typeid,String key);
 }
