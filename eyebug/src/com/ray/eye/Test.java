@@ -1,14 +1,16 @@
 package com.ray.eye;
 
 import com.ray.entity.Alert;
+import com.ray.entity.ResLink;
 
 public class Test {
 
 	public static void main(String[] args) {
-		FreebufCrawler crawler = new FreebufCrawler();
+		Crawler crawler = new CodeceoCrawler();
 		
 		Alert alert = new Alert();
-		alert.setUrl("http://www.freebuf.com/articles/web/68002.html");
-		crawler.crawlerAlert(alert);
+		ResLink link = new ResLink();
+		link.setUrl("http://www.codeceo.com/article/category/develop");
+		crawler.crawlerList(link);
 	}
 }

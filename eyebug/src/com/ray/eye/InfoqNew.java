@@ -73,6 +73,9 @@ public class InfoqNew implements Crawler {
 			StringBuffer sb = new StringBuffer();
 			for(int i = 0; i < element.childNodeSize();i++){
 				Node node = element.childNode(i);
+				if(node.outerHtml().indexOf("给InfoQ中文站投稿或者参与") >= 0){
+					break;
+				}
 				if(node.attr("class").equals("related_sponsors visible stacked")){
 					continue;
 				}
