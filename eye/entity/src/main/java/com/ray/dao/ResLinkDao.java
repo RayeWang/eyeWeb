@@ -23,4 +23,18 @@ public interface ResLinkDao {
 	 * @return 所有分类来源
 	 */
 	public List<ResLink> findAll();
+	
+	/**
+	 * 获取总数量，用于分页
+	 * @return 总数量
+	 */
+	public int getCount();
+	
+	/**
+	 * 根据分页查询
+	 * @param page 当前页的索引
+	 * @param pageSize 每页显示的数量
+	 * @return 分类来源集合
+	 */
+	public List<ResLink> findByPage(int page,int pageSize);
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ray.dao.ResLinkDao;
 import com.ray.entity.ResLink;
+import com.ray.entity.ResLinkCriteria;
 import com.ray.entity.mapper.DynamicSql;
 import com.ray.entity.mapper.ResLinkMapper;
 /**
@@ -40,6 +41,19 @@ public class ResLinkDaoImpl implements ResLinkDao {
 		DynamicSql dynameic = new DynamicSql();
 		dynameic.setSql(sql);
 		return mapper.selectAll();
+	}
+
+
+
+	public int getCount() {
+		return mapper.countByExample(null);
+	}
+
+
+
+	public List<ResLink> findByPage(int page, int pageSize) {
+		
+		return null;
 	}
 
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ray.dao.TypeDao;
 import com.ray.entity.AlertType;
 import com.ray.entity.mapper.AlertTypeMapper;
+import com.ray.entity.mapper.DynamicSql;
 /**
  * 文章类型的数据库操作接口实现类
  * @author Ray Wang
@@ -29,6 +30,23 @@ public class TypeDaoImpl implements TypeDao {
 		}
 		return false;
 	}
+	
+	
+
+	public List<AlertType> findByPage(int page, int pageSize) {
+		String sql = "select id, name, param1, param2 from alerttype"
+				+ " limit "+(page - 1)*pageSize+","+pageSize;
+		new DynamicSql().setSql(sql);
+		return mapper.selectByDynamicSQL();
+	}
+
+
+
+	public int getCount() {
+		return mapper.countByExample(null);
+	}
+
+
 
 	public List<AlertType> findAll() {
 		return mapper.selectByExample(null);

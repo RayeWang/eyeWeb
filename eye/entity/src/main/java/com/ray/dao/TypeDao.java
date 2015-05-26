@@ -24,4 +24,18 @@ public interface TypeDao {
 	 * @return
 	 */
 	public List<AlertType> findAll();
+	
+	/**
+	 * 根据分页查询文章分类
+	 * @param page 当前页面索引
+	 * @param pageSize 
+	 * @return
+	 */
+	public List<AlertType> findByPage(int page,int pageSize);
+	
+	/** 
+	 * 获取总记录数据，用于分页
+	 * @return
+	 */
+	public int getCount();
 }
