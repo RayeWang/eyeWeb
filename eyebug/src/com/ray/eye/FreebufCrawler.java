@@ -103,7 +103,6 @@ public class FreebufCrawler implements Crawler {
 			str = content.html();
 			
 			alert.setContent(HtmlUtil.encode("<div id=\"contenttxt\">"+str+"</div>"));
-			System.out.println(alert.getContent());
 			return true;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

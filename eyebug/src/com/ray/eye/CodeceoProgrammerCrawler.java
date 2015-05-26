@@ -13,15 +13,15 @@ import org.jsoup.select.Elements;
 import com.ray.entity.Alert;
 import com.ray.entity.ResLink;
 /**
+ * 码农网程序人生模块爬虫
  * http://www.codeceo.com/article/category/programmer
- *  （码农网---程序人生的分类）的爬虫程序
  * @author Ray Wang
- * @date 2015年5月24日21:23:54
+ * @date 2015年5月25日21:12:16
  * @version 1.0
  */
-public class CodeceoCrawler implements Crawler {
-	
-	public static final String NOWURL = "http://www.codeceo.com/article/category/develop";
+public class CodeceoProgrammerCrawler implements Crawler {
+
+	public static final String NOWURL = "http://www.codeceo.com/article/category/programmer";
 
 	public ArrayList<Alert> crawlerList(ResLink link) {
 		ArrayList<Alert> alerts = new ArrayList<Alert>();
@@ -73,5 +73,6 @@ public class CodeceoCrawler implements Crawler {
 		}
 		return false;
 	}
+
 
 }

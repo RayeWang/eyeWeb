@@ -38,4 +38,15 @@ public interface TypeDao {
 	 * @return
 	 */
 	public int getCount();
+	
+	/**
+	 * 更新一个分类
+	 * @param type
+	 */
+	public void update(AlertType type);
+	/**
+	 * 根据id来删除一个分类
+	 * @param id 分类id
+	 */
+	public void delete(int id);
 }

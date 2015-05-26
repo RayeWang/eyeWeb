@@ -48,6 +48,18 @@ public class TypeDaoImpl implements TypeDao {
 
 
 
+	public void update(AlertType type) {
+		mapper.updateByPrimaryKey(type);
+	}
+
+
+
+	public void delete(int id) {
+		mapper.deleteByPrimaryKey(id);
+	}
+
+
+
 	public List<AlertType> findAll() {
 		return mapper.selectByExample(null);
 	}

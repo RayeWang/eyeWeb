@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ray.dao.ResDao;
 import com.ray.entity.Res;
+import com.ray.entity.mapper.DynamicSql;
 import com.ray.entity.mapper.ResMapper;
 /**
  * 来源网站数据库操作实现接口
@@ -31,6 +32,32 @@ public class ResDaoImpl implements ResDao {
 	}
 	
 	
+
+	public int getCount() {
+		return mapper.countByExample(null);
+	}
+
+
+
+	public void deleteById(int id) {
+		mapper.deleteByPrimaryKey(id);
+	}
+
+
+
+	public void update(Res res) {
+		mapper.updateByPrimaryKey(res);
+	}
+
+
+
+	public List<Res> findByPage(int page, int pageSize) {
+		String sql = "select id, name, url from res limit "+(page - 1) * pageSize+","+pageSize;
+		new DynamicSql().setSql(sql);
+		return mapper.selectByPage();
+	}
+
+
 
 	public List<Res> findAll() {
 		return mapper.selectByExample(null);

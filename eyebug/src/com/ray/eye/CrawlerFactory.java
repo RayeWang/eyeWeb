@@ -26,8 +26,15 @@ public class CrawlerFactory {
 			crawler = new InfoqNew();
 		}else if(link.getUrl().equals(FreebufCrawler.NOWURL)){
 			crawler = new FreebufCrawler();
+		}else if(link.getUrl().equals(CodeceoCrawler.NOWURL)){
+			crawler = new CodeceoCrawler();
+		}else if(link.getUrl().equals(CodeceoProgrammerCrawler.NOWURL)){
+			crawler = new CodeceoProgrammerCrawler();
 		}
 		
+		if(crawler == null){
+			return null;
+		}
 		return crawler.crawlerList(link);
 	}
 }

@@ -50,7 +50,7 @@ public class ManagerAlertCon {
 			List<ResLink> links = linkDao.findAll();
 			for(ResLink link : links){
 				ArrayList<Alert> list = new CrawlerFactory().crawlerFactory(link);
-				if(list.size() > 0){
+				if(list != null && list.size() > 0){
 					dao.add(list);
 				}
 			}

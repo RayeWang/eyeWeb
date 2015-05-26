@@ -25,4 +25,29 @@ public interface ResDao {
 	 * @return
 	 */
 	public List<Res> findAll();
+	
+	/**
+	 * 获取所有数据量，用于分页
+	 * @return
+	 */
+	public int getCount();
+	
+	/**
+	 * 根据id来删除一个网站来源
+	 * @param id
+	 */
+	public void deleteById(int id);
+	/**
+	 * 更新
+	 * @param res
+	 */
+	public void update(Res res);
+	
+	/**
+	 * 根据分页查询
+	 * @param page 当前页面索引
+	 * @param pageSize 每页显示的数据大小
+	 * @return
+	 */
+	public List<Res> findByPage(int page,int pageSize);
 }

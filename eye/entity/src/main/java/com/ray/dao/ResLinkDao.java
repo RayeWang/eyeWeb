@@ -37,4 +37,15 @@ public interface ResLinkDao {
 	 * @return 分类来源集合
 	 */
 	public List<ResLink> findByPage(int page,int pageSize);
+	
+	/**
+	 * 修改一个分类来源
+	 * @param link 分类来源
+	 */
+	public void update(ResLink link);
+	/**
+	 * 删除一个分类来源
+	 * @param id 来源id
+	 */
+	public void deleteById(int id);
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.ray.dao.ResLinkDao;
 import com.ray.entity.ResLink;
-import com.ray.entity.ResLinkCriteria;
 import com.ray.entity.mapper.DynamicSql;
 import com.ray.entity.mapper.ResLinkMapper;
 /**
@@ -52,8 +51,23 @@ public class ResLinkDaoImpl implements ResLinkDao {
 
 
 	public List<ResLink> findByPage(int page, int pageSize) {
+		String sql = "select id, name, url, resid, typeid from res_link "
+				+ "limit "+(page - 1) * pageSize+","+pageSize;
+		new DynamicSql().setSql(sql);
 		
-		return null;
+		return mapper.selectByPage();
+	}
+
+
+
+	public void update(ResLink link) {
+		mapper.updateByPrimaryKey(link);
+	}
+
+
+
+	public void deleteById(int id) {
+		mapper.deleteByPrimaryKey(id);
 	}
 
 
