@@ -46,8 +46,9 @@
 		<property name="enableSubPackages" value="true" />
 	</javaClientGenerator>
 	<table tableName="tem" ></table>
-
 <!-- 
+
+	<table tableName="users" domainObjectName="Users"></table>
 <table tableName="css" domainObjectName="Css">
 	</table>
 	<table tableName="res" domainObjectName="Res">
