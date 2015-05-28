@@ -47,11 +47,16 @@ create table if not exists css(
 	res_link_id integer not null,-- 分类来源的id
 	csslink varchar(500) not null-- css link语句
 );
-
+--创建用户表
+create table if not exists users(
+	username varchar(20) not null,
+	password varchar(32) not null,
+	disabled int not null default 1
+);
 drop table if exists res;
 drop table if exists res_link;
 drop table if exists alert;
 drop table if exists alertType;
 drop table if exists css;
-
+drop table if exists users;
 
