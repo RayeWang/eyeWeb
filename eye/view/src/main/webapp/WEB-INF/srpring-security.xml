@@ -3,7 +3,29 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
-	<http>
+	
+	
+	
+	<http auto-config="true" >
+		<session-management>
+	 		<concurrency-control max-sessions="1" />
+		</session-management>
 		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
+		<logout logout-success-url="/loginpage.jsp" logout-url="/logout.ad" />
+		<form-login login-page="/loginpage.jsp" login-processing-url="/login.ad"
+			authentication-success-handler-ref="loginLogAuthenticationSuccessHandler"
+			authentication-failure-url="/loginpage.jsp?error=true"  />
 	</http>
+	
+	<beans:bean id="loginLogAuthenticationSuccessHandler"
+		class="com.ray.controller.admin.LoginSuccessHandler">
+		<!-- 登录成功后的页面 -->
+		<beans:property name="defaultTargetUrl" value="/admin/adminpage.jsp"></beans:property>
+	</beans:bean>
+	
+	<authentication-manager>
+		<authentication-provider>
+			<user-service><user name="admin" password="admin" authorities="ROLE_ADMIN"/></user-service>
+		</authentication-provider>
+	</authentication-manager>
 </beans:beans>
