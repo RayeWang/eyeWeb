@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public class Users extends User{
 	
@@ -12,6 +11,12 @@ public class Users extends User{
 	 * 
 	 */
 	private static final long serialVersionUID = -7288560348820810397L;
+
+	
+
+	public Users() {
+		super(null, null, null);
+	}
 
 	public Users(String username, String password, boolean enabled,
 			boolean accountNonExpired, boolean credentialsNonExpired,

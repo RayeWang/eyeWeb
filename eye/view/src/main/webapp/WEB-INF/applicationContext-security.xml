@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+	<!-- <debug/> -->
+	<http pattern="/**/*.js" security="none" />
+	<http pattern="/**/*.css" security="none" />
+	<http pattern="/**/*.gif" security="none" />
+	<http pattern="/**/*_*.gif" security="none" />
+	<http pattern="/**/*.jpg" security="none" />
+	<http pattern="/**/*.jsp" security="none" />
+	<http pattern="/**/*.png" security="none" />
+	<http pattern="/**/*_*.png" security="none" />
+	<http use-expressions="true" auto-config="true"
+		entry-point-ref="authenticationProcessingFilterEntryPoint"
+		access-denied-page="/content/common/noRight.jsp">
+		<logout invalidate-session="false" logout-success-url="/login.jsp"
+			logout-url="/j_spring_security_logout" />
+		<!-- 实现免登陆验证 -->
+		<!-- "记住我"功能，采用持久化策略（将用户的登录信息存放在数据库表中） -->
+		<!-- <remember-me data-source-ref="dataSource" /> <remember-me /> -->
+		<!-- 定制自己的过滤器 -->
+		<custom-filter ref="loginFilter" before="FORM_LOGIN_FILTER" />
+		<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+		<session-management
+			session-authentication-strategy-ref="sas" />
+	</http>
+	<!-- id登陆唯一. 后登陆的账号会挤掉第一次登陆的账号 error-if-maximum-exceeded="true" 禁止2次登陆; 
+		session-fixation-protection="none" 防止伪造sessionid攻击. 用户登录成功后会销毁用户当前的session. 
+		创建新的session,并把用户信息复制到新session中. -->
+	<beans:bean id="sas"
+		class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+		<beans:constructor-arg name="sessionRegistry"
+			ref="sessionRegistry" />
+		<beans:property name="maximumSessions" value="1" />
+		<!-- 防止session攻击 -->
+		<beans:property name="alwaysCreateSession" value="true" />
+		<beans:property name="migrateSessionAttributes" value="false" />
+		<!-- 同一个帐号 同时只能一个人登录 -->
+		<beans:property name="exceptionIfMaximumExceeded"
+			value="true" />
+	</beans:bean>
+	<!-- 登录验证器 -->
+	<beans:bean id="loginFilter"
+		class="zy.security.MyUsernamePasswordAuthenticationFilter">
+		<!-- 处理登录 -->
+		<beans:property name="filterProcessesUrl" value="/j_spring_security_check"></beans:property>
+		<beans:property name="authenticationSuccessHandler"
+			ref="loginLogAuthenticationSuccessHandler"></beans:property>
+		<beans:property name="authenticationFailureHandler"
+			ref="simpleUrlAuthenticationFailureHandler"></beans:property>
+		<beans:property name="authenticationManager" ref="myAuthenticationManager"></beans:property>
+		<beans:property name="sessionAuthenticationStrategy"
+			ref="sas" />
+	</beans:bean>
+	<beans:bean id="loginLogAuthenticationSuccessHandler"
+		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<!-- 登录成功后的页面 -->
+		<beans:property name="defaultTargetUrl" value="/main.action"></beans:property>
+	</beans:bean>
+	<beans:bean id="simpleUrlAuthenticationFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/login.jsp"></beans:property>
+	</beans:bean>
+
+	<!-- 认证过滤器 -->
+	<beans:bean id="securityFilter" class="zy.security.MySecurityFilter">
+		<!-- 用户拥有的权限 -->
+		<beans:property name="authenticationManager" ref="myAuthenticationManager" />
+		<!-- 用户是否拥有所请求资源的权限 -->
+		<beans:property name="accessDecisionManager" ref="myAccessDecisionManager" />
+		<!-- 资源与权限对应关系 -->
+		<beans:property name="securityMetadataSource" ref="mySecurityMetadataSource" />
+	</beans:bean>
+	<!-- 实现了UserDetailsService的Bean -->
+	<authentication-manager alias="myAuthenticationManager">
+		<authentication-provider user-service-ref="myUserDetailServiceImpl">
+		</authentication-provider>
+	</authentication-manager>
+	<beans:bean id="myAccessDecisionManager" class="zy.security.MyAccessDecisionManager"></beans:bean>
+	<beans:bean id="mySecurityMetadataSource" class="zy.security.MySecurityMetadataSource"></beans:bean>
+	<beans:bean id="myUserDetailServiceImpl" class="zy.security.MyUserDetailServiceImpl"></beans:bean>
+	<beans:bean id="sessionRegistry"
+		class="org.springframework.security.core.session.SessionRegistryImpl" />
+	<!-- 未登录的切入点 -->
+	<beans:bean id="authenticationProcessingFilterEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/login.jsp"></beans:property>
+	</beans:bean>
+</beans:beans>

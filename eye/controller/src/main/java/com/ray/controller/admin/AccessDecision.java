@@ -1,4 +1,4 @@
-package com.ray.controller;
+package com.ray.controller.admin;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -10,10 +10,18 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
+/**
+ * 用来判断用户是否有访问资源的权限的拦截器
+ * @author Ray
+ * @date 2015年5月29日16:13:34
+ * @version 1.0
+ */
+public class AccessDecision implements AccessDecisionManager{
 
-public class MyAccessDecisionManager implements AccessDecisionManager {
-	
-	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
+	public void decide(Authentication authentication, Object object,
+			Collection<ConfigAttribute> configAttributes)
+			throws AccessDeniedException, InsufficientAuthenticationException {
+		System.out.println("判断用户是否有访问资源的权限的拦截器");
 		if(configAttributes == null) {
 			return;
 		}
@@ -35,16 +43,15 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 		}
 		//没有权限让我们去捕捉
 		throw new AccessDeniedException("对不起，没有权限访问！");
+		
 	}
 
 	public boolean supports(ConfigAttribute attribute) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	public boolean supports(Class<?> clazz) {
-		// TODO Auto-generated method stub
 		return true;
 	}
-	
+
 }

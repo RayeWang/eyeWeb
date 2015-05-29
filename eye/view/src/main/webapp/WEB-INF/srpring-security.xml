@@ -10,22 +10,43 @@
 		<session-management>
 	 		<concurrency-control max-sessions="1" />
 		</session-management>
-		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
 		<logout logout-success-url="/loginpage.jsp" logout-url="/logout.ad" />
 		<form-login login-page="/loginpage.jsp" login-processing-url="/login.ad"
 			authentication-success-handler-ref="loginLogAuthenticationSuccessHandler"
-			authentication-failure-url="/loginpage.jsp?error=true"  />
+			authentication-failure-url="/loginpage.jsp?error=true" />
+		<custom-filter ref="myFilter" after="FILTER_SECURITY_INTERCEPTOR"/>
+		<custom-filter ref="loginFilter" after="FORM_LOGIN_FILTER"/>
 	</http>
 	
+	<authentication-manager  alias="authenticationManager" >
+		<authentication-provider user-service-ref ="loginDetail"></authentication-provider>
+	</authentication-manager>
+	
+	<!-- 登陆成功后调用的句柄 -->
 	<beans:bean id="loginLogAuthenticationSuccessHandler"
 		class="com.ray.controller.admin.LoginSuccessHandler">
 		<!-- 登录成功后的页面 -->
 		<beans:property name="defaultTargetUrl" value="/admin/adminpage.jsp"></beans:property>
 	</beans:bean>
 	
-	<authentication-manager>
-		<authentication-provider>
-			<user-service><user name="admin" password="admin" authorities="ROLE_ADMIN"/></user-service>
-		</authentication-provider>
-	</authentication-manager>
+	<!-- 自定义的拦截器 -->
+	<beans:bean id="myFilter" class="com.ray.controller.admin.MyFilter">
+		<!-- 用户是否拥有所请求资源的权限 -->
+		<beans:property name="accessDecisionManager" ref="myAccessDecisionManager" />
+		<!-- 所有资源权限的拦截器 -->
+		<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
+		<!-- 登陆验证的 -->
+		<beans:property name="authenticationManager" ref="loginDetail"/>
+	</beans:bean>
+	
+	<!-- 登陆拦截器 -->
+	<beans:bean id="loginFilter" class="com.ray.controller.admin.UserPassAuthentication"></beans:bean>
+	
+	<beans:bean id="loginDetail" class="com.ray.controller.admin.LoginDetail"></beans:bean>
+	
+	<!-- 判断用户是否有请求资源的权限 -->
+	<beans:bean id="myAccessDecisionManager" class="com.ray.controller.admin.AccessDecision"></beans:bean>
+	<!-- 资源与权限关系的拦截器 -->
+	<beans:bean id="securityMetadataSource" class="com.ray.controller.admin.SecurityMetadataSource"></beans:bean>
+	
 </beans:beans>
