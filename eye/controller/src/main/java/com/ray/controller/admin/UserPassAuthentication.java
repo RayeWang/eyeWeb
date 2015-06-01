@@ -8,9 +8,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 public class UserPassAuthentication extends
 		UsernamePasswordAuthenticationFilter {
+	
+	public UserPassAuthentication(){
+		super();
+		setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher(
+				"/login.ad","POST"));
+	}
 
 	public Authentication attemptAuthentication(HttpServletRequest request,
 			HttpServletResponse response) throws AuthenticationException {
@@ -32,6 +39,7 @@ public class UserPassAuthentication extends
 		// 允许子类设置详细属性
         setDetails(request, authRequest);
 		
+        
         // 运行UserDetailsService的loadUserByUsername 再次封装Authentication
 		return this.getAuthenticationManager().authenticate(authRequest);
 	}

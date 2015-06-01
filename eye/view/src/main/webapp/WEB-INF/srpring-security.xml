@@ -10,17 +10,24 @@
 		<session-management>
 	 		<concurrency-control max-sessions="1" />
 		</session-management>
-		<logout logout-success-url="/loginpage.jsp" logout-url="/logout.ad" />
-		<form-login login-page="/loginpage.jsp" login-processing-url="/login.ad"
+		<logout logout-success-url="/admin/loginpage.jsp" logout-url="/admin/logout.ad" />
+		<form-login  login-page="/admin/loginpage.jsp" login-processing-url="/admin/login.ad"
 			authentication-success-handler-ref="loginLogAuthenticationSuccessHandler"
-			authentication-failure-url="/loginpage.jsp?error=true" />
-		<custom-filter ref="myFilter" after="FILTER_SECURITY_INTERCEPTOR"/>
-		<custom-filter ref="loginFilter" after="FORM_LOGIN_FILTER"/>
+			authentication-failure-url="/admin/loginpage.jsp?error=true" />
+		<!-- <custom-filter ref="loginFilter" after="FORM_LOGIN_FILTER"/>-->
+		<!-- 
+		<custom-filter ref="myFilter" after="FILTER_SECURITY_INTERCEPTOR"/>  -->
 	</http>
 	
-	<authentication-manager  alias="authenticationManager" >
-		<authentication-provider user-service-ref ="loginDetail"></authentication-provider>
+	<!-- 用户的登陆验证器 -->
+	<authentication-manager  alias="am" >
+		<authentication-provider user-service-ref ="loginDetail">
+			<password-encoder ref="passwordEncoder"></password-encoder>
+		</authentication-provider>
 	</authentication-manager>
+	
+	<!-- 对密码进行MD5编码 -->  
+    <beans:bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
 	
 	<!-- 登陆成功后调用的句柄 -->
 	<beans:bean id="loginLogAuthenticationSuccessHandler"
@@ -35,14 +42,21 @@
 		<beans:property name="accessDecisionManager" ref="myAccessDecisionManager" />
 		<!-- 所有资源权限的拦截器 -->
 		<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
-		<!-- 登陆验证的 -->
-		<beans:property name="authenticationManager" ref="loginDetail"/>
+		
+		<beans:property name="authenticationManager" ref="am"/>
+		<!-- 不知道是干嘛的
+		<beans:property name="authenticationManager" ref="authentication"/>-->
 	</beans:bean>
 	
-	<!-- 登陆拦截器 -->
-	<beans:bean id="loginFilter" class="com.ray.controller.admin.UserPassAuthentication"></beans:bean>
-	
+	<!-- 登陆的UserDetailService -->
 	<beans:bean id="loginDetail" class="com.ray.controller.admin.LoginDetail"></beans:bean>
+	
+	<!-- 登陆拦截器 -->
+	<beans:bean id="loginFilter" class="com.ray.controller.admin.UserPassAuthentication">
+		<beans:property name="authenticationManager" ref="am" ></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="authentication" class="com.ray.controller.admin.MyAuthenticationManager"></beans:bean>
 	
 	<!-- 判断用户是否有请求资源的权限 -->
 	<beans:bean id="myAccessDecisionManager" class="com.ray.controller.admin.AccessDecision"></beans:bean>
