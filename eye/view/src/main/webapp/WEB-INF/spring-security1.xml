@@ -99,4 +99,36 @@
 		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
 		<beans:constructor-arg index="0" value="/loginpage.jsp"></beans:constructor-arg>
 	</beans:bean> -->
+	
+	<!-- 登陆成功后调用的句柄 -->
+	<beans:bean id="loginLogAuthenticationSuccessHandler"
+		class="com.ray.controller.admin.LoginSuccessHandler">
+		<!-- 登录成功后的页面 -->
+		<beans:property name="defaultTargetUrl" value="/admin/adminpage.jsp"></beans:property>
+	</beans:bean>
+	
+	<!-- 自定义的拦截器 -->
+	<beans:bean id="myFilter" class="com.ray.controller.admin.MyFilter">
+		<!-- 用户是否拥有所请求资源的权限 -->
+		<beans:property name="accessDecisionManager" ref="myAccessDecisionManager" />
+		<!-- 所有资源权限的拦截器 -->
+		<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
+		
+		<beans:property name="authenticationManager" ref="am"/>
+		<!-- 不知道是干嘛的
+		<beans:property name="authenticationManager" ref="authentication"/>-->
+	</beans:bean>
+	
+	
+	<!-- 登陆拦截器 -->
+	<beans:bean id="loginFilter" class="com.ray.controller.admin.UserPassAuthentication">
+		<beans:property name="authenticationManager" ref="am" ></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="authentication" class="com.ray.controller.admin.MyAuthenticationManager"></beans:bean>
+	
+	<!-- 判断用户是否有请求资源的权限 -->
+	<beans:bean id="myAccessDecisionManager" class="com.ray.controller.admin.AccessDecision"></beans:bean>
+	<!-- 资源与权限关系的拦截器 -->
+	<beans:bean id="securityMetadataSource" class="com.ray.controller.admin.SecurityMetadataSource"></beans:bean>
 </beans:beans>
