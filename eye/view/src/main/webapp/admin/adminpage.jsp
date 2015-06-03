@@ -21,12 +21,21 @@
 		                title: $(this).html(),
 		                href:$(this).attr("url"),
 		                closable: true,
+		                
 		            });
 			}
 		});
 	});
+	function formatEdit(value,row,index){
+		return '<input type="button" value="编辑" onclick="toedit('+row.id+')"></input>';
+	}
 	
+	function toedit(id){
+		alert(id);
+		return;
+	}
 </script>
+
 </head>
 <body>
 
