@@ -6,10 +6,11 @@
 	
 	
 	
-	<http auto-config="true"  use-expressions="true" >
+	<http auto-config="true"  use-expressions="true"  >
+		<!--  
 		<intercept-url pattern="/admin/loginpage.jsp" access="permitAll"/>
 		<intercept-url pattern="/admin/login.ad" access="permitAll"/>
-		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>-->
 		<session-management>
 	 		<concurrency-control max-sessions="1" />
 		</session-management>
@@ -17,12 +18,12 @@
 		<form-login  login-page="/admin/loginpage.jsp" login-processing-url="/admin/login.ad"
 			authentication-success-handler-ref="loginLogAuthenticationSuccessHandler"
 			authentication-failure-url="/admin/loginpage.jsp?error=true" />
-			
+		<custom-filter ref="myFilter" after="FILTER_SECURITY_INTERCEPTOR"/>
 	</http>
 	
 	<!-- 用户的登陆验证器
 			 -->
-	<authentication-manager  >
+	<authentication-manager  alias="am">
 		<authentication-provider user-service-ref ="loginDetail">
 			<password-encoder ref="passwordEncoder"></password-encoder>
 		</authentication-provider>
@@ -40,4 +41,20 @@
 		<beans:property name="defaultTargetUrl" value="/admin/adminpage.jsp"></beans:property>
 	</beans:bean>
 	
+	
+	<!-- 自定义的拦截器 -->
+	<beans:bean id="myFilter" class="com.ray.controller.admin.MyFilter">
+		<!-- 用户是否拥有所请求资源的权限 -->
+		<beans:property name="accessDecisionManager" ref="myAccessDecisionManager" />
+		<!-- 所有资源权限的拦截器 -->
+		<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
+		<!-- 登陆的处理器 -->
+		<beans:property name="authenticationManager" ref="am"/>
+	</beans:bean>
+	
+	
+	<!-- 判断用户是否有请求资源的权限 -->
+	<beans:bean id="myAccessDecisionManager" class="com.ray.controller.admin.AccessDecision"></beans:bean>
+	<!-- 资源与权限关系的拦截器 -->
+	<beans:bean id="securityMetadataSource" class="com.ray.controller.admin.SecurityMetadataSource"></beans:bean>
 </beans:beans>

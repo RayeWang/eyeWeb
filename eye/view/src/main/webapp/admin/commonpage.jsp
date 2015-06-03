@@ -5,11 +5,19 @@
 <head>  
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
 <title>Insert title here</title>  
+<script type="text/javascript" src="../js/jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("h1").click(function(){
+		alert('click');
+	});
+});
+	
+</script>
 </head>  
 <body>  
     <h1>Common Page</h1>  
-    <p>每个人都能访问的页面.</p>  
-    <a href="/spring3-security-integration/main/admin"> Go AdminPage </a>  
+   	
     <br />  
     <a href="/spring3-security-integration/auth/login">退出登录</a>  
   

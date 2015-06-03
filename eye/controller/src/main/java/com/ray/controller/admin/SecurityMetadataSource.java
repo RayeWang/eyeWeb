@@ -50,7 +50,7 @@ public class SecurityMetadataSource implements
 			resourceMap = new HashMap<String, Collection<ConfigAttribute>>();
 
 			Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
-			ConfigAttribute configAttribute = new SecurityConfig("ADMIN");
+			ConfigAttribute configAttribute = new SecurityConfig("ROLE_ADMIN");
 			configAttributes.add(configAttribute);
 			resourceMap.put("/admin/adminpage.jsp", configAttributes);
 		}

@@ -1,14 +1,68 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>后台管理</title>
+<link rel="stylesheet" type="text/css"
+	href="../themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css" href="../themes/icon.css">
+<script type="text/javascript" src="../js/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+<style type="text/css">
+body {
+	padding: 0px;
+	margin: 0px;
+}
+.menu_item{
+	cursor:pointer;
+	
+}
+</style>
+<script type="text/javascript">
+	$(function(){
+		$(".menu_item").click(function(){
+			if ($('#tabs').tabs('exists',$(this).html())){
+				$('#tabs').tabs('select', $(this).html());
+			} else {
+				 $('#tabs').tabs('add',{
+		                title: $(this).html(),
+		                content: '<div style="padding:10px">Content'+$(this).html()+'</div>',
+		                closable: true
+		            });
+			}
+		});
+	});
+	
+</script>
 </head>
 <body>
-	<h1>Admin Page</h1>
-	<p>管理员页面</p>
-	<a href="/spring3-security-integration/auth/login">退出登录</a>
+
+	<div style="width: 100%; height: 50px; background-color: #333"></div>
+	<div class="easyui-layout" style="width: 100%;height: 90%;min-height: 500px;">
+		<!-- 菜单区域 -->
+		<div data-options="region:'west',split:true" title="菜单"
+			style="width: 200px;height: 100%">
+			<div class="easyui-accordion" style="width: 100%;">
+				<div title="文章管理" style="overflow: auto; padding: 10px;">
+					<h2 class="menu_item" >文章管理</h2>
+					<h2 class="menu_item">来源管理</h2>
+					<h2 class="menu_item">分类管理</h2>
+					<h2 class="menu_item">样式管理</h2>
+				</div>
+				<div title="系统管理" style="padding: 10px;">
+					<h2 class="menu_item">登陆日志</h2>
+					<h2 class="menu_item">系统用户</h2>
+					<h2 class="menu_item">权限管理</h2>
+				</div>
+
+			</div>
+		</div>
+		<!-- 中间面板区 -->
+		<div class="easyui-tabs" id="tabs" data-options="region:'center'">
+	
+		</div>
+	</div>
 </body>
 </html>
