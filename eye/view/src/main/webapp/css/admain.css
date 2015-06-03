@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+body{
+	padding: 0px;
+	margin: 0px;
+}
+html,body{
+	
+	height: 100%;
+}
+.menu_item{
+	cursor:pointer;
+	
+}

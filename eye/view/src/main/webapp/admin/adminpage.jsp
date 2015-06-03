@@ -10,16 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../themes/icon.css">
 <script type="text/javascript" src="../js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
-<style type="text/css">
-body {
-	padding: 0px;
-	margin: 0px;
-}
-.menu_item{
-	cursor:pointer;
-	
-}
-</style>
+<link rel="stylesheet" type="text/css" href="../css/admain.css" />
 <script type="text/javascript">
 	$(function(){
 		$(".menu_item").click(function(){
@@ -28,8 +19,8 @@ body {
 			} else {
 				 $('#tabs').tabs('add',{
 		                title: $(this).html(),
-		                content: '<div style="padding:10px">Content'+$(this).html()+'</div>',
-		                closable: true
+		                href:$(this).attr("url"),
+		                closable: true,
 		            });
 			}
 		});
@@ -40,14 +31,14 @@ body {
 <body>
 
 	<div style="width: 100%; height: 50px; background-color: #333"></div>
-	<div class="easyui-layout" style="width: 100%;height: 90%;min-height: 500px;">
+	<div class="easyui-layout" style="width: 100%;height: 90%">
 		<!-- 菜单区域 -->
 		<div data-options="region:'west',split:true" title="菜单"
 			style="width: 200px;height: 100%">
 			<div class="easyui-accordion" style="width: 100%;">
 				<div title="文章管理" style="overflow: auto; padding: 10px;">
 					<h2 class="menu_item" >文章管理</h2>
-					<h2 class="menu_item">来源管理</h2>
+					<h2 class="menu_item" url="res.jsp">来源管理</h2>
 					<h2 class="menu_item">分类管理</h2>
 					<h2 class="menu_item">样式管理</h2>
 				</div>

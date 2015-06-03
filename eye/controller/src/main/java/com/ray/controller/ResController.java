@@ -25,7 +25,7 @@ import com.ray.entity.ResLink;
  * @version 1.0
  */
 @Controller
-@RequestMapping("/manager")
+@RequestMapping("/admin")
 public class ResController {
 	/** 来源网站的数据库操作接口*/
 	@Autowired
@@ -99,6 +99,8 @@ public class ResController {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	public ResDao getDao() {
 		return dao;
