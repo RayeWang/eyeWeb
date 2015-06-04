@@ -36,7 +36,7 @@ function deleteRes(){
   		  ${_csrf.parameterName}:'${_csrf.token}'
   	  },
   	   success: function(data){
-			if(data==0){
+			if(data==true){
 				 $.messager.alert('删除来源','删除成功');
 				 var tab = $('#tabs').tabs('getSelected');  // get selected panel
              	 tab.panel('refresh');

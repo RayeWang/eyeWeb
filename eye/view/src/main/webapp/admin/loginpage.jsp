@@ -22,7 +22,7 @@
 		<div class="panel-heading">登陆系统</div>
 		<div class="panel-body">
 			<form
-				action='<c:out value="${pageContext.request.contextPath}/admin/login.ad"></c:out>'
+				action='<c:out value="login.ad"></c:out>'
 				method="post">
 
 				<p>

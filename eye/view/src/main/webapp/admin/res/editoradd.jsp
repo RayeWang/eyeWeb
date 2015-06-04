@@ -73,7 +73,8 @@
 		            		  ${_csrf.parameterName}:'${_csrf.token}'
 		            	  },
 		            	   success: function(data){
-							if(data==0){
+								alert(data);
+							if(data==true){
 								 $.messager.alert(msg+'来源',msg+'成功');
 								 $('#tabs').tabs('close',tabname+"来源");
 								 $('#tabs').tabs('getTab','来源管理').panel('refresh');

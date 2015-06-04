@@ -54,9 +54,9 @@ public class ResController {
 			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 			PrintWriter pw = response.getWriter();
 			if(dao.addRes(res)){
-				pw.write("0");
+				pw.write("true");
 			}else{
-				pw.write("1");
+				pw.write("false");
 			}
 			pw.close();
 		} catch (IOException e) {
@@ -90,9 +90,9 @@ public class ResController {
 		try {
 			PrintWriter pw = response.getWriter();
 			if(linkDao.addLink(link)){
-				pw.write("add Success");
+				pw.write("true");
 			}else{
-				pw.write("add Error");
+				pw.write("false");
 			}
 			pw.close();
 		} catch (IOException e) {
@@ -110,9 +110,9 @@ public class ResController {
 		try {
 			PrintWriter pw = response.getWriter();
 			if(typeDao.addType(type)){
-				pw.write("add Success");
+				pw.write("true");
 			}else{
-				pw.write("add Error");
+				pw.write("false");
 			}
 			pw.close();
 		} catch (IOException e) {
@@ -139,7 +139,12 @@ public class ResController {
 			e.printStackTrace();
 		}
 	}
-	
+	/***
+	 * 根据分页获取分类来源的页面
+	 * @param response
+	 * @param page
+	 * @param rows
+	 */
 	@RequestMapping("reslink/get.do")
 	public void getResLink(HttpServletResponse response,@RequestParam(defaultValue="1")int page,
 			@RequestParam(defaultValue="10")int rows){
@@ -163,7 +168,33 @@ public class ResController {
 		
 		List<AlertType> types = typeDao.findAll();
 		map.put("types", types);
-		return "/admin/editoradd";
+		return "/admin/res/editoradd";
+	}
+	/**
+	 * 进入编辑分类来源的页面
+	 * @param id
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping("/reslink/toedit.do")
+	public String toEditLink(int id,ModelMap map){
+		ResLink link = linkDao.findById(id);
+
+		List<AlertType> types = typeDao.findAll();
+		map.put("types", types);
+		map.put("reslink", link);
+		return "/admin/res/editlink";
+	}
+	/**
+	 * 进入添加分类来源的页面
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping("/reslink/toadd.do")
+	public String toAddLink(ModelMap map){
+		List<AlertType> types = typeDao.findAll();
+		map.put("types", types);
+		return "/admin/res/addlink";
 	}
 	
 	/**
@@ -176,10 +207,8 @@ public class ResController {
 	public String toEditRes(@RequestParam(defaultValue="0")int id,
 			ModelMap map){
 		Res res = resDao.findById(id);
-		List<AlertType> types = typeDao.findAll();
-		map.put("types", types);
 		map.put("res", res);
-		return "/admin/editoradd";
+		return "/admin/res/editoradd";
 	}
 	
 	/**
@@ -193,15 +222,31 @@ public class ResController {
 		try {
 			pw = response.getWriter();
 			resDao.update(res);
-			pw.write("0");
+			pw.write("true");
 			pw.close();
 			return;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if(pw != null){
-			pw.write("1");
+		
+		
+	}
+	/**
+	 * 更新一个resLink 对象
+	 * @param link
+	 * @param response
+	 */
+	@RequestMapping("reslink/update.do")
+	public void updateResLin(ResLink link,HttpServletResponse response){
+		PrintWriter pw = null;
+		try {
+			pw = response.getWriter();
+			linkDao.update(link);
+			pw.write("true");
 			pw.close();
+			return;
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 	}
@@ -213,7 +258,7 @@ public class ResController {
 			
 			pw = response.getWriter();
 			resDao.deleteByIds(id);
-			pw.write("0");
+			pw.write("true");
 			pw.close();
 			return;
 		} catch (NumberFormatException e) {
@@ -221,7 +266,7 @@ public class ResController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		pw.write("1");
+		pw.write("false");
 		pw.close();
 	}
 	

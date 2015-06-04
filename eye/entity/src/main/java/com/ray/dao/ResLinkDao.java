@@ -48,4 +48,11 @@ public interface ResLinkDao {
 	 * @param id 来源id
 	 */
 	public void deleteById(int id);
+	
+	/**
+	 * 根据ID查询
+	 * @param id
+	 * @return
+	 */
+	public ResLink findById(int id);
 }

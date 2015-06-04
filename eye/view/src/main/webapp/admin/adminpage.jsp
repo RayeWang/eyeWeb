@@ -62,8 +62,8 @@
 					<h2 class="menu_item">样式管理</h2>
 				</div>
 				<div title="来源管理" style="overflow: auto; padding: 10px;">
-					<h2 class="menu_item" url="res.jsp">来源管理</h2>
-					<h2 class="menu_item" >分类来源</h2>
+					<h2 class="menu_item" url="res/res.jsp">来源管理</h2>
+					<h2 class="menu_item" url="res/reslink.jsp">分类来源</h2>
 					<h2 class="menu_item">分类管理</h2>
 				</div>
 				<div title="系统管理" style="padding: 10px;">

@@ -50,6 +50,12 @@ public class ResLinkDaoImpl implements ResLinkDao {
 
 
 
+	public ResLink findById(int id) {
+		return mapper.selectByPrimaryKey(id);
+	}
+
+
+
 	public List<ResLink> findByPage(int page, int pageSize) {
 		String sql = "select id, name, url, resid, typeid from res_link "
 				+ "limit "+(page - 1) * pageSize+","+pageSize;
