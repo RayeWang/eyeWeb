@@ -140,6 +140,7 @@ public class ResController {
 		}
 	}
 	
+	@RequestMapping("reslink/get.do")
 	public void getResLink(HttpServletResponse response,@RequestParam(defaultValue="1")int page,
 			@RequestParam(defaultValue="10")int rows){
 		try {
