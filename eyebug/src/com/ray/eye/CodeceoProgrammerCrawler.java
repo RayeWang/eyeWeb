@@ -34,6 +34,10 @@ public class CodeceoProgrammerCrawler implements Crawler {
 				Alert temp = new Alert();
 				Element e = elements.get(i);
 				temp.setTitle(e.getElementsByTag("a").get(1).html());
+				if(temp.getTitle().equals(link.getTitle())){
+					//已经爬取到上次爬取的地方了
+					return alerts;
+				}
 				temp.setUrl(e.getElementsByTag("a").get(0).attr("href"));
 				temp.setImg(e.getElementsByTag("img").get(0).attr("src"));
 				temp.setAlerttime(e.getElementsByTag("time").get(0).html());
@@ -51,7 +55,6 @@ public class CodeceoProgrammerCrawler implements Crawler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(alerts.get(0).getContent());
 		return alerts;
 	}
 

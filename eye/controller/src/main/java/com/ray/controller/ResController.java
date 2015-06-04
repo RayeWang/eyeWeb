@@ -140,6 +140,18 @@ public class ResController {
 		}
 	}
 	
+	public void getResLink(HttpServletResponse response,@RequestParam(defaultValue="1")int page,
+			@RequestParam(defaultValue="10")int rows){
+		try {
+			PrintWriter pw = response.getWriter();
+			List<ResLink> links = linkDao.findByPage(page, rows);
+			pw.write(new Gson().toJson(links));
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * 进入来源添加页面
 	 * @param map
@@ -151,6 +163,46 @@ public class ResController {
 		List<AlertType> types = typeDao.findAll();
 		map.put("types", types);
 		return "/admin/editoradd";
+	}
+	
+	/**
+	 * 前往修改来源页面
+	 * @param id
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping("/res/toedit.do")
+	public String toEditRes(@RequestParam(defaultValue="0")int id,
+			ModelMap map){
+		Res res = resDao.findById(id);
+		List<AlertType> types = typeDao.findAll();
+		map.put("types", types);
+		map.put("res", res);
+		return "/admin/editoradd";
+	}
+	
+	/**
+	 * 更新一个来源
+	 * @param res
+	 * @param response
+	 */
+	@RequestMapping("/res/update.do")
+	public void updateRes(Res res,HttpServletResponse response){
+		PrintWriter pw = null;
+		try {
+			pw = response.getWriter();
+			resDao.update(res);
+			pw.write("0");
+			pw.close();
+			return;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if(pw != null){
+			pw.write("1");
+			pw.close();
+		}
+		
 	}
 	
 	@RequestMapping("res/deletebyids.do")

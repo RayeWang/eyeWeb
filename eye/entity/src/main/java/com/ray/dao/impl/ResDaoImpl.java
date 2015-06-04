@@ -76,6 +76,12 @@ public class ResDaoImpl implements ResDao {
 
 
 
+	public Res findById(int id) {
+		return mapper.selectByPrimaryKey(id);
+	}
+
+
+
 	public ResMapper getMapper() {
 		return mapper;
 	}

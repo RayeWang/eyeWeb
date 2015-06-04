@@ -73,6 +73,7 @@ public class FreebufCrawler implements Crawler {
 
 	public boolean crawlerAlert(Alert alert) {
 		try {
+			Thread.sleep(60*1000);//暂停一分钟，不然会获取不到数据
 			WebClient wc = new WebClient(BrowserVersion.CHROME);
 		    wc.getOptions().setUseInsecureSSL(true);
 		    wc.getOptions().setJavaScriptEnabled(true); // 启用JS解释器，默认为true
@@ -107,6 +108,8 @@ public class FreebufCrawler implements Crawler {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		return false;

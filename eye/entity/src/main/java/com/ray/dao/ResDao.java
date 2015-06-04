@@ -55,4 +55,11 @@ public interface ResDao {
 	 * @param ids
 	 */
 	public void deleteByIds(String ids);
+	
+	/**
+	 * 根据id查询一个来源
+	 * @param id
+	 * @return
+	 */
+	public Res findById(int id);
 }

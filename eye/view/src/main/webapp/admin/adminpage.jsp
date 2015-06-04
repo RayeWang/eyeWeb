@@ -43,7 +43,7 @@
 	
 	
 	function toedit(id){
-		alert(id);
+		addTab("编辑来源","res/toedit.do?id="+id);
 		return;
 	}
 </script>
@@ -59,16 +59,19 @@
 			<div class="easyui-accordion" style="width: 100%;">
 				<div title="文章管理" style="overflow: auto; padding: 10px;">
 					<h2 class="menu_item" >文章管理</h2>
-					<h2 class="menu_item" url="res.jsp">来源管理</h2>
-					<h2 class="menu_item">分类管理</h2>
 					<h2 class="menu_item">样式管理</h2>
+				</div>
+				<div title="来源管理" style="overflow: auto; padding: 10px;">
+					<h2 class="menu_item" url="res.jsp">来源管理</h2>
+					<h2 class="menu_item" >分类来源</h2>
+					<h2 class="menu_item">分类管理</h2>
 				</div>
 				<div title="系统管理" style="padding: 10px;">
 					<h2 class="menu_item">登陆日志</h2>
 					<h2 class="menu_item">系统用户</h2>
 					<h2 class="menu_item">权限管理</h2>
 				</div>
-
+			
 			</div>
 		</div>
 		<!-- 中间面板区 -->
