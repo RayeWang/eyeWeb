@@ -8,6 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
@@ -28,6 +29,7 @@ public class MyFilter extends AbstractSecurityInterceptor  implements Filter{
 	
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		response.setContentType("application/json;charset=UTF-8");
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
 		if (fi!=null) {
 			invoke(fi);

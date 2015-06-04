@@ -2,14 +2,13 @@ package com.ray.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -52,12 +51,14 @@ public class ResController {
 	@RequestMapping("/res/addres.do")
 	public void addRes(Res res,HttpServletResponse response){
 		try {
+			response.setHeader("X-Frame-Options", "SAMEORIGIN");
 			PrintWriter pw = response.getWriter();
 			if(dao.addRes(res)){
-				pw.write("Add Success");
+				pw.write("0");
 			}else{
-				pw.write("Add Error");
+				pw.write("1");
 			}
+			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -73,11 +74,17 @@ public class ResController {
 			PrintWriter pw = response.getWriter();
 			List<Res> list = dao.findAll();
 			pw.write(new Gson().toJson(list));
+			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * 添加一个分类来源
+	 * @param link 分类来源
+	 * @param response
+	 */
 	@RequestMapping("/reslink/add.do")
 	public void addResLink(ResLink link,HttpServletResponse response){
 		try {
@@ -87,11 +94,17 @@ public class ResController {
 			}else{
 				pw.write("add Error");
 			}
+			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * 添加一个分类
+	 * @param type
+	 * @param response
+	 */
 	@RequestMapping("/type/add.do")
 	public void addType(AlertType type,HttpServletResponse response){
 		try {
@@ -101,23 +114,62 @@ public class ResController {
 			}else{
 				pw.write("add Error");
 			}
+			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * 根据分页获取来源网站
+	 * @param response
+	 * @param page
+	 * @param rows
+	 */
 	@RequestMapping("/res/get.do")
 	public void getRes(HttpServletResponse response,@RequestParam(defaultValue="1")int page,
 			@RequestParam(defaultValue="10")int rows){
 		try {
 			
-			response.setContentType("application/json;charset=UTF-8");//防止数据传递乱码
 			PrintWriter pw = response.getWriter();
 			List<Res> res = resDao.findByPage(page, rows);
 			pw.write(new Gson().toJson(res));
+			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 进入来源添加页面
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping("/res/toadd.do")
+	public String toAddRes(ModelMap map){
+		
+		List<AlertType> types = typeDao.findAll();
+		map.put("types", types);
+		return "/admin/editoradd";
+	}
+	
+	@RequestMapping("res/deletebyids.do")
+	public void deleteResByIds(@RequestParam(defaultValue="")String id,HttpServletResponse response){
+		PrintWriter pw = null;
+		try {
+			
+			pw = response.getWriter();
+			resDao.deleteByIds(id);
+			pw.write("0");
+			pw.close();
+			return;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		pw.write("1");
+		pw.close();
 	}
 	
 	public ResDao getDao() {

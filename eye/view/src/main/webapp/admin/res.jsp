@@ -17,6 +17,35 @@
 
 </head>
 <body>
+<script type="text/javascript">
+function deleteRes(){
+	var selected = $('#dg').datagrid('getChecked');
+	console.log(selected);
+	console.log(selected[0].id);
+	var ids = "";
+	for(var i = 0;i < selected.length;i++){
+		ids += selected[i].id+",";
+	}
+	ids = ids.substring(0, ids.length-1);
+	
+	$.ajax({ url: "res/deletebyids.do",
+  	  type: 'POST',
+  	  datattpe:"text",
+  	  data:{
+  		  id:ids,
+  		  ${_csrf.parameterName}:'${_csrf.token}'
+  	  },
+  	   success: function(data){
+			if(data==0){
+				 $.messager.alert('删除来源','删除成功');
+				 var tab = $('#tabs').tabs('getSelected');  // get selected panel
+             	 tab.panel('refresh');
+			}else{
+				$.messager.alert('删除来源','删除失败');
+			}
+    }});
+}
+</script>
 <table id="dg" title="来源管理" class="easyui-datagrid" style="width:100%;height:97%"
             url='res/get.do?${_csrf.parameterName}=${_csrf.token}&" />'
             toolbar="#toolbar" pagination="true" striped="true"
@@ -31,11 +60,12 @@
             </tr>
         </thead>
     </table>
+     
     <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">新增来源</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除来源</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addTab('新增来源','res/toadd.do?${_csrf.parameterName}=${_csrf.token}&')">新增来源</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteRes()">删除来源</a>
     </div>
-    
+   
     
 </body>
 </html>

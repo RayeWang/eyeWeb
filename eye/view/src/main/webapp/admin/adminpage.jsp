@@ -14,21 +14,33 @@
 <script type="text/javascript">
 	$(function(){
 		$(".menu_item").click(function(){
-			if ($('#tabs').tabs('exists',$(this).html())){
-				$('#tabs').tabs('select', $(this).html());
-			} else {
-				 $('#tabs').tabs('add',{
-		                title: $(this).html(),
-		                href:$(this).attr("url"),
-		                closable: true,
-		                
-		            });
-			}
+			addTab($(this).html(),$(this).attr("url"));
 		});
 	});
+	
+	function addTab(name,url){
+		if ($('#tabs').tabs('exists',name)){
+			$('#tabs').tabs('select',name);
+		} else {
+			 $('#tabs').tabs('add',{
+	                title: name,
+	                href:url,
+	                closable: true,
+	                tools:[{
+	                    iconCls:'icon-mini-refresh',
+	                    handler:function(){
+	                    	var tab = $('#tabs').tabs('getSelected');  // get selected panel
+	                    	tab.panel('refresh');
+	                    }
+	                }]
+	            });
+		}
+	
+	}
 	function formatEdit(value,row,index){
 		return '<input type="button" value="编辑" onclick="toedit('+row.id+')"></input>';
 	}
+	
 	
 	function toedit(id){
 		alert(id);

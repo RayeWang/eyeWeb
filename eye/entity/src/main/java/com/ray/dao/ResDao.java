@@ -50,4 +50,9 @@ public interface ResDao {
 	 * @return
 	 */
 	public List<Res> findByPage(int page,int pageSize);
+	/**
+	 * 根据id集合删除
+	 * @param ids
+	 */
+	public void deleteByIds(String ids);
 }

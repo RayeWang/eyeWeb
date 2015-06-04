@@ -19,6 +19,7 @@
 			authentication-success-handler-ref="loginLogAuthenticationSuccessHandler"
 			authentication-failure-url="/admin/loginpage.jsp?error=true" />
 		<custom-filter ref="myFilter" after="FILTER_SECURITY_INTERCEPTOR"/>
+		<headers><frame-options policy="SAMEORIGIN"/></headers>
 	</http>
 	
 	<!-- 用户的登陆验证器

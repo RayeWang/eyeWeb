@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ray.dao.ResDao;
 import com.ray.entity.Res;
@@ -34,6 +35,7 @@ public class ResDaoImpl implements ResDao {
 	
 
 	public int getCount() {
+		
 		return mapper.countByExample(null);
 	}
 
@@ -61,6 +63,15 @@ public class ResDaoImpl implements ResDao {
 
 	public List<Res> findAll() {
 		return mapper.selectByExample(null);
+	}
+
+
+	@Transactional
+	public void deleteByIds(String ids) {
+		String[] idsStr = ids.split(",");
+		for(String id : idsStr){
+			mapper.deleteByPrimaryKey(Integer.parseInt(id));
+		}
 	}
 
 
