@@ -55,7 +55,7 @@
 			style="width: 200px;height: 100%">
 			<div class="easyui-accordion" style="width: 100%;">
 				<div title="文章管理" style="overflow: auto; padding: 10px;">
-					<h2 class="menu_item" >文章管理</h2>
+					<h2 class="menu_item" url="article/article.jsp">文章管理</h2>
 					<h2 class="menu_item">样式管理</h2>
 				</div>
 				<div title="来源管理" style="overflow: auto; padding: 10px;">

@@ -3,6 +3,7 @@ package com.ray.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,6 @@ import com.ray.dao.ResLinkDao;
 import com.ray.dao.TypeDao;
 import com.ray.entity.Alert;
 import com.ray.entity.AlertType;
-import com.ray.entity.Res;
 import com.ray.entity.ResLink;
 import com.ray.eye.CrawlerFactory;
 
@@ -92,7 +92,10 @@ public class ManagerAlertCon {
 		try {
 			PrintWriter pw = response.getWriter();
 			List<Alert> alerts = dao.findByAlert(page, rows, 0, "");
-			pw.write(new Gson().toJson(alerts));
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("rows", alerts);
+			map.put("total", dao.findCount(0, ""));
+			pw.write(new Gson().toJson(map));
 			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -125,15 +128,13 @@ public class ManagerAlertCon {
 	 */
 	@RequestMapping("/article/toadd.do")
 	public String toAdd(ModelMap map){
-		List<Res> res = resDao.findAll();
 		List<ResLink> links = linkDao.findAll();
 		List<AlertType> types = typeDao.findAll();
 		
-		map.put("res", res);
 		map.put("links", links);
 		map.put("types", types);
 		
-		return "";
+		return "/admin/article/addarticle";
 	}
 	/**
 	 * 进入文章编辑页面
@@ -145,15 +146,13 @@ public class ManagerAlertCon {
 	public String toEdit(@RequestParam(defaultValue="0")int id,
 			ModelMap map){
 		Alert alert = dao.findById(id);
-		List<Res> res = resDao.findAll();
 		List<ResLink> links = linkDao.findAll();
 		List<AlertType> types = typeDao.findAll();
 		
 		map.put("article", alert);
-		map.put("res", res);
 		map.put("links", links);
 		map.put("types", types);
-		return "";
+		return "/admin/article/editarticle";
 	}
 
 	public AlertDao getDao() {
