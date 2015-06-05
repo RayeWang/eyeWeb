@@ -50,10 +50,10 @@
 					</tr>
 				</table>
 				 <div style="text-align:left;padding:5px 0px 5px 70px">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitLinkForm()">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitAddLinkForm()">保存</a>
             </div>
             <script type="text/javascript">
-            function submitLinkForm(){
+            function submitAddLinkForm(){
             	 $.ajax({ url:'reslink/add.do',
 	            	  type: 'POST',
 	            	  datattpe:"text",

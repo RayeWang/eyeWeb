@@ -60,6 +60,18 @@ public class AlertDaoImpl implements AlertDao {
 		return mapper.countByDynamicSQL();
 	}
 
+	@Transactional
+	public void deleteByIds(String ids) {
+		String[] temps = ids.split(",");
+		for(String id:temps){
+			mapper.deleteByPrimaryKey(Integer.parseInt(id));
+		}
+	}
+
+	public void update(Alert alert) {
+		mapper.updateByPrimaryKey(alert);
+	}
+
 	public Alert findById(int id) {
 		return mapper.selectByPrimaryKey(id);
 	}

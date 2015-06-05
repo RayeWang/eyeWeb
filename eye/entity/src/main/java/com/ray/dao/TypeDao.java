@@ -33,6 +33,13 @@ public interface TypeDao {
 	 */
 	public List<AlertType> findByPage(int page,int pageSize);
 	
+	/**
+	 * 根据id查询一个分类
+	 * @param id
+	 * @return
+	 */
+	public AlertType findById(int id);
+	
 	/** 
 	 * 获取总记录数据，用于分页
 	 * @return
@@ -49,4 +56,10 @@ public interface TypeDao {
 	 * @param id 分类id
 	 */
 	public void delete(int id);
+	
+	/**
+	 * 根据id几个删除
+	 * @param ids
+	 */
+	public void deleteByIds(String ids);
 }

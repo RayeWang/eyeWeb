@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ray.dao.TypeDao;
 import com.ray.entity.AlertType;
@@ -56,6 +57,22 @@ public class TypeDaoImpl implements TypeDao {
 
 	public void delete(int id) {
 		mapper.deleteByPrimaryKey(id);
+	}
+
+
+
+	public AlertType findById(int id) {
+		return mapper.selectByPrimaryKey(id);
+	}
+
+
+
+	@Transactional
+	public void deleteByIds(String ids) {
+		String[] id = ids.split(",");
+		for(String temp : id){
+			mapper.deleteByPrimaryKey(Integer.parseInt(temp));
+		}
 	}
 
 

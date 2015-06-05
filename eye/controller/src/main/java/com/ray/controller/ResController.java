@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.ray.dao.ResDao;
 import com.ray.dao.ResLinkDao;
 import com.ray.dao.TypeDao;
+import com.ray.entity.Alert;
 import com.ray.entity.AlertType;
 import com.ray.entity.Res;
 import com.ray.entity.ResLink;
@@ -43,6 +44,24 @@ public class ResController {
 	@Autowired
 	private ResDao resDao;
 
+	
+	
+	/**
+	 * 查询所有来源
+	 * @param response
+	 */
+	@RequestMapping("/res/findall.do")
+	public void findAll(HttpServletResponse response){
+		try {
+			PrintWriter pw = response.getWriter();
+			List<Res> list = dao.findAll();
+			pw.write(new Gson().toJson(list));
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * 添加一个来源
 	 * @param res
@@ -58,22 +77,6 @@ public class ResController {
 			}else{
 				pw.write("false");
 			}
-			pw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * 查询所有来源
-	 * @param response
-	 */
-	@RequestMapping("/res/findall.do")
-	public void findAll(HttpServletResponse response){
-		try {
-			PrintWriter pw = response.getWriter();
-			List<Res> list = dao.findAll();
-			pw.write(new Gson().toJson(list));
 			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -157,6 +160,24 @@ public class ResController {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 根据分页获取文章分类
+	 * @param response
+	 * @param page
+	 * @param rows
+	 */
+	@RequestMapping("type/get.do")
+	public void getTypeByPage(HttpServletResponse response,
+			@RequestParam(defaultValue="1")int page,@RequestParam(defaultValue="10")int rows){
+		try {
+			PrintWriter pw = response.getWriter();
+			List<AlertType> types = typeDao.findByPage(page, rows);
+			pw.write(new Gson().toJson(types));
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 进入来源添加页面
@@ -214,6 +235,20 @@ public class ResController {
 	}
 	
 	/**
+	 * 进入修改分类的页面
+	 * @param id
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping("/type/toedit.do")
+	public String toEditType(@RequestParam(defaultValue="0")int id,
+			ModelMap map){
+		AlertType type = typeDao.findById(id);
+		map.put("type", type);
+		return "/admin/res/edittype";
+	}
+	
+	/**
 	 * 更新一个来源
 	 * @param res
 	 * @param response
@@ -253,6 +288,24 @@ public class ResController {
 		
 	}
 	
+	/**
+	 * 更新一个分类
+	 * @param type
+	 * @param response
+	 */
+	@RequestMapping("type/update.do")
+	public void updateType(AlertType type,HttpServletResponse response){
+		try {
+			PrintWriter pw = response.getWriter();
+			typeDao.update(type);
+			pw.write("true");
+			pw.close();
+			return;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping("res/deletebyids.do")
 	public void deleteResByIds(@RequestParam(defaultValue="")String id,HttpServletResponse response){
 		PrintWriter pw = null;
@@ -290,6 +343,26 @@ public class ResController {
 		}
 		pw.write("false");
 		pw.close();
+	}
+	
+	/**
+	 * 根据id集合删除
+	 * @param ids
+	 * @param response
+	 */
+	@RequestMapping("type/deletebyids.do")
+	public void deleteTypeByIds(@RequestParam(defaultValue="")String ids,
+			HttpServletResponse response){
+		try {
+			PrintWriter pw = response.getWriter();
+			typeDao.deleteByIds(ids);
+			pw.write("true");
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public ResDao getDao() {

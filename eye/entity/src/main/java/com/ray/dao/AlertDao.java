@@ -46,4 +46,17 @@ public interface AlertDao {
 	 * @return 总数量
 	 */
 	public int findCount(int typeid,String key);
+	
+	/**
+	 * 根据id集合进行删除
+	 * @param ids id集合
+	 * @return
+	 */
+	public void deleteByIds(String ids);
+	
+	/**
+	 * 更新一篇文章
+	 * @param alert 文章对象
+	 */
+	public void update(Alert alert);
 }

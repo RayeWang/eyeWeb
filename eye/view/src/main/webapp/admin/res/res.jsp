@@ -44,6 +44,10 @@ function deleteRes(){
 			}
     }});
 }
+function formatEdit(value,row,index){
+	return '<input type="button" value="编辑" onclick="toedit('+row.id+')"></input>';
+}
+
 </script>
 <table id="dg" title="来源管理" class="easyui-datagrid" style="width:100%;height:97%"
             url='res/get.do?${_csrf.parameterName}=${_csrf.token}&" />'
