@@ -36,8 +36,8 @@
 				
 					<tr>
 						<td>分类:</td>
-						<td><select class="easyui-combobox" id="editlink_type" name="language">
-								<c:forEach items="${types}" var="type">
+						<td><select class="easyui-combobox" id="editlink_type" name="editlink_type">
+								<c:forEach items="${types}" var="type" >
 									<option <c:if test="${reslink.typeid==type.id }">selected="selected"</c:if>
 										value="${type.id }">${type.name }</option>
 								</c:forEach>
@@ -49,8 +49,6 @@
             </div>
             <script type="text/javascript">
             function submitLinkForm(){
-            	alert($("#editlink_id").val());
-            	return;
             	 $.ajax({ url:'reslink/update.do',
 	            	  type: 'POST',
 	            	  datattpe:"text",
@@ -59,18 +57,18 @@
 	            		  name:$("#editlink_name").val(),
 	            		  url:$("#editlink_url").val(),
 	            		  resid:$("#editlink_resid").val(),
-	            		  typeid:$("#editlink_type").val(),
+	            		  typeid:$("[name=editlink_type]").val(),
 	            		  ${_csrf.parameterName}:'${_csrf.token}'
 	            	  },
-	            	   success: function(data){
-						if(data==0){
-							 $.messager.alert(msg+'来源',msg+'成功');
-							 $('#tabs').tabs('close',tabname+"来源");
-							 $('#tabs').tabs('getTab','来源管理').panel('refresh');
-						}else{
-							$.messager.alert(msg+'来源',msg+'失败');
-						}
-	              }});
+	            	  success: function(data){
+							if(data==true){
+								 $.messager.alert('编辑分类来源','保存分类成功');
+								 $('#tabs').tabs('close',"编辑分类来源");
+								 $('#tabs').tabs('getTab','分类来源').panel('refresh');
+							}else{
+								$.messager.alert('编辑分类来源','保存分类失败');
+							}
+		              }});
             }
             </script>
 			</form>

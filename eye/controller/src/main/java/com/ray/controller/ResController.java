@@ -193,7 +193,9 @@ public class ResController {
 	@RequestMapping("/reslink/toadd.do")
 	public String toAddLink(ModelMap map){
 		List<AlertType> types = typeDao.findAll();
+		List<Res> res = resDao.findAll();
 		map.put("types", types);
+		map.put("ress", res);
 		return "/admin/res/addlink";
 	}
 	
@@ -258,6 +260,26 @@ public class ResController {
 			
 			pw = response.getWriter();
 			resDao.deleteByIds(id);
+			pw.write("true");
+			pw.close();
+			return;
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		pw.write("false");
+		pw.close();
+	}
+	
+	@RequestMapping("reslink/deletebyids.do")
+	public void deleteResLinkByIds(@RequestParam(defaultValue="")String id,
+			HttpServletResponse response){
+		PrintWriter pw = null;
+		try {
+			
+			pw = response.getWriter();
+			linkDao.deleteByIds(id);
 			pw.write("true");
 			pw.close();
 			return;

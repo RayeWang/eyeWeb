@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ray.dao.ResLinkDao;
 import com.ray.entity.ResLink;
@@ -62,6 +63,17 @@ public class ResLinkDaoImpl implements ResLinkDao {
 		new DynamicSql().setSql(sql);
 		
 		return mapper.selectByPage();
+	}
+
+
+
+	@Transactional
+	public void deleteByIds(String ids) {
+		String[] idsStr = ids.split(",");
+		for(String id : idsStr){
+			mapper.deleteByPrimaryKey(Integer.parseInt(id));
+		}
+
 	}
 
 

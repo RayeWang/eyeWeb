@@ -55,4 +55,9 @@ public interface ResLinkDao {
 	 * @return
 	 */
 	public ResLink findById(int id);
+	/**
+	 * 根据id集合删除对象
+	 * @param ids
+	 */
+	public void deleteByIds(String ids);
 }

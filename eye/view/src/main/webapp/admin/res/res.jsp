@@ -20,8 +20,7 @@
 <script type="text/javascript">
 function deleteRes(){
 	var selected = $('#dg').datagrid('getChecked');
-	console.log(selected);
-	console.log(selected[0].id);
+
 	var ids = "";
 	for(var i = 0;i < selected.length;i++){
 		ids += selected[i].id+",";

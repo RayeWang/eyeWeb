@@ -21,7 +21,29 @@
 	}
 	
 	function deleteLink(){
-		alert('delete');
+		var selected = $('#linkdg').datagrid('getChecked');
+
+		var ids = "";
+		for(var i = 0;i < selected.length;i++){
+			ids += selected[i].id+",";
+		}
+		ids = ids.substring(0, ids.length-1);
+		$.ajax({ url: "reslink/deletebyids.do",
+	  	  type: 'POST',
+	  	  datattpe:"text",
+	  	  data:{
+	  		  id:ids,
+	  		  ${_csrf.parameterName}:'${_csrf.token}'
+	  	  },
+	  	   success: function(data){
+				if(data==true){
+					 $.messager.alert('删除分类来源','删除成功');
+					 var tab = $('#tabs').tabs('getSelected');  // get selected panel
+	             	 tab.panel('refresh');
+				}else{
+					$.messager.alert('删除分类来源','删除失败');
+				}
+	    }});
 	}
 </script>
 <table id="linkdg" title="分类来源" class="easyui-datagrid" style="width:100%;height:97%"

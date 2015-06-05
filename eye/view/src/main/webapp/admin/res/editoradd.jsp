@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="X-Frame-Options" content="SAMEORIGIN"> 
 <title><c:if test="${res != null }">编辑来源</c:if><c:if
 		test="${res == null }">新增来源</c:if></title>
 </head>
@@ -73,7 +72,6 @@
 		            		  ${_csrf.parameterName}:'${_csrf.token}'
 		            	  },
 		            	   success: function(data){
-								alert(data);
 							if(data==true){
 								 $.messager.alert(msg+'来源',msg+'成功');
 								 $('#tabs').tabs('close',tabname+"来源");
