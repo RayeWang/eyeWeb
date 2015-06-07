@@ -82,6 +82,13 @@ public class ResDaoImpl implements ResDao {
 
 
 
+	public Res findByLinkId(int id) {
+		
+		return mapper.selectByLinkKey(id);
+	}
+
+
+
 	public ResMapper getMapper() {
 		return mapper;
 	}

@@ -21,6 +21,7 @@ import com.ray.dao.ResLinkDao;
 import com.ray.dao.TypeDao;
 import com.ray.entity.Alert;
 import com.ray.entity.AlertType;
+import com.ray.entity.Res;
 import com.ray.entity.ResLink;
 import com.ray.eye.CrawlerFactory;
 
@@ -79,6 +80,25 @@ public class ManagerAlertCon {
 			pw.write("Crawler Error");
 		}
 	}
+	/**
+	 * 添加一篇文章
+	 * @param alert
+	 * @param response
+	 */
+	@RequestMapping("article/add.do")
+	public void add(Alert alert,HttpServletResponse response){
+		try {
+			Res res = resDao.findByLinkId(alert.getResLinkId());
+			alert.setResId(res.getId());
+			dao.add(alert);
+			PrintWriter pw = response.getWriter();
+			pw.write("true");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	/**
 	 * 获取文章
 	 * @param response
@@ -153,6 +173,24 @@ public class ManagerAlertCon {
 		map.put("links", links);
 		map.put("types", types);
 		return "/admin/article/editarticle";
+	}
+	
+	/**
+	 * 更新一篇文章
+	 * @param alert
+	 * @param response
+	 */
+	@RequestMapping("/article/updata.do")
+	public void update(Alert alert,HttpServletResponse response){
+		try {
+			PrintWriter pw = response.getWriter();
+			dao.update(alert);
+			pw.write("true");
+			pw.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public AlertDao getDao() {

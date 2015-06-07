@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ray.dao.AlertDao;
 import com.ray.entity.Alert;
-import com.ray.entity.AlertCriteria;
 import com.ray.entity.mapper.AlertMapper;
 import com.ray.entity.mapper.DynamicSql;
 /**
@@ -68,8 +67,12 @@ public class AlertDaoImpl implements AlertDao {
 		}
 	}
 
+	public void add(Alert alert) {
+		mapper.insert(alert);
+	}
+
 	public void update(Alert alert) {
-		mapper.updateByPrimaryKey(alert);
+		mapper.update(alert);
 	}
 
 	public Alert findById(int id) {

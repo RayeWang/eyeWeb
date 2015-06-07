@@ -59,4 +59,9 @@ public interface AlertDao {
 	 * @param alert 文章对象
 	 */
 	public void update(Alert alert);
+	/**
+	 * 添加一篇文章
+	 * @param alert
+	 */
+	public void add(Alert alert);
 }

@@ -62,4 +62,11 @@ public interface ResDao {
 	 * @return
 	 */
 	public Res findById(int id);
+	
+	/**
+	 * 根据分类来源查询
+	 * @param id
+	 * @return
+	 */
+	public Res findByLinkId(int id);
 }

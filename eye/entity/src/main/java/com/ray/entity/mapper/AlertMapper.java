@@ -298,4 +298,19 @@ public interface AlertMapper {
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Alert record);
+    
+    
+    @Update({
+        "update alert",
+        "set title = #{title,jdbcType=VARCHAR},",
+          "desc1 = #{desc1,jdbcType=VARCHAR},",
+          "url = #{url,jdbcType=VARCHAR},",
+          "res_link_id = #{resLinkId,jdbcType=INTEGER},",
+          "res_id = #{resId,jdbcType=INTEGER},",
+          "atype_id = #{atypeId,jdbcType=INTEGER},",
+          "img = #{img,jdbcType=VARCHAR}, ",
+          "content = #{content,jdbcType=VARCHAR}",
+        "where id = #{id,jdbcType=INTEGER}"
+    })
+    int update(Alert record);
 }
