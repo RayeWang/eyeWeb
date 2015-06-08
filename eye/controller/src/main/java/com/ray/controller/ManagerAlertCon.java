@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
 import com.ray.dao.AlertDao;
+import com.ray.dao.CssDao;
 import com.ray.dao.ResDao;
 import com.ray.dao.ResLinkDao;
 import com.ray.dao.TypeDao;
 import com.ray.entity.Alert;
 import com.ray.entity.AlertType;
+import com.ray.entity.Css;
 import com.ray.entity.Res;
 import com.ray.entity.ResLink;
 import com.ray.eye.CrawlerFactory;
@@ -47,6 +49,9 @@ public class ManagerAlertCon {
 	private ResDao resDao;
 	@Autowired
 	private TypeDao typeDao;
+	
+	@Autowired
+	private CssDao cssDao;
 	
 	/**
 	 * 启用爬虫
@@ -116,6 +121,26 @@ public class ManagerAlertCon {
 			map.put("rows", alerts);
 			map.put("total", dao.findCount(0, ""));
 			pw.write(new Gson().toJson(map));
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 获取样式列表
+	 * @param response
+	 * @param page
+	 * @param rows
+	 */
+	@RequestMapping("/cssadmin/get.do")
+	public void getCss(HttpServletResponse response,
+			@RequestParam(defaultValue="1")int page,
+			@RequestParam(defaultValue="10")int rows){
+		try {
+			PrintWriter pw = response.getWriter();
+			List<ResLink> links = linkDao.findByPage(page, rows);
+			pw.write(new Gson().toJson(links));
 			pw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -220,6 +245,12 @@ public class ManagerAlertCon {
 	}
 	public void setTypeDao(TypeDao typeDao) {
 		this.typeDao = typeDao;
+	}
+	public CssDao getCssDao() {
+		return cssDao;
+	}
+	public void setCssDao(CssDao cssDao) {
+		this.cssDao = cssDao;
 	}
 	
 	

@@ -53,6 +53,7 @@ create table if not exists users(
 	password varchar(32) not null,
 	disabled int not null default 1
 );
+
 drop table if exists res;
 drop table if exists res_link;
 drop table if exists alert;

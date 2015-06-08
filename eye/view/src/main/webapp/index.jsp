@@ -14,6 +14,7 @@
 	body {
 	margin: 0px;
 	padding: 0px;
+	min-width: 1024px;
 }
 	.head{
 		height: 60px;
@@ -22,12 +23,13 @@
 		z-index: 1;
 		position: fixed; 
 		top: 0px;
+		min-width: 1024px;
 		background: #ffffff;
 	}
 	#headcontent{
 		width: 90%;
 		height: 100%;
-		min-width:720px;
+		min-width: 1024px;
 		margin: 0 auto;
 	}
 	#headcontent span{
@@ -96,11 +98,11 @@
 
 <body>
 
-	<div class="head">
+	<div class="head" style="min-width: 1024px;">
 		<div id="headcontent">
 			<a href='<c:out value="alert.do"></c:out>'><img src="img/logo.png"  style="margin: 2 20;float: left;" /></a>
 			<span >程序员眼中的世界</span>
-			<form class="navbar-form navbar-left" style="margin-top: 14px;" action='<c:out value="alert.do"></c:out>' role="search">
+			<form class="navbar-form navbar-left" method="post" style="margin-top: 14px;" action='<c:out value="alert.do"></c:out>' role="search">
 			  <div class="form-group">
 			    <input type="text" class="form-control" name="key" value="${key }" placeholder="输入关键字搜索">
 			  </div>

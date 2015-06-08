@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.ray.dao.UserDao;
 import com.ray.entity.Users;
 /**
  * 这里应该是登陆的处理的地方
@@ -20,8 +21,8 @@ import com.ray.entity.Users;
  *
  */
 public class LoginDetail implements UserDetailsService {
-	
-	private UserDao dao = new UserDao();
+	@Autowired
+	private UserDao dao;
 
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException,DataAccessException {
@@ -29,7 +30,7 @@ public class LoginDetail implements UserDetailsService {
 		UserDetails user = null;
 		
 		try {
-			Users users = dao.getDatabase(username);
+			Users users = dao.findByName(username);
 			user = new User(users.getUsername(), users.getPassword()
 					.toLowerCase(), true, true, true, true,
 					getAuthorities(1));
@@ -60,5 +61,17 @@ public class LoginDetail implements UserDetailsService {
 
 		return authList;
 	}
+
+
+	public UserDao getDao() {
+		return dao;
+	}
+
+
+	public void setDao(UserDao dao) {
+		this.dao = dao;
+	}
+	
+	
 	
 }

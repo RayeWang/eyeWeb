@@ -76,14 +76,14 @@ function Waterfall(param){
   
     new Waterfall({
         "container":"wf-main",
-        "colWidth":document.body.clientWidth * 0.28,
+        "colWidth":(document.body.clientWidth * 0.28)<328?328:(document.body.clientWidth * 0.28),
         "colCount":3
     });
     
     window.onresize = function(){
     	new Waterfall({
             "container":"wf-main",
-            "colWidth":document.body.clientWidth * 0.28,
+            "colWidth":(document.body.clientWidth * 0.28)<328?328:(document.body.clientWidth * 0.28),
             "colCount":3
         });
     }
