@@ -71,6 +71,8 @@ public class TypeDaoImpl implements TypeDao {
 	public void deleteByIds(String ids) {
 		String[] id = ids.split(",");
 		for(String temp : id){
+			if(temp.isEmpty())
+				continue;
 			mapper.deleteByPrimaryKey(Integer.parseInt(temp));
 		}
 	}

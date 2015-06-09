@@ -71,6 +71,8 @@ public class ResLinkDaoImpl implements ResLinkDao {
 	public void deleteByIds(String ids) {
 		String[] idsStr = ids.split(",");
 		for(String id : idsStr){
+			if(id.isEmpty())
+				continue;
 			mapper.deleteByPrimaryKey(Integer.parseInt(id));
 		}
 

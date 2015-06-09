@@ -4,17 +4,17 @@
 <html>
 <head>
 <title>程序员之眼，我就是你的眼</title>
-<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 <link href="css/wall.css" rel="stylesheet" />
 <link href="css/loading.css" rel="stylesheet" />
-<script src="js/jquery-2.1.3.min.js" type="text/javascript"></script>
-<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/page.js"></script>
 <style type="text/css">
 	body {
 	margin: 0px;
 	padding: 0px;
-	min-width: 1024px;
+	min-width: 1124px;
 }
 	.head{
 		height: 60px;
@@ -23,13 +23,13 @@
 		z-index: 1;
 		position: fixed; 
 		top: 0px;
-		min-width: 1024px;
+		min-width: 1124px;
 		background: #ffffff;
 	}
 	#headcontent{
 		width: 90%;
 		height: 100%;
-		min-width: 1024px;
+		min-width: 1124px;
 		margin: 0 auto;
 	}
 	#headcontent span{
@@ -98,7 +98,7 @@
 
 <body>
 
-	<div class="head" style="min-width: 1024px;">
+	<div class="head" style="min-width: 1124px;">
 		<div id="headcontent">
 			<a href='<c:out value="alert.do"></c:out>'><img src="img/logo.png"  style="margin: 2 20;float: left;" /></a>
 			<span >程序员眼中的世界</span>

@@ -9,7 +9,7 @@
 <title>添加文章</title>
 </head>
 <body>
-	<div class="easyui-panel" title="修改分类来源" style="width: 100%">
+	<div class="easyui-panel" title="添加文章" style="width: 100%">
 		<div style="padding: 10px 60px 20px 60px; margin: 20px auto;">
 			<form>
 				<table cellpadding="5">

@@ -70,6 +70,8 @@ public class ResDaoImpl implements ResDao {
 	public void deleteByIds(String ids) {
 		String[] idsStr = ids.split(",");
 		for(String id : idsStr){
+			if(id.isEmpty())
+				continue;
 			mapper.deleteByPrimaryKey(Integer.parseInt(id));
 		}
 	}

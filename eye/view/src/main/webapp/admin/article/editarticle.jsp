@@ -9,7 +9,7 @@
 <title>修改文章</title>
 </head>
 <body>
-	<div class="easyui-panel" title="修改分类来源" style="width: 100%">
+	<div class="easyui-panel" title="文章管理" style="width: 100%">
 		<div style="padding: 10px 60px 20px 60px; margin: 20px auto;">
 		<input type="hidden" id="editarticle_id" value="${article.id }" />
 		<input type="hidden" id="editarticle_resid" value="${article.resId }" />

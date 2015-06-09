@@ -21,6 +21,8 @@
 	function addTab(name,url){
 		if ($('#tabs').tabs('exists',name)){
 			$('#tabs').tabs('select',name);
+			var tab = $('#tabs').tabs('getSelected');
+			tab.panel('refresh', url);
 		} else {
 			 $('#tabs').tabs('add',{
 	                title: name,

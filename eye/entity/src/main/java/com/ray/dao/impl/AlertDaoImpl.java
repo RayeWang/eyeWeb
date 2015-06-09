@@ -63,6 +63,8 @@ public class AlertDaoImpl implements AlertDao {
 	public void deleteByIds(String ids) {
 		String[] temps = ids.split(",");
 		for(String id:temps){
+			if(id.isEmpty())
+				continue;
 			mapper.deleteByPrimaryKey(Integer.parseInt(id));
 		}
 	}

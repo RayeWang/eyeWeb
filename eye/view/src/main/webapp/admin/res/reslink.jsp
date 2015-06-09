@@ -27,7 +27,9 @@
 		for(var i = 0;i < selected.length;i++){
 			ids += selected[i].id+",";
 		}
+		
 		ids = ids.substring(0, ids.length-1);
+		
 		$.ajax({ url: "reslink/deletebyids.do",
 	  	  type: 'POST',
 	  	  datattpe:"text",

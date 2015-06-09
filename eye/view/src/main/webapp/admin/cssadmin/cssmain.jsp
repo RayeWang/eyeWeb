@@ -19,11 +19,11 @@
 	}
 	
 	function cssEdit(id){
-		alert(id);
+		addTab('编辑样式','cssadmin/toedit.do?id='+id);
 	}
 </script>
 
-<table id="linkdg" title="分类来源" class="easyui-datagrid" style="width:100%;height:97%"
+<table id="cssdg" title="分类来源" class="easyui-datagrid" style="width:100%;height:97%"
             url='cssadmin/get.do?${_csrf.parameterName}=${_csrf.token}&" />'
             toolbar="#linktoolbar" pagination="true" striped="true"
             class="easyui-datagrid"
@@ -44,6 +44,5 @@
             </tr>
         </thead>
     </table>
-11
 </body>
 </html>

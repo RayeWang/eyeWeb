@@ -165,6 +165,7 @@ public class ManagerAlertCon {
 			e.printStackTrace();
 		}
 	}
+	
 
 	/**
 	 * 进入添加文章的页面
@@ -200,6 +201,14 @@ public class ManagerAlertCon {
 		return "/admin/article/editarticle";
 	}
 	
+	@RequestMapping("/cssadmin/toedit.do")
+	public String toEditCss(@RequestParam(defaultValue="0")int id,ModelMap map){
+		List<Css> csss = cssDao.findByLinkId(id);
+		ResLink link = linkDao.findById(id);
+		map.put("link", link);
+		map.put("csss", csss);
+		return "/admin/cssadmin/editcss";
+	}
 	/**
 	 * 更新一篇文章
 	 * @param alert
@@ -216,6 +225,31 @@ public class ManagerAlertCon {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 更新css样式
+	 * @param ids 需要添加或者更新的css的id（用<;>隔开的，如果小于0则是添加）
+	 * @param values 具体内容（和ids一一对应，用<;>隔开）
+	 * @param linkid 分类来源的id
+	 * @param del 需要删除的id集合（<;>隔开）
+	 * @param response
+	 */
+	@RequestMapping("/cssadmin/update.do")
+	public void updateCss(@RequestParam(defaultValue="")String ids,
+			@RequestParam(defaultValue="")String values,
+			@RequestParam(defaultValue="0")int linkid,
+			@RequestParam(defaultValue="")String del,HttpServletResponse response){
+		try {
+			PrintWriter pw = response.getWriter();
+			cssDao.update(ids, values, del, linkid);
+			pw.write("true");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public AlertDao getDao() {
