@@ -53,11 +53,17 @@ create table if not exists users(
 	password varchar(32) not null,
 	disabled int not null default 1
 );
-
+-- 用户登陆日志表
+create table if not exists userlog(
+	id integer primary key auto_increment, -- 主键	
+	username varchar(20) not null, -- 登陆的用户名
+	ip varchar(20) not null, -- 登陆的IP
+	issuccess integer not null -- 时候登陆成功
+);
 drop table if exists res;
 drop table if exists res_link;
 drop table if exists alert;
 drop table if exists alertType;
 drop table if exists css;
 drop table if exists users;
-
+drop table if exists userlog;

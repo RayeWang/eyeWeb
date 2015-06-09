@@ -48,6 +48,7 @@
 	<table tableName="tem" ></table>
 <!-- 
 
+	<table tableName="userlog" domainObjectName="UserLog"></table>
 	<table tableName="users" domainObjectName="Users"></table>
 <table tableName="css" domainObjectName="Css">
 	</table>
