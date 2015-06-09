@@ -31,7 +31,9 @@ public class SecurityMetadataSource implements
 		if (resourceMap == null) {
 			loadResourceDefine();
 		}
-
+		if(requestUrl.indexOf("?") > 0){
+			requestUrl = requestUrl.substring(0, requestUrl.indexOf("?"));
+		}
 		return resourceMap.get(requestUrl);
 	}
 
@@ -52,7 +54,7 @@ public class SecurityMetadataSource implements
 			Collection<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
 			ConfigAttribute configAttribute = new SecurityConfig("ROLE_ADMIN");
 			configAttributes.add(configAttribute);
-			resourceMap.put("/admin/adminpage.jsp**", configAttributes);
+			resourceMap.put("/admin/adminpage.jsp", configAttributes);
 		}
 
 	
