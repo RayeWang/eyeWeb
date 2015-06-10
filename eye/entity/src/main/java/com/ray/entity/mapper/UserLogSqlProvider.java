@@ -67,6 +67,10 @@ public class UserLogSqlProvider {
             VALUES("username", "#{username,jdbcType=VARCHAR}");
         }
         
+        if (record.getLogintime() != null) {
+            VALUES("logintime", "#{logintime,jdbcType=TIMESTAMP}");
+        }
+        
         if (record.getIp() != null) {
             VALUES("ip", "#{ip,jdbcType=VARCHAR}");
         }
@@ -92,6 +96,7 @@ public class UserLogSqlProvider {
             SELECT("id");
         }
         SELECT("username");
+        SELECT("logintime");
         SELECT("ip");
         SELECT("issuccess");
         FROM("userlog");
@@ -125,6 +130,10 @@ public class UserLogSqlProvider {
             SET("username = #{record.username,jdbcType=VARCHAR}");
         }
         
+        if (record.getLogintime() != null) {
+            SET("logintime = #{record.logintime,jdbcType=TIMESTAMP}");
+        }
+        
         if (record.getIp() != null) {
             SET("ip = #{record.ip,jdbcType=VARCHAR}");
         }
@@ -149,6 +158,7 @@ public class UserLogSqlProvider {
         
         SET("id = #{record.id,jdbcType=INTEGER}");
         SET("username = #{record.username,jdbcType=VARCHAR}");
+        SET("logintime = #{record.logintime,jdbcType=TIMESTAMP}");
         SET("ip = #{record.ip,jdbcType=VARCHAR}");
         SET("issuccess = #{record.issuccess,jdbcType=INTEGER}");
         
@@ -169,6 +179,10 @@ public class UserLogSqlProvider {
         
         if (record.getUsername() != null) {
             SET("username = #{username,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getLogintime() != null) {
+            SET("logintime = #{logintime,jdbcType=TIMESTAMP}");
         }
         
         if (record.getIp() != null) {

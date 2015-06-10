@@ -55,9 +55,11 @@ public interface UserLogMapper {
      */
     @Insert({
         "insert into userlog (id, username, ",
-        "ip, issuccess)",
+        "logintime, ip, ",
+        "issuccess)",
         "values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, ",
-        "#{ip,jdbcType=VARCHAR}, #{issuccess,jdbcType=INTEGER})"
+        "#{logintime,jdbcType=TIMESTAMP}, #{ip,jdbcType=VARCHAR}, ",
+        "#{issuccess,jdbcType=INTEGER})"
     })
     int insert(UserLog record);
 
@@ -80,6 +82,7 @@ public interface UserLogMapper {
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="username", property="username", jdbcType=JdbcType.VARCHAR),
+        @Result(column="logintime", property="logintime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="ip", property="ip", jdbcType=JdbcType.VARCHAR),
         @Result(column="issuccess", property="issuccess", jdbcType=JdbcType.INTEGER)
     })
@@ -93,13 +96,14 @@ public interface UserLogMapper {
      */
     @Select({
         "select",
-        "id, username, ip, issuccess",
+        "id, username, logintime, ip, issuccess",
         "from userlog",
         "where id = #{id,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="username", property="username", jdbcType=JdbcType.VARCHAR),
+        @Result(column="logintime", property="logintime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="ip", property="ip", jdbcType=JdbcType.VARCHAR),
         @Result(column="issuccess", property="issuccess", jdbcType=JdbcType.INTEGER)
     })
@@ -141,6 +145,7 @@ public interface UserLogMapper {
     @Update({
         "update userlog",
         "set username = #{username,jdbcType=VARCHAR},",
+          "logintime = #{logintime,jdbcType=TIMESTAMP},",
           "ip = #{ip,jdbcType=VARCHAR},",
           "issuccess = #{issuccess,jdbcType=INTEGER}",
         "where id = #{id,jdbcType=INTEGER}"

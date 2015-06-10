@@ -57,6 +57,7 @@ create table if not exists users(
 create table if not exists userlog(
 	id integer primary key auto_increment, -- 主键	
 	username varchar(20) not null, -- 登陆的用户名
+	logintime timestamp default CURRENT_TIMESTAMP,-- 登陆的时间
 	ip varchar(20) not null, -- 登陆的IP
 	issuccess integer not null -- 时候登陆成功
 );

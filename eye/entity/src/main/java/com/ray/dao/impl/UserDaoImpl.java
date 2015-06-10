@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao {
 		UsersCriteria criteria = new UsersCriteria();
 		criteria.createCriteria().andUsernameEqualTo(name);
 		List<Users> users = mapper.selectByExample(criteria);
-		if(users != null || users.size() > 0){
+		if(users != null && users.size() > 0){
 			return users.get(0);
 		}
 		return null;
