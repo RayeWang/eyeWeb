@@ -37,7 +37,7 @@
 	
 	<!-- 登陆成功后的句柄 -->
 	<beans:bean id="loginLogAuthenticationSuccessHandler"
-		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		class="com.ray.controller.admin.LoginSuccessHandler">
 		<!-- 登录成功后的页面 -->
 		<beans:property name="defaultTargetUrl" value="/admin/adminpage.jsp"></beans:property>
 	</beans:bean>

@@ -6,12 +6,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.util.StringUtils;
+
+import com.ray.dao.UserLogDao;
+import com.ray.entity.UserLog;
 /**
  * 登陆成功后的处理
  * @author Ray Wang
@@ -23,12 +27,20 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 	private RequestCache requestCache = new HttpSessionRequestCache();
 	
 	private String defaultTargetUrl;
+	
+	@Autowired
+	private UserLogDao logDao;
 
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
 			throws ServletException, IOException {
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
-
+		UserLog log = new UserLog();
+		log.setUsername(authentication.getName());
+		log.setIssuccess(1);
+		log.setIp(getRemortIP(request));
+		System.out.println(log.getId());
+		System.out.println("登陆成功："+authentication.getName());
 		if (savedRequest == null) {
 			super.onAuthenticationSuccess(request, response, authentication);
 
@@ -63,6 +75,25 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 	public void setDefaultTargetUrl(String defaultTargetUrl) {
 		this.defaultTargetUrl = defaultTargetUrl;
 	}
+
+	public UserLogDao getLogDao() {
+		return logDao;
+	}
+
+	public void setLogDao(UserLogDao logDao) {
+		this.logDao = logDao;
+	}
 	
+	public String getRemortIP(HttpServletRequest request) {
+
+		if (request.getHeader("x-forwarded-for") == null) {
+
+			return request.getRemoteAddr();
+
+		}
+
+		return request.getHeader("x-forwarded-for");
+
+	} 
 	
 }
