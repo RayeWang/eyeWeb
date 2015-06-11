@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import com.ray.dao.ResDao;
 import com.ray.dao.ResLinkDao;
 import com.ray.dao.TypeDao;
-import com.ray.entity.Alert;
 import com.ray.entity.AlertType;
 import com.ray.entity.Res;
 import com.ray.entity.ResLink;

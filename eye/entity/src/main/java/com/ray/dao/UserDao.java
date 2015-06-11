@@ -11,4 +11,11 @@ import com.ray.entity.Users;
 public interface UserDao {
 
 	public Users findByName(String name);
+	
+	/**
+	 * 修改登陆密码
+	 * @param pass
+	 * @param name
+	 */
+	public void changePass(String name,String newPass,String oldPass);
 }

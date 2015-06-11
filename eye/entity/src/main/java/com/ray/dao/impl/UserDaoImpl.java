@@ -31,6 +31,10 @@ public class UserDaoImpl implements UserDao {
 		return null;
 	}
 
+	public void changePass(String name, String newPass, String oldPass) {
+		mapper.updatePass(name, newPass, oldPass);
+	}
+
 	public UsersMapper getMapper() {
 		return mapper;
 	}

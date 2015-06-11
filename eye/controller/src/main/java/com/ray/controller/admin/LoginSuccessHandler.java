@@ -38,9 +38,8 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		UserLog log = new UserLog();
 		log.setUsername(authentication.getName());
 		log.setIssuccess(1);
-		log.setIp(getRemortIP(request));
-		System.out.println(log.getId());
-		System.out.println("登陆成功："+authentication.getName());
+		log.setIp(getIpAddress(request));
+		logDao.add(log);
 		if (savedRequest == null) {
 			super.onAuthenticationSuccess(request, response, authentication);
 
@@ -84,16 +83,25 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		this.logDao = logDao;
 	}
 	
-	public String getRemortIP(HttpServletRequest request) {
 
-		if (request.getHeader("x-forwarded-for") == null) {
-
-			return request.getRemoteAddr();
-
-		}
-
-		return request.getHeader("x-forwarded-for");
-
-	} 
 	
+	public String getIpAddress(HttpServletRequest request){    
+        String ip = request.getHeader("x-forwarded-for");    
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {    
+            ip = request.getHeader("Proxy-Client-IP");    
+        }    
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {    
+            ip = request.getHeader("WL-Proxy-Client-IP");    
+        }    
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {    
+            ip = request.getHeader("HTTP_CLIENT_IP");    
+        }    
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {    
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");    
+        }    
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {    
+            ip = request.getRemoteAddr();    
+        }    
+        return ip;    
+    }  
 }

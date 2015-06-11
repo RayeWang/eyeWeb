@@ -25,4 +25,9 @@ public interface UserLogDao {
 	 * @return
 	 */
 	public List<UserLog> findByPage(int page,int rows);
+	/**
+	 * 获取总记录数，用于分页数据
+	 * @return
+	 */
+	public int getAllCount();
 }

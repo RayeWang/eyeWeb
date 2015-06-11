@@ -29,6 +29,10 @@ public class UserLogDaoImpl implements UserLogDao {
 		return mapper.selectByPage((page - 1) * rows, rows);
 	}
 
+	public int getAllCount() {
+		return mapper.countByExample(null);
+	}
+
 	public UserLogMapper getMapper() {
 		return mapper;
 	}

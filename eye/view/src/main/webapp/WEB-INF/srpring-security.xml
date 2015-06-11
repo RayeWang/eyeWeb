@@ -17,6 +17,7 @@
 		<logout logout-success-url="/admin/loginpage.jsp" logout-url="/admin/logout.ad" />
 		<form-login  login-page="/admin/loginpage.jsp" login-processing-url="/admin/login.ad"
 			authentication-success-handler-ref="loginLogAuthenticationSuccessHandler"
+			authentication-failure-handler-ref="loginFailureHandler"
 			authentication-failure-url="/admin/loginpage.jsp?error=true" />
 		<custom-filter ref="myFilter" after="FILTER_SECURITY_INTERCEPTOR"/>
 		<headers><frame-options policy="SAMEORIGIN"/></headers>
@@ -42,6 +43,10 @@
 		<beans:property name="defaultTargetUrl" value="/admin/adminpage.jsp"></beans:property>
 	</beans:bean>
 	
+	<!-- 登陆失败的句柄 -->
+	<beans:bean id="loginFailureHandler" class="com.ray.controller.admin.LoginFailureHandler" >
+		<beans:property name="failUrl" value="/admin/loginpage.jsp?error=true" />
+	</beans:bean>
 	
 	<!-- 自定义的拦截器 -->
 	<beans:bean id="myFilter" class="com.ray.controller.admin.MyFilter">
