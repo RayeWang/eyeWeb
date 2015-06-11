@@ -17,5 +17,5 @@ public interface UserDao {
 	 * @param pass
 	 * @param name
 	 */
-	public void changePass(String name,String newPass,String oldPass);
+	public int changePass(String name,String newPass,String oldPass);
 }

@@ -41,7 +41,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		log.setIp(getIpAddress(request));
 		logDao.add(log);
 		if (savedRequest == null) {
-			super.onAuthenticationSuccess(request, response, authentication);
+			getRedirectStrategy().sendRedirect(request, response, defaultTargetUrl);
 
 			return;
 		}
