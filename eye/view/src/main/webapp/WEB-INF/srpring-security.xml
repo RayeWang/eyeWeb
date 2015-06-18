@@ -19,7 +19,7 @@
 			authentication-success-handler-ref="loginLogAuthenticationSuccessHandler"
 			authentication-failure-handler-ref="loginFailureHandler"
 			authentication-failure-url="/admin/loginpage.jsp?error=true" />
-		<!-- <custom-filter ref="myFilter" after="FILTER_SECURITY_INTERCEPTOR"/> -->
+		<custom-filter ref="responseFilter" after="FILTER_SECURITY_INTERCEPTOR"/>
 		<headers><frame-options policy="SAMEORIGIN"/></headers>
 	</http>
 	
@@ -47,6 +47,9 @@
 	<beans:bean id="loginFailureHandler" class="com.ray.controller.admin.LoginFailureHandler" >
 		<beans:property name="failUrl" value="/admin/loginpage.jsp?error=true" />
 	</beans:bean>
+	
+	<!-- response的Filter -->
+	<beans:bean id="responseFilter" class="com.ray.controller.admin.ResponseFilter"></beans:bean>
 	
 	<!-- 自定义的拦截器 -->
 	<beans:bean id="myFilter" class="com.ray.controller.admin.MyFilter">
