@@ -7,10 +7,10 @@
 	
 	
 	<http auto-config="true"  use-expressions="true"  >
-		<!--  
+		<!--  -->
 		<intercept-url pattern="/admin/loginpage.jsp" access="permitAll"/>
 		<intercept-url pattern="/admin/login.ad" access="permitAll"/>
-		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>-->
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 		<session-management>
 	 		<concurrency-control max-sessions="1" />
 		</session-management>
@@ -19,7 +19,7 @@
 			authentication-success-handler-ref="loginLogAuthenticationSuccessHandler"
 			authentication-failure-handler-ref="loginFailureHandler"
 			authentication-failure-url="/admin/loginpage.jsp?error=true" />
-		<custom-filter ref="myFilter" after="FILTER_SECURITY_INTERCEPTOR"/>
+		<!-- <custom-filter ref="myFilter" after="FILTER_SECURITY_INTERCEPTOR"/> -->
 		<headers><frame-options policy="SAMEORIGIN"/></headers>
 	</http>
 	
