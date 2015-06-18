@@ -102,11 +102,12 @@
 		<div id="headcontent">
 			<a href='<c:out value="alert.do"></c:out>'><img src="img/logo.png"  style="margin: 2 20;float: left;" /></a>
 			<span >程序员眼中的世界</span>
-			<form class="navbar-form navbar-left" method="post" style="margin-top: 14px;" action='<c:out value="alert.do"></c:out>' role="search">
-			  <div class="form-group">
-			    <input type="text" class="form-control" name="key" value="${key }" placeholder="输入关键字搜索">
-			  </div>
-			  <button type="submit" class="btn btn-default">搜索</button>
+			<form  method="post" style="margin-top: 14px;max-width: 284px;float: left;" action='<c:out value="alert.do"></c:out>' role="search">
+		
+			    <input type="text" style="float: left;width: 220px;" class="form-control" name="key" value="${key }" placeholder="输入关键字搜索">
+			  	<button type="submit" class="btn btn-default" style="float: left;margin-left: 5px;">搜索</button>
+		
+			  
 			</form>
 			<ul class="nav nav-pills">
 				<c:forEach items="${types}" var="type">
