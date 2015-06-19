@@ -35,28 +35,34 @@ public class AlertDaoImpl implements AlertDao {
 		
 		String sql = "select a.id,a.title,a.desc1,a.url,r.name as name,a.img,r.url as url1"
 				+ " from alert a left join res r "
-				+ " on a.res_id=r.id where a.title like '%"+key+"%'";
+				+ " on a.res_id=r.id where a.title like #{key,jdbcType=VARCHAR}";
 		if(typeid != 0){
-			sql += " and atype_id="+typeid;
+			sql += " and atype_id=#{type,jdbcType=INTEGER}";
 		}
 		sql += " order by id desc limit "+
 				(page - 1)*pageSize+","+pageSize;
 		
 		new DynamicSql().setSql(sql);
 		
-		return mapper.selectByExamplePage();
+//		if(key.contains("%") || key.contains("_") || key.contains("'")){  
+//			key = key.replaceAll("\\\\", "\\\\\\\\")  
+//                             .replaceAll("\\%", "\\\\%")  
+//                             .replaceAll("\\_", "\\\\_")
+//                             .replace("\'", "\\'");
+//        } 
+		return mapper.selectByExamplePage("%"+key+"%",typeid);
 	}
 
 	
 	
 	public int findCount(int typeid, String key) {
-		String sql = "select count(*) from alert where title like '%"+key+"%'";
+		String sql = "select count(*) from alert where title like #{key,jdbcType=VARCHAR}";
 		if(typeid != 0){
 			sql += " and atype_id="+typeid;
 		}
 		new DynamicSql().setSql(sql);
 		
-		return mapper.countByDynamicSQL();
+		return mapper.countByDynamicSQL("%"+key+"%");
 	}
 
 	@Transactional
