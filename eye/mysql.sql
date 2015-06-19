@@ -61,6 +61,21 @@ create table if not exists userlog(
 	ip varchar(20) not null, -- 登陆的IP
 	issuccess integer not null -- 时候登陆成功
 );
+
+---添加文章的存储过程
+CREATE  PROCEDURE `alertPro`(in title varchar(80),in desc1 varchar(500),in content text,
+in url varchar(200),in res_link_id integer,in res_id integer,in atype_id integer,
+in img varchar(300),in alerttime varchar(20))
+BEGIN
+DECLARE count INT DEFAULT 0;
+select count(*) INTO count from alert a where a.title=title or a.url=url;
+IF count=0 THEN
+INSERT INTO alert(title,desc1,content,url,res_link_id,res_id,atype_id,hot,img,alerttime) VALUES
+(title,desc1,content,url,res_link_id,res_id,atype_id,0,img,alerttime);
+ELSE 
+select '已经存在';
+END IF;
+END
 drop table if exists res;
 drop table if exists res_link;
 drop table if exists alert;
