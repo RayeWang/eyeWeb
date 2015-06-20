@@ -4,6 +4,9 @@
 <html>
 <head>
 <title>程序员之眼，我就是你的眼</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http equiv="Content-Language" content="zh-CN">
+<meta name="description" content="程序员之眼，程序员各种资讯，最新IT文章，网络安全文章">
 <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 <link href="css/wall.css" rel="stylesheet" />
 <link href="css/loading.css" rel="stylesheet" />
