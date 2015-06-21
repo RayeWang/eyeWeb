@@ -91,7 +91,6 @@
 
 	function showImg(url,id) {
 
-    	alert($("#img"+id).attr("src"));
 	   // $("#span"+id).html('<iframe width="170" height="120"  name="iframe'+id+'" align="left" style="border: 0;margin-top:-8px;margin-right:2px;" src="img.html?url='+url+'" ></iframe>'); 
 	    if($("#img"+id).attr("src") != "img.jsp?url="+url){
 		    $("#img"+id).attr("src","img.jsp?url="+url);
