@@ -8,12 +8,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.mapping.ResultSetType;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.beans.factory.annotation.Required;
@@ -86,7 +88,6 @@ public interface UsersMapper {
 
     @Update({"update users set password=#{newPass} where username=#{name} ",
     	"and password=#{oldPass}"})
-
     int updatePass(@Param("name")String name,@Param("newPass")String newPass,
     		@Param("oldPass")String oldPass);
     /**

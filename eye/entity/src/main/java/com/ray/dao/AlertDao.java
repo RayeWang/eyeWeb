@@ -64,4 +64,10 @@ public interface AlertDao {
 	 * @param alert
 	 */
 	public void add(Alert alert);
+	
+	/**
+	 * 添加一篇文章（通过存储过程添加）
+	 * @param alert
+	 */
+	public void insertByPro(Alert alert);
 }

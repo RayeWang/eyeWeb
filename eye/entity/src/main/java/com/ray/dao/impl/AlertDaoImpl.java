@@ -26,7 +26,7 @@ public class AlertDaoImpl implements AlertDao {
 	public void add(List<Alert> list) {
 		if(list != null && list.size() > 0){
 			for(int i = list.size() - 1;i > -1 ;i--){
-				mapper.insert(list.get(i));
+				mapper.insertByProcedure(list.get(i));
 			}
 		}
 	}
@@ -63,6 +63,12 @@ public class AlertDaoImpl implements AlertDao {
 		new DynamicSql().setSql(sql);
 		
 		return mapper.countByDynamicSQL("%"+key+"%");
+	}
+	
+	
+
+	public void insertByPro(Alert alert) {
+		mapper.insertByProcedure(alert);
 	}
 
 	@Transactional

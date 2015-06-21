@@ -76,6 +76,8 @@ ELSE
 select '已经存在';
 END IF;
 END
+
+
 drop table if exists res;
 drop table if exists res_link;
 drop table if exists alert;

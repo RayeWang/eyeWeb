@@ -4,6 +4,7 @@ import com.ray.entity.Alert;
 import com.ray.entity.AlertCriteria;
 import com.ray.entity.Css;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -313,4 +314,9 @@ public interface AlertMapper {
         "where id = #{id,jdbcType=INTEGER}"
     })
     int update(Alert record);
+    
+    @Select({"call alertPro(#{title,jdbcType=VARCHAR},#{desc1,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},",
+    		"#{url,jdbcType=VARCHAR},#{resLinkId,jdbcType=INTEGER},#{resId,jdbcType=INTEGER},",
+    		"#{atypeId,jdbcType=INTEGER},#{img,jdbcType=VARCHAR},#{alerttime,jdbcType=VARCHAR})"})
+    String insertByProcedure(Alert alert);
 }

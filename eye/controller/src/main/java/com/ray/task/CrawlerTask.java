@@ -30,20 +30,52 @@ public class CrawlerTask {
 	@Autowired
 	private ResLinkDao linkDao;
 	
+	private int count = 0;
+	
 	/** 11点的时候触发*/
 	@Scheduled(cron="0 0 11 ? * * ")
 	public void oneCrawle(){
-		System.out.println("task is run");
+		if(count == 0){
+			try {
+				count ++;
+				List<ResLink> links = linkDao.findAll();
+				if(count > 1){
+					return;
+				}
+				for(ResLink link : links){
+					ArrayList<Alert> list = new CrawlerFactory().crawlerFactory(link);
+					if(list != null && list.size() > 0){
+						dao.add(list);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally{
+				count = 0;
+			}
+		}
 	}
 	
 	/** 15点的时候触发*/
 	@Scheduled(cron="0 0 15 ? * * ")
 	public void twoCrawle(){
-		List<ResLink> links = linkDao.findAll();
-		for(ResLink link : links){
-			ArrayList<Alert> list = new CrawlerFactory().crawlerFactory(link);
-			if(list != null && list.size() > 0){
-				dao.add(list);
+		if(count == 0){
+			try {
+				count ++;
+				List<ResLink> links = linkDao.findAll();
+				if(count > 1){
+					return;
+				}
+				for(ResLink link : links){
+					ArrayList<Alert> list = new CrawlerFactory().crawlerFactory(link);
+					if(list != null && list.size() > 0){
+						dao.add(list);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally{
+				count = 0;
 			}
 		}
 	}
@@ -51,15 +83,26 @@ public class CrawlerTask {
 	/** 0点的时候触发*/
 	@Scheduled(cron="0 58 23 ? * * ")
 	public void threeCrawle(){
-		List<ResLink> links = linkDao.findAll();
-		for(ResLink link : links){
-			ArrayList<Alert> list = new CrawlerFactory().crawlerFactory(link);
-			if(list != null && list.size() > 0){
-				dao.add(list);
+		if(count == 0){
+			try {
+				count ++;
+				List<ResLink> links = linkDao.findAll();
+				if(count > 1){
+					return;
+				}
+				for(ResLink link : links){
+					ArrayList<Alert> list = new CrawlerFactory().crawlerFactory(link);
+					if(list != null && list.size() > 0){
+						dao.add(list);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally{
+				count = 0;
 			}
 		}
 	}
-	
 	
 	
 }
