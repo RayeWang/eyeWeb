@@ -73,7 +73,7 @@ public class FreebufCrawler implements Crawler {
 
 	public boolean crawlerAlert(Alert alert) {
 		try {
-			Thread.sleep(120*1000);//暂停一分钟，不然会获取不到数据
+			Thread.sleep(120*1000);//暂停2分钟，不然会获取不到数据
 			WebClient wc = new WebClient(BrowserVersion.CHROME);
 		    wc.getOptions().setUseInsecureSSL(true);
 		    wc.getOptions().setJavaScriptEnabled(true); // 启用JS解释器，默认为true

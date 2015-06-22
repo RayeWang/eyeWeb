@@ -23,7 +23,7 @@ public class AlertDaoImpl implements AlertDao {
 	private AlertMapper mapper;
 
 	@Transactional
-	public void add(List<Alert> list) {
+	public synchronized void add(List<Alert> list) {
 		if(list != null && list.size() > 0){
 			for(int i = list.size() - 1;i > -1 ;i--){
 				mapper.insertByProcedure(list.get(i));

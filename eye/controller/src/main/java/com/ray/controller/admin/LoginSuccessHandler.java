@@ -101,8 +101,12 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         }    
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {    
             ip = request.getRemoteAddr();    
-        }else{
-        	ip = "未知IP";
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
+        	ip = request.getHeader("WL-Proxy-Client-IP"); 
+        }
+        if(ip == null){
+        	return "未知IP";
         }
         return ip;    
     }  
