@@ -86,7 +86,11 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
 	
 	public String getIpAddress(HttpServletRequest request){    
-        String ip = request.getHeader("x-forwarded-for");    
+        String ip = request.getHeader("x-forwarded-for");
+        if(ip.indexOf(",") > 0){
+        	//有2个IP
+        	ip = null;
+        }
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {    
             ip = request.getHeader("Proxy-Client-IP");    
         }    
