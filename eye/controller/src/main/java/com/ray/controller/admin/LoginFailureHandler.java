@@ -47,7 +47,7 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 	
 	public String getIpAddress(HttpServletRequest request){    
         String ip = request.getHeader("x-forwarded-for");  
-        if(ip.indexOf(",") > 0){
+        if(ip != null && ip.indexOf(",") > 0){
         	//有2个IP
         	ip = null;
         }
