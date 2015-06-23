@@ -109,6 +109,8 @@ public class InfoqAlert implements Crawler {
 
 	public boolean crawlerAlert(Alert alert) {
 		try {
+			//暂停2秒
+			Thread.sleep(60000);
 			URL url = new URL(alert.getUrl());
 			Document document = Jsoup.parse(url, TIMEOUT);
 			Element element = document.getElementsByClass("text_info").first();
@@ -132,6 +134,8 @@ public class InfoqAlert implements Crawler {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;

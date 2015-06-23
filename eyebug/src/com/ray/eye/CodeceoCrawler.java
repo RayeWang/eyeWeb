@@ -59,6 +59,7 @@ public class CodeceoCrawler implements Crawler {
 
 	public boolean crawlerAlert(Alert alert) {
 		try {
+			Thread.sleep(60000);
 			URL url = new URL(alert.getUrl());
 			Document document = Jsoup.parse(url, TIMEOUT);
 			Element content = document.getElementsByClass("article-entry").get(0);
@@ -71,6 +72,8 @@ public class CodeceoCrawler implements Crawler {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
