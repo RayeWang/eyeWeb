@@ -35,74 +35,47 @@ public class CrawlerTask {
 	/** 11点的时候触发*/
 	@Scheduled(cron="0 0 11 ? * * ")
 	public void oneCrawle(){
-		if(count == 0){
-			try {
-				count ++;
-				List<ResLink> links = linkDao.findAll();
-				if(count > 1){
-					return;
-				}
-				for(ResLink link : links){
-					ArrayList<Alert> list = new CrawlerFactory().crawlerFactory(link);
-					if(list != null && list.size() > 0){
-						dao.add(list);
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}finally{
-				count = 0;
-			}
-		}
+		crale();
 	}
 	
 	/** 15点的时候触发*/
 	@Scheduled(cron="0 0 15 ? * * ")
 	public void twoCrawle(){
-		if(count == 0){
-			try {
-				count ++;
-				List<ResLink> links = linkDao.findAll();
-				if(count > 1){
-					return;
-				}
-				for(ResLink link : links){
-					ArrayList<Alert> list = new CrawlerFactory().crawlerFactory(link);
-					if(list != null && list.size() > 0){
-						dao.add(list);
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}finally{
-				count = 0;
-			}
-		}
+		crale();
 	}
 	
 	/** 0点的时候触发*/
 	@Scheduled(cron="0 58 23 ? * * ")
 	public void threeCrawle(){
-		if(count == 0){
-			try {
-				count ++;
-				List<ResLink> links = linkDao.findAll();
-				if(count > 1){
-					return;
+		crale();
+	}
+	
+	/**
+	 * 爬去数据的方法
+	 */
+	private synchronized void crale(){
+		new CrawleThead().start();
+	}
+	
+	/**
+	 * 爬虫的线程
+	 * @author Ray Wang
+	 * @date 2015年6月23日19:21:08
+	 * @version 1.0
+	 */
+	private class CrawleThead extends Thread{
+		public void run() {
+			List<ResLink> links = linkDao.findAll();
+			if(count > 1){
+				return;
+			}
+			for(ResLink link : links){
+				ArrayList<Alert> list = new CrawlerFactory().crawlerFactory(link);
+				if(list != null && list.size() > 0){
+					dao.add(list);
 				}
-				for(ResLink link : links){
-					ArrayList<Alert> list = new CrawlerFactory().crawlerFactory(link);
-					if(list != null && list.size() > 0){
-						dao.add(list);
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}finally{
-				count = 0;
 			}
 		}
 	}
-	
 	
 }
