@@ -21,7 +21,7 @@
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<!-- 连接URL串 -->
 		<property name="jdbcUrl"
-			value="jdbc:mysql://52.24.121.154/eyedata?useUnicode=true&amp;characterEncoding=UTF-8" />
+			value="jdbc:mysql://127.0.0.1/eyedata?useUnicode=true&amp;characterEncoding=UTF-8" />
 		<!-- 连接用户名 -->
 		<property name="user" value="ray" />
 		<!-- 连接密码 -->
