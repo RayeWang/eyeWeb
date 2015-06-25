@@ -18,6 +18,10 @@
 							missingMessage="必须输入名称" type="text" id="addtype_name"
 							data-options="required:true"></input></td>
 					</tr>
+					<tr>
+						<td>分类网址:</td>
+						<td style="width: 500px;"><input class="easyui-textbox" type="text" id="addtype_url"></input></td>
+					</tr>
 				</table>
 				<div style="text-align: left; padding: 5px 0px 5px 70px">
 					<a href="javascript:void(0)" class="easyui-linkbutton"
@@ -30,6 +34,7 @@
 	            	  datattpe:"text",
 	            	  data:{
 	            		  name:$("#addtype_name").val(),
+	            		  param1:$("#addtype_url").val(),
 	            		  ${_csrf.parameterName}:'${_csrf.token}'
 	            	  },
 	            	  success: function(data){
