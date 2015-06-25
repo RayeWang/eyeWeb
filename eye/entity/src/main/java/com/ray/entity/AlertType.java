@@ -33,10 +33,11 @@ public class AlertType {
      */
     private String param2;
 
-    public AlertType(Integer id, String name) {
+    public AlertType(Integer id, String name,String url) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.param1 = url;
 	}
 
 	public AlertType() {
