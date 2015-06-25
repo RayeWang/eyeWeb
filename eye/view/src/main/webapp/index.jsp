@@ -3,7 +3,7 @@
 <%@ page isELIgnored="false"%>
 <html>
 <head>
-<title>程序员之眼，我就是你的眼</title>
+<title>程序员之眼</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http equiv="Content-Language" content="zh-CN">
 <meta name="description" content="程序员之眼，程序员各种资讯，最新IT文章，网络安全文章">
@@ -116,7 +116,7 @@
 			</form>
 			<ul class="nav nav-pills">
 				<c:forEach items="${types}" var="type">
-					<li role="presentation" <c:if test="${type.id==typeid }">class="active"</c:if> ><a href='<c:out value="alert.do?typeid=${type.id }"></c:out>'><b>${type.name }</b></a></li>
+					<li role="presentation" <c:if test="${type.id==typeid }">class="active"</c:if> > <a href="<c:if test="${type.param1==null||type.param1 == '' }">alert.do?typeid=${type.id }</c:if><c:if test="${type.param1 != null }">${type.param1 }</c:if>" ><b>${type.name }</b></a></li>
 				</c:forEach>
 			</ul>
 			
@@ -181,5 +181,6 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255526976'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1255526976%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 </body>
 </html>

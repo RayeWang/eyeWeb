@@ -16,7 +16,7 @@
 	</commentGenerator>
 
 	<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-		connectionURL="jdbc:mysql://52.24.121.154/eyedata" userId="ray"
+		connectionURL="jdbc:mysql://52.25.204.140/eyedata" userId="ray"
 		password="123456">
 	</jdbcConnection>
 

@@ -48,7 +48,7 @@ public class AlertController {
 		List<Alert> list = dao.findByAlert( page, pageSize,typeid,key);
 		List<AlertType> types = typeDao.findAll();
 		//添加一个全部的分类
-		types.add(0,new AlertType(0, "全部分类"));
+		types.add(0,new AlertType(0, "全部分类","alert.do"));
 		
 		//传递参数到页面
 		map.addAttribute("types", types);
