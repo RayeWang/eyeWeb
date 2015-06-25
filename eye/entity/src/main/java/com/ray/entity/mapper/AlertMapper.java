@@ -176,7 +176,7 @@ public interface AlertMapper {
     @Select({
         "select",
         "id, title, desc1, url, res_link_id, res_id, atype_id, hot, createtime, img, ",
-        "alerttime, param1, param2, param3, param4, param5, content",
+        "alerttime, param1, param2, param3, param4, param5, CAST(content AS CHAR CHARACTER SET utf8) AS content",
         "from alert ",
         "where id = #{id,jdbcType=INTEGER}"
     })
