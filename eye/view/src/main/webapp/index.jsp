@@ -125,6 +125,7 @@
 	<div class="wf-main" id="wf-main">
 		<c:forEach items="${alerts }" var="alert">
 			<div class="wall-item">
+				<a href="getalert.do?id=${alert.id }" title="${alert.desc1 }"></a>
 				<h4 style="color:#1874CD;cursor:pointer;"
 					onclick="loadClick('${alert.id}','${alert.title }','${alert.param1 }','${alert.url }','${alert.param2 }')">${alert.title }</h4>
 
