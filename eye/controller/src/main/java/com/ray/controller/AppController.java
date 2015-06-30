@@ -25,7 +25,8 @@ import com.ray.entity.JsonResult;
  * @date 2015年6月24日21:31:58
  * @version 1.0
  */
-@Controller("/app")
+@RequestMapping("/app")
+@Controller()
 public class AppController {
 	
 	@Autowired
@@ -47,7 +48,7 @@ public class AppController {
 			@RequestParam(defaultValue="")String key,HttpServletResponse response){
 		PrintWriter pw = null;
 		try {
-
+			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
 			//查询出数据
 			List<Alert> list = alertDao.findByAlert(page, rows, type, key);
@@ -79,6 +80,7 @@ public class AppController {
 	public void getType(HttpServletResponse response){
 		PrintWriter pw = null;
 		try {
+			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
 			List<AlertType> types = typeDao.findAll();
 			JsonResult result = new JsonResult(types);
