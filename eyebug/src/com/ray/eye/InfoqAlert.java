@@ -114,9 +114,11 @@ public class InfoqAlert implements Crawler {
 			URL url = new URL(alert.getUrl());
 			Document document = Jsoup.parse(url, TIMEOUT);
 			Element element = document.getElementsByClass("text_info").first();
+			element.select("related_sponsors").remove();
 			StringBuffer sb = new StringBuffer();
 			for(int i = 0; i < element.childNodeSize();i++){
 				Node node = element.childNode(i);
+				
 				if(node.attr("class").equals("related_sponsors visible stacked")){
 					continue;
 				}
