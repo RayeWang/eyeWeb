@@ -383,6 +383,76 @@ public class CssCriteria {
             addCriterion("csslink not between", value1, value2, "csslink");
             return (Criteria) this;
         }
+
+        public Criteria andAndroidlinkIsNull() {
+            addCriterion("androidlink is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkIsNotNull() {
+            addCriterion("androidlink is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkEqualTo(String value) {
+            addCriterion("androidlink =", value, "androidlink");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkNotEqualTo(String value) {
+            addCriterion("androidlink <>", value, "androidlink");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkGreaterThan(String value) {
+            addCriterion("androidlink >", value, "androidlink");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkGreaterThanOrEqualTo(String value) {
+            addCriterion("androidlink >=", value, "androidlink");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkLessThan(String value) {
+            addCriterion("androidlink <", value, "androidlink");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkLessThanOrEqualTo(String value) {
+            addCriterion("androidlink <=", value, "androidlink");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkLike(String value) {
+            addCriterion("androidlink like", value, "androidlink");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkNotLike(String value) {
+            addCriterion("androidlink not like", value, "androidlink");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkIn(List<String> values) {
+            addCriterion("androidlink in", values, "androidlink");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkNotIn(List<String> values) {
+            addCriterion("androidlink not in", values, "androidlink");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkBetween(String value1, String value2) {
+            addCriterion("androidlink between", value1, value2, "androidlink");
+            return (Criteria) this;
+        }
+
+        public Criteria andAndroidlinkNotBetween(String value1, String value2) {
+            addCriterion("androidlink not between", value1, value2, "androidlink");
+            return (Criteria) this;
+        }
     }
 
     /**

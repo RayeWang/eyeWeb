@@ -33,5 +33,5 @@ public interface CssDao {
 	 * @param dels 需要删除的id集合（<;>隔开）
 	 * @param linkid 分类来源的id
 	 */
-	public void update(String ids,String values,String dels,int linkid);
+	public void update(String ids,String values,String dels,int linkid,String androids);
 }

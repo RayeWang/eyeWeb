@@ -71,6 +71,10 @@ public class CssSqlProvider {
             VALUES("csslink", "#{csslink,jdbcType=VARCHAR}");
         }
         
+        if (record.getAndroidlink() != null) {
+            VALUES("androidlink", "#{androidlink,jdbcType=VARCHAR}");
+        }
+        
         return SQL();
     }
 
@@ -89,6 +93,7 @@ public class CssSqlProvider {
         }
         SELECT("res_link_id");
         SELECT("csslink");
+        SELECT("androidlink");
         FROM("css");
         applyWhere(example, false);
         
@@ -124,6 +129,10 @@ public class CssSqlProvider {
             SET("csslink = #{record.csslink,jdbcType=VARCHAR}");
         }
         
+        if (record.getAndroidlink() != null) {
+            SET("androidlink = #{record.androidlink,jdbcType=VARCHAR}");
+        }
+        
         applyWhere(example, true);
         return SQL();
     }
@@ -141,6 +150,7 @@ public class CssSqlProvider {
         SET("id = #{record.id,jdbcType=INTEGER}");
         SET("res_link_id = #{record.resLinkId,jdbcType=INTEGER}");
         SET("csslink = #{record.csslink,jdbcType=VARCHAR}");
+        SET("androidlink = #{record.androidlink,jdbcType=VARCHAR}");
         
         CssCriteria example = (CssCriteria) parameter.get("example");
         applyWhere(example, true);
@@ -163,6 +173,10 @@ public class CssSqlProvider {
         
         if (record.getCsslink() != null) {
             SET("csslink = #{csslink,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getAndroidlink() != null) {
+            SET("androidlink = #{androidlink,jdbcType=VARCHAR}");
         }
         
         WHERE("id = #{id,jdbcType=INTEGER}");

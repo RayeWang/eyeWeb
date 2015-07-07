@@ -239,10 +239,11 @@ public class ManagerAlertCon {
 	public void updateCss(@RequestParam(defaultValue="")String ids,
 			@RequestParam(defaultValue="")String values,
 			@RequestParam(defaultValue="0")int linkid,
+			@RequestParam(defaultValue="")String androids,
 			@RequestParam(defaultValue="")String del,HttpServletResponse response){
 		try {
 			PrintWriter pw = response.getWriter();
-			cssDao.update(ids, values, del, linkid);
+			cssDao.update(ids, values, del, linkid,androids);
 			pw.write("true");
 		} catch (IOException e) {
 			e.printStackTrace();

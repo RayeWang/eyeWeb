@@ -55,9 +55,9 @@ public interface CssMapper {
      */
     @Insert({
         "insert into css (id, res_link_id, ",
-        "csslink)",
+        "csslink, androidlink)",
         "values (#{id,jdbcType=INTEGER}, #{resLinkId,jdbcType=INTEGER}, ",
-        "#{csslink,jdbcType=VARCHAR})"
+        "#{csslink,jdbcType=VARCHAR}, #{androidlink,jdbcType=VARCHAR})"
     })
     int insert(Css record);
 
@@ -80,7 +80,8 @@ public interface CssMapper {
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="res_link_id", property="resLinkId", jdbcType=JdbcType.INTEGER),
-        @Result(column="csslink", property="csslink", jdbcType=JdbcType.VARCHAR)
+        @Result(column="csslink", property="csslink", jdbcType=JdbcType.VARCHAR),
+        @Result(column="androidlink", property="androidlink", jdbcType=JdbcType.VARCHAR)
     })
     List<Css> selectByExample(CssCriteria example);
 
@@ -92,14 +93,15 @@ public interface CssMapper {
      */
     @Select({
         "select",
-        "id, res_link_id, csslink",
+        "id, res_link_id, csslink, androidlink",
         "from css",
         "where id = #{id,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="res_link_id", property="resLinkId", jdbcType=JdbcType.INTEGER),
-        @Result(column="csslink", property="csslink", jdbcType=JdbcType.VARCHAR)
+        @Result(column="csslink", property="csslink", jdbcType=JdbcType.VARCHAR),
+        @Result(column="androidlink", property="androidlink", jdbcType=JdbcType.VARCHAR)
     })
     Css selectByPrimaryKey(Integer id);
 
@@ -139,19 +141,20 @@ public interface CssMapper {
     @Update({
         "update css",
         "set res_link_id = #{resLinkId,jdbcType=INTEGER},",
-          "csslink = #{csslink,jdbcType=VARCHAR}",
+          "csslink = #{csslink,jdbcType=VARCHAR},",
+          "androidlink = #{androidlink,jdbcType=VARCHAR}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Css record);
     
     @Select({"select c.id, c.res_link_id, c.csslink,r.name",
-            "from css c join res_link r on c.res_link_id=r.id ",
-            " order by r.id desc limit #{index,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}"})
-    @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="res_link_id", property="resLinkId", jdbcType=JdbcType.INTEGER),
-        @Result(column="csslink", property="csslink", jdbcType=JdbcType.VARCHAR),
-        @Result(column="name",property="linkName",jdbcType=JdbcType.VARCHAR)
-    })
-    List<Css> seletdByPage(@Param("index")int index,@Param("rows")int rows);
+        "from css c join res_link r on c.res_link_id=r.id ",
+        " order by r.id desc limit #{index,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}"})
+	@Results({
+	    @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+	    @Result(column="res_link_id", property="resLinkId", jdbcType=JdbcType.INTEGER),
+	    @Result(column="csslink", property="csslink", jdbcType=JdbcType.VARCHAR),
+	    @Result(column="name",property="linkName",jdbcType=JdbcType.VARCHAR)
+	})
+	List<Css> seletdByPage(@Param("index")int index,@Param("rows")int rows);
 }

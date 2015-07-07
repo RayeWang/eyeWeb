@@ -33,10 +33,11 @@ public class CssDaoImpl implements CssDao {
 	}
 
 	@Transactional
-	public void update(String ids, String values, String dels, int linkid) {
+	public void update(String ids, String values, String dels, int linkid,String androids) {
 		String[] tempIds = ids.split("<;>");
 		String[] tempValues = values.split("<;>");
 		String[] tempDels = dels.split("<;>");
+		String[] tempAns = androids.split("<;>");
 		//插入或更新
 		if(tempIds != null && tempIds.length > 0 && tempValues != null && tempValues.length > 0){
 			for(int i = 0;i < tempIds.length;i++){
@@ -51,12 +52,18 @@ public class CssDaoImpl implements CssDao {
 					record.setResLinkId(linkid);
 					record.setCsslink(tempValues[i]);
 					record.setId(id);
+					if(tempAns.length > i){
+						record.setAndroidlink(tempAns[i]);
+					}
 					mapper.updateByPrimaryKey(record);
 				}else{
 					//插入
 					Css record = new Css();
 					record.setCsslink(tempValues[i]);
 					record.setResLinkId(linkid);
+					if(tempAns.length > i){
+						record.setAndroidlink(tempAns[i]);
+					}
 					mapper.insert(record);
 				}
 			}

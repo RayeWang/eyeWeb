@@ -21,7 +21,8 @@
 	
 	function addLine(){
 		index--;
-		$("#eidtcssTBody").append('<tr cid1="'+index+'"><td>代码:</td><td ><span class="textbox" style="width: 498px; height: 20px;"><input type="text" class="textbox-text validatebox-text" autocomplete="off" placeholder="" style="margin-left: 0px; margin-right: 0px; padding-top: 3px; padding-bottom: 3px; width: 490px;" name="edit_css" cid="'+index+'"></span>'+
+		$("#eidtcssTBody").append('<tr cid1="'+index+'"><td>代码:</td><td ><span class="textbox" style="width: 498px; height: 20px;"><input type="text" class="textbox-text validatebox-text" autocomplete="off" placeholder="" style="margin-left: 0px; margin-right: 0px; padding-top: 3px; padding-bottom: 3px; width: 490px;" name="edit_css" cid="'+index+'">'+
+		'<input type="text" class="textbox-text validatebox-text" autocomplete="off" placeholder="" style="margin-left: 0px; margin-right: 0px; padding-top: 3px; padding-bottom: 3px; width: 490px;" name="edit_android_css" caid="a'+index+'"></span>'+
 		'<td><a href="javascript:void(0)" iconcls="icon-remove" class="easyui-linkbutton l-btn l-btn-small" onclick="deleteItem('+index+')" group="" id=""><span class="l-btn-left l-btn-icon-left"><span class="l-btn-text l-btn-empty">&nbsp;</span><span class="l-btn-icon icon-remove">&nbsp;</span></span></a></td></tr>');
 	
 	}
@@ -39,11 +40,12 @@
 					<tbody id="eidtcssTBody">
 					<c:forEach items="${csss }" var="css">
 						<tr cid1="${css.id }">
-							<td>代码:</td>
+							<td width="150">代码:</td>
 							<td >
 								<input style="width: 500px;" name="edit_css" cid="${css.id }" value='${css.csslink }'
 								data-options="required:true" class="easyui-textbox"
 								missingMessage="必须输入内容"/>
+								<input style="width: 500px;" name="edit_android_css" caid="${css.id }" value='${css.androidlink }' class="easyui-textbox"/>
 							</td>
 							<td><a href="javascript:void(0)" iconCls="icon-remove" class="easyui-linkbutton" onclick="deleteItem(${css.id})"></a></td>
 						</tr>
@@ -62,13 +64,18 @@
 					function submitEditCssForm(){
 						//先获取数据
 						var vitems = $("[name=edit_css]");
+						var vitems2 = $("[name=edit_android_css]");
 						var iitems = $("[cid]");
-						var ids1="",values1="";
+						var ids1="",values1="",values2="";
 						vitems.each(function(i, o){
 							values1 += $(o).val()+"<;>";
 						});
 						iitems.each(function(i,o){
 							ids1 += $(o).attr("cid")+"<;>";
+						});
+						
+						vitems2.each(function(i,o){
+							values2 += $(o).val()+"<;>";
 						});
 						//获取删除了的
 						var dels = $("[name=editcss_del]");
@@ -86,6 +93,7 @@
 			            		  ids:ids1,
 			            		  values:values1,
 			            		  del:delIds,
+			            		  androids:values2,
 			            		  ${_csrf.parameterName}:'${_csrf.token}'
 			            	  },
 			            	  success: function(data){
