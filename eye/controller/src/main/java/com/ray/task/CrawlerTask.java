@@ -30,31 +30,67 @@ public class CrawlerTask {
 	@Autowired
 	private ResLinkDao linkDao;
 	
-	private int count = 0;
+	private static String count = "0";
+	private static boolean one = true;
+	private static boolean two = true;
+	private static boolean three = true;
 	
 	/** 11点的时候触发*/
 	@Scheduled(cron="0 0 11 ? * * ")
+//	@Scheduled(cron="0 20 17 ? * * ")
 	public void oneCrawle(){
-		crale();
+		crale(0);
 	}
 	
 	/** 15点的时候触发*/
 	@Scheduled(cron="0 0 15 ? * * ")
+//	@Scheduled(cron="0 23 17 ? * * ")
 	public void twoCrawle(){
-		crale();
+		crale(1);
 	}
 	
 	/** 0点的时候触发*/
 	@Scheduled(cron="0 58 23 ? * * ")
+//	@Scheduled(cron="0 25 17 ? * * ")
 	public void threeCrawle(){
-		crale();
+		crale(2);
 	}
 	
 	/**
 	 * 爬去数据的方法
 	 */
-	private synchronized void crale(){
-		new CrawleThead().start();
+	private synchronized void crale(int index){
+		synchronized (count) {
+			switch (index) {
+				case 0:
+					if(!one){
+						return;
+					}
+					three = true;
+					one = false;
+					break;
+				case 1:
+					if(!two){
+						return;
+					}
+					one = true;
+					two = false;
+					break;
+				case 2:
+					if(!three){
+						return;
+					}
+					two = true;
+					three = false;
+					break;
+	
+				default:
+					break;
+			}
+			new CrawleThead().start();
+//			System.out.println(System.currentTimeMillis()+"  threadid:"+Thread.currentThread().getId());
+			
+		}
 	}
 	
 	/**
@@ -63,12 +99,12 @@ public class CrawlerTask {
 	 * @date 2015年6月23日19:21:08
 	 * @version 1.0
 	 */
-	private class CrawleThead extends Thread{
+	private  class CrawleThead extends Thread{
+		
+
 		public void run() {
 			List<ResLink> links = linkDao.findAll();
-			if(count > 1){
-				return;
-			}
+			
 			for(ResLink link : links){
 				ArrayList<Alert> list = new CrawlerFactory().crawlerFactory(link);
 				if(list != null && list.size() > 0){
