@@ -2,6 +2,8 @@ package com.ray.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +32,9 @@ import com.ray.entity.JsonResult;
 @Controller()
 public class AppController {
 	
+	public static int count = 0;
+	
+	
 	@Autowired
 	private AlertDao alertDao;
 	
@@ -51,10 +56,19 @@ public class AppController {
 		try {
 			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
+
+			if(count > 10){
+				ArticleResult result = new ArticleResult("2", "接口调用超过当日次数限制");
+				pw.write(new Gson().toJson(result));
+				pw.close();
+				return;
+			}
+
+			count++;
 			//查询出数据
 			List<Alert> list = alertDao.findByAlertNoId(page, rows, type, key);
 			int count = alertDao.findCount(type, key);
-			
+
 			ArticleResult result = new ArticleResult();
 			result.setCount(count);
 			result.setData(list);
@@ -84,6 +98,13 @@ public class AppController {
 		try {
 			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
+			if(count > 10){
+				ArticleResult result = new ArticleResult("2", "接口调用超过当日次数限制");
+				pw.write(new Gson().toJson(result));
+				pw.close();
+				return;
+			}
+			count++;
 			List<AlertType> types = typeDao.findAll();
 			JsonResult result = new JsonResult(types);
 			pw.write(new Gson().toJson(result));
@@ -106,6 +127,10 @@ public class AppController {
 	 */
 	@RequestMapping("/getalert.do")
 	public String getAlertByid(String url,HttpServletRequest request){
+		if(count > 10){
+			return "alert";
+		}
+		count++;
 		Alert alert = alertDao.findByUrl(url);
 		request.setAttribute("alert", alert);
 		return "alert";
@@ -126,7 +151,6 @@ public class AppController {
 	public void setTypeDao(TypeDao typeDao) {
 		this.typeDao = typeDao;
 	}
-	
 	
 	
 }
