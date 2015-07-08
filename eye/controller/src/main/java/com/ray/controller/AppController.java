@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class AppController {
 			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
 			//查询出数据
-			List<Alert> list = alertDao.findByAlert(page, rows, type, key);
+			List<Alert> list = alertDao.findByAlertNoId(page, rows, type, key);
 			int count = alertDao.findCount(type, key);
 			
 			ArticleResult result = new ArticleResult();
@@ -64,6 +65,7 @@ public class AppController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}catch (Exception e) {
+			e.printStackTrace();
 			if(pw != null){
 				ArticleResult result = new ArticleResult("1", "服务器异常");
 				pw.write(new Gson().toJson(result));
@@ -96,6 +98,18 @@ public class AppController {
 		}
 	}
 	
+	/**
+	 * 根据id显示文章
+	 * @param id 文章id
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/getalert.do")
+	public String getAlertByid(String url,HttpServletRequest request){
+		Alert alert = alertDao.findByUrl(url);
+		request.setAttribute("alert", alert);
+		return "alert";
+	}
 
 	public AlertDao getAlertDao() {
 		return alertDao;

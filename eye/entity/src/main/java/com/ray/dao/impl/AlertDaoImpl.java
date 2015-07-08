@@ -53,7 +53,22 @@ public class AlertDaoImpl implements AlertDao {
 		return mapper.selectByExamplePage("%"+key+"%",typeid);
 	}
 
-	
+	public List<Alert> findByAlertNoId(int page,int pageSize,int typeid,String key) {
+		
+		String sql = "select a.title,a.desc1,a.url,r.name as name,a.img,r.url as url1"
+				+ " from alert a left join res r "
+				+ " on a.res_id=r.id where a.title like #{key,jdbcType=VARCHAR}";
+		if(typeid != 0){
+			sql += " and atype_id=#{type,jdbcType=INTEGER}";
+		}
+		sql += " order by a.id desc limit "+
+				(page - 1)*pageSize+","+pageSize;
+		
+		new DynamicSql().setSql(sql);
+		
+
+		return mapper.selectByExamplePage("%"+key+"%",typeid);
+	}
 	
 	public int findCount(int typeid, String key) {
 		String sql = "select count(*) from alert where title like #{key,jdbcType=VARCHAR}";
@@ -91,6 +106,10 @@ public class AlertDaoImpl implements AlertDao {
 
 	public Alert findById(int id) {
 		return mapper.selectByPrimaryKey(id);
+	}
+
+	public Alert findByUrl(String url) {
+		return mapper.selectByPrimaryUrl(url);
 	}
 
 	public AlertMapper getMapper() {

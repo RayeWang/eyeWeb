@@ -40,6 +40,13 @@ public interface AlertDao {
 	public Alert findById(int id);
 	
 	/**
+	 * 根据URL查询文章
+	 * @param url 文章的url
+	 * @return
+	 */
+	public Alert findByUrl(String url);
+	
+	/**
 	 * 查询文章数量，用于分页
 	 * @param typeid 分类的ID，0则查询所有
 	 * @param key 关键字（目前只是标题）
@@ -70,4 +77,14 @@ public interface AlertDao {
 	 * @param alert
 	 */
 	public void insertByPro(Alert alert);
+	
+	/**
+	 * 查询文章列表，不返回ID
+	 * @param page
+	 * @param pageSize
+	 * @param typeid
+	 * @param key
+	 * @return
+	 */
+	public List<Alert> findByAlertNoId(int page,int pageSize,int typeid,String key);
 }
