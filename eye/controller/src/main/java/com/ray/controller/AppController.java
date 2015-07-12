@@ -2,8 +2,6 @@ package com.ray.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +19,7 @@ import com.ray.entity.Alert;
 import com.ray.entity.AlertType;
 import com.ray.entity.ArticleResult;
 import com.ray.entity.JsonResult;
+import com.ray.util.MD5Util;
 
 /**
  * APP的相关接口控制器
@@ -89,6 +88,46 @@ public class AppController {
 	}
 	
 	/**
+	 * 获取文章接口（未进行加密判断，最初测试的接口）
+	 * @param page 当前页的索引
+	 * @param rows 每页查询的数据行
+	 * @param response 
+	 */
+	@RequestMapping("/article1.do")
+	public void getAlert1(@RequestParam(defaultValue="1")int page,
+			@RequestParam(defaultValue="20")int rows,
+			@RequestParam(defaultValue="0")int type,
+			@RequestParam(defaultValue="")String key,HttpServletResponse response){
+		PrintWriter pw = null;
+		try {
+			response.setContentType("application/json;charset=UTF-8");
+			pw = response.getWriter();
+
+			
+			//查询出数据
+			List<Alert> list = alertDao.findByAlertNoId(page, rows, type, key);
+			int count = alertDao.findCount(type, key);
+
+			ArticleResult result = new ArticleResult();
+			result.setCount(count);
+			result.setData(list);
+			
+			pw.write(new Gson().toJson(result));
+			pw.close();
+			return;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+			if(pw != null){
+				ArticleResult result = new ArticleResult("1", "服务器异常");
+				pw.write(new Gson().toJson(result));
+				pw.close();
+			}
+		}
+	}
+	
+	/**
 	 * 获取分类的接口
 	 * @param response
 	 */
@@ -119,14 +158,15 @@ public class AppController {
 		}
 	}
 	
+	
 	/**
-	 * 根据id显示文章
-	 * @param id 文章id
+	 * 根据url显示文章
+	 * @param url 文章url
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping("/getalert.do")
-	public String getAlertByid(String url,HttpServletRequest request){
+	public String getAlertByUrl(String url,HttpServletRequest request){
 		if(count > 10){
 			return "alert";
 		}
@@ -134,6 +174,34 @@ public class AppController {
 		Alert alert = alertDao.findByUrl(url);
 		request.setAttribute("alert", alert);
 		return "alert";
+	}
+	
+	/**
+	 * 根据url显示文章
+	 * @param url 文章url
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/getalert1.do")
+	public String getAlertByUrl1(@RequestParam(defaultValue="")String url,
+			HttpServletRequest request,@RequestParam(defaultValue="")String token,
+			HttpServletResponse response){
+		if(!"".equals(token)){
+			//验证是否正确的md5
+			String temp = token.substring(0, 24);
+			//随机数的md5值
+			String rand = token.substring(24);
+			if(MD5Util.md5(rand+url).substring(0, 24).equals(temp.toLowerCase())){
+				//验证成功
+				Alert alert = alertDao.findByUrl(url);
+				request.setAttribute("alert", alert);
+				return "alert";
+			}
+		}
+		//验证失败了的
+		
+		
+		return "tokenerror";
 	}
 
 	public AlertDao getAlertDao() {
