@@ -191,7 +191,7 @@ public class AppController {
 			String temp = token.substring(0, 24);
 			//随机数的md5值
 			String rand = token.substring(24);
-			if(MD5Util.md5(rand+url).substring(0, 24).equals(temp.toLowerCase())){
+			if(MD5Util.md5(rand+url).substring(0, 24).equals(temp.toUpperCase())){
 				//验证成功
 				Alert alert = alertDao.findByUrl(url);
 				request.setAttribute("alert", alert);
