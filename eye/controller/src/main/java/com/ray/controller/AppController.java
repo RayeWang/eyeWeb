@@ -109,7 +109,7 @@ public class AppController {
 				String temp = token.substring(0, 24);
 				//随机数的md5值
 				String rand = token.substring(24);
-				if(MD5Util.md5(rand+"typeid="+type+"&page="+page).substring(0, 23).equals(temp.toUpperCase())){
+				if(MD5Util.md5(rand+"typeid="+type+"&page="+page).substring(0, 24).equals(temp.toUpperCase())){
 					//验证成功
 					//查询出数据
 					List<Alert> list = alertDao.findByAlertNoId(page, rows, type, key);
