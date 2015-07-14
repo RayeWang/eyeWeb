@@ -56,7 +56,7 @@ public class AppController {
 			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
 
-			if(count > 10){
+			if(count > 500){
 				ArticleResult result = new ArticleResult("2", "接口调用超过当日次数限制");
 				pw.write(new Gson().toJson(result));
 				pw.close();
@@ -150,7 +150,7 @@ public class AppController {
 		try {
 			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
-			if(count > 10){
+			if(count > 500){
 				ArticleResult result = new ArticleResult("2", "接口调用超过当日次数限制");
 				pw.write(new Gson().toJson(result));
 				pw.close();
