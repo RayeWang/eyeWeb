@@ -97,21 +97,34 @@ public class AppController {
 	public void getAlert1(@RequestParam(defaultValue="1")int page,
 			@RequestParam(defaultValue="20")int rows,
 			@RequestParam(defaultValue="0")int type,
-			@RequestParam(defaultValue="")String key,HttpServletResponse response){
+			@RequestParam(defaultValue="")String key,
+			@RequestParam(defaultValue="")String token,HttpServletResponse response){
 		PrintWriter pw = null;
 		try {
 			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
-
 			
-			//查询出数据
-			List<Alert> list = alertDao.findByAlertNoId(page, rows, type, key);
-			int count = alertDao.findCount(type, key);
+			if(!"".equals(token)){
+				//验证是否正确的md5
+				String temp = token.substring(0, 24);
+				//随机数的md5值
+				String rand = token.substring(24);
+				if(MD5Util.md5(rand+"typeid="+type+"&page="+page).substring(0, 23).equals(temp.toUpperCase())){
+					//验证成功
+					//查询出数据
+					List<Alert> list = alertDao.findByAlertNoId(page, rows, type, key);
+					int count = alertDao.findCount(type, key);
 
-			ArticleResult result = new ArticleResult();
-			result.setCount(count);
-			result.setData(list);
-			
+					ArticleResult result = new ArticleResult();
+					result.setCount(count);
+					result.setData(list);
+					
+					pw.write(new Gson().toJson(result));
+					pw.close();
+					return;
+				}
+			}
+			ArticleResult result = new ArticleResult("2", "请不要尝试破解接口，谢谢");
 			pw.write(new Gson().toJson(result));
 			pw.close();
 			return;
