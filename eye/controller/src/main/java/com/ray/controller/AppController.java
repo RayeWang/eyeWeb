@@ -150,13 +150,7 @@ public class AppController {
 		try {
 			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
-			if(count > 500){
-				ArticleResult result = new ArticleResult("2", "接口调用超过当日次数限制");
-				pw.write(new Gson().toJson(result));
-				pw.close();
-				return;
-			}
-			count++;
+			
 			List<AlertType> types = typeDao.findAll();
 			JsonResult result = new JsonResult(types);
 			pw.write(new Gson().toJson(result));
