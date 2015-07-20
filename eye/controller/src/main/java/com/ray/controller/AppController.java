@@ -179,13 +179,16 @@ public class AppController {
 	 * @return
 	 */
 	@RequestMapping("/getalert.do")
-	public String getAlertByUrl(String url,HttpServletRequest request){
+	public String getAlertByUrl(@RequestParam(defaultValue="")String url,
+			HttpServletRequest request,@RequestParam(defaultValue="false")boolean isBlack){
 		if(count > 500){
 			return "alert";
 		}
 		count++;
 		Alert alert = alertDao.findByUrl(url);
 		request.setAttribute("alert", alert);
+
+		request.setAttribute("isblack", isBlack);
 		return "alert";
 	}
 	
