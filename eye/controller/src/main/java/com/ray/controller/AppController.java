@@ -180,7 +180,7 @@ public class AppController {
 	 */
 	@RequestMapping("/getalert.do")
 	public String getAlertByUrl(String url,HttpServletRequest request){
-		if(count > 10){
+		if(count > 500){
 			return "alert";
 		}
 		count++;
@@ -198,7 +198,8 @@ public class AppController {
 	@RequestMapping("/getalert1.do")
 	public String getAlertByUrl1(@RequestParam(defaultValue="")String url,
 			HttpServletRequest request,@RequestParam(defaultValue="")String token,
-			HttpServletResponse response){
+			HttpServletResponse response,
+			@RequestParam(defaultValue="false")boolean isBlack){
 		if(!"".equals(token)){
 			//验证是否正确的md5
 			String temp = token.substring(0, 24);
@@ -208,6 +209,7 @@ public class AppController {
 				//验证成功
 				Alert alert = alertDao.findByUrl(url);
 				request.setAttribute("alert", alert);
+				request.setAttribute("isblack", isBlack);
 				return "alert";
 			}
 		}
