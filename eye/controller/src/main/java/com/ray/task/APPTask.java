@@ -8,9 +8,8 @@ import com.ray.controller.AppController;
 @Component
 public class APPTask {
 
-	@Scheduled(cron="0 30 17 ? * * ")
+	@Scheduled(cron="0 59 23 ? * * ")
 	public void task(){
-		System.out.println("count is 0");
 		AppController.count = 0;
 	}
 }
