@@ -80,6 +80,7 @@ margin: 0px;padding: 0px;
 <script type="text/javascript">
 	window.onresize()=function(){
 		document.getElementByTagName(img).style.width = document.documentElement.clientWidth  + 'px';
+		document.getElementByTagName(img).style.margin = "0px";
 	}
 	
 </script>
