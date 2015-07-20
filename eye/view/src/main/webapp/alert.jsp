@@ -25,7 +25,7 @@
 	  margin: 0;
 	  <c:if test="${isblack}">
 	
-	background:#000000;
+	background:#333333;
 	color:#ffffff;
 	</c:if>
 }
@@ -35,7 +35,7 @@
   font: 12px/20px 'courier new';
   border: 1px solid #ddd;
   border-left-width: 4px;
-  background: #000000; 
+  background: #333333; 
   padding: 10px 15px;
 }
 html{
@@ -43,7 +43,7 @@ background: #000000;
 }
 .prettyprint {
   padding: 8px;
-  background-color: #000000;
+  background-color: #333333;
   border: 1px solid #e1e1e8;
   white-space: pre;
   white-space: pre-wrap;
@@ -68,7 +68,7 @@ body{
 	padding: 2px;
 	<c:if test="${isblack}">
 	
-	background:#000000;
+	background:#333333;
 	color:#ffffff;
 	</c:if>
 }
