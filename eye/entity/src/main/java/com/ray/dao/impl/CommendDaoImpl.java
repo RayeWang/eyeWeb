@@ -32,6 +32,11 @@ public class CommendDaoImpl implements CommendDao {
 		mapper.insert(commend);
 	}
 
+	
+	public int getCount() {
+		return mapper.countByExample(null);
+	}
+
 	public CommendMapper getMapper() {
 		return mapper;
 	}

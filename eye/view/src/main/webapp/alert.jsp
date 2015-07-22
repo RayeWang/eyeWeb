@@ -39,7 +39,7 @@
   padding: 10px 15px;
 }
 html{
-background: #000000;
+background: #333333;
 }
 .prettyprint {
   padding: 8px;

@@ -230,6 +230,8 @@ public class AppController {
 	@RequestMapping("/commend.do")
 	public void commend(Commend commend,HttpServletResponse response){
 		PrintWriter pw = null;
+
+		response.setContentType("application/json;charset=UTF-8");
 		try{
 			pw = response.getWriter();
 			if(count >= 500){
@@ -264,6 +266,7 @@ public class AppController {
 	public void commend1(Commend commend,HttpServletResponse response,
 			@RequestParam(defaultValue="")String token){
 		PrintWriter pw = null;
+		response.setContentType("application/json;charset=UTF-8");
 		try{
 			pw = response.getWriter();
 			

@@ -15,4 +15,6 @@ public interface CommendDao {
 	public List<Commend> findByPage(int page,int rows);
 	
 	public void add(Commend commend);
+	
+	public int getCount();
 }

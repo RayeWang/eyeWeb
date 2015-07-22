@@ -75,6 +75,7 @@
 				</div>
 				<div title="系统管理" style="padding: 10px;">
 					<h2 class="menu_item" url="log/log.jsp">登陆日志</h2>
+					<h2 class="menu_item" url="commend/commend.jsp">意见与建议</h2>
 					<h2 class="menu_item">系统用户</h2>
 					<h2 class="menu_item">权限管理</h2>
 				</div>
