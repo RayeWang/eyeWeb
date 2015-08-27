@@ -8,7 +8,7 @@
 <title>意见与建议</title>
 </head>
 <body>
-<table id="articledg" title="来源管理" class="easyui-datagrid" style="width:100%;height:97%"
+<table id="articledg" title="已经与建议" class="easyui-datagrid" style="width:100%;height:97%"
             url='commend.do?${_csrf.parameterName}=${_csrf.token}&" />'
             toolbar="#articletoolbar" pagination="true" striped="true"
             rownumbers="true" fitColumns="true" loadMsg="加载中..." >

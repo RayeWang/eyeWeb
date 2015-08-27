@@ -49,6 +49,7 @@
 	
 <!-- 
 
+	<table tableName="appversion" ></table>
 	<table tableName="commend" ></table>
 	<table tableName="userlog" domainObjectName="UserLog"></table>
 	<table tableName="users" domainObjectName="Users"></table>

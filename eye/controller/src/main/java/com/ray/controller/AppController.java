@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
 import com.ray.dao.AlertDao;
+import com.ray.dao.AppVersionDao;
 import com.ray.dao.CommendDao;
 import com.ray.dao.TypeDao;
 import com.ray.entity.Alert;
 import com.ray.entity.AlertType;
+import com.ray.entity.Appversion;
 import com.ray.entity.ArticleResult;
 import com.ray.entity.Commend;
 import com.ray.entity.JsonResult;
@@ -43,7 +45,8 @@ public class AppController {
 	private TypeDao typeDao;
 	@Autowired
 	private CommendDao commendDao;
-	
+	@Autowired
+	private AppVersionDao versionDao;
 	/**
 	 * 获取文章接口（未进行加密判断，最初测试的接口）
 	 * @param page 当前页的索引
@@ -291,6 +294,35 @@ public class AppController {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			if(pw != null){
+				pw.close();
+			}
+		}
+	}
+	
+	@RequestMapping("/checkVersion.do")
+	public void getNewVersion(@RequestParam(defaultValue="1")int type,
+			HttpServletResponse response){
+
+		PrintWriter pw = null;
+		response.setContentType("application/json;charset=UTF-8");
+		try{
+			pw = response.getWriter();
+			Appversion appversion = versionDao.findByType(type);
+			if(appversion != null){
+				JsonResult jsonResult = new JsonResult("","获取成功");
+				jsonResult.setData(appversion);
+				pw.write(new Gson().toJson(jsonResult));
+			}else{
+				ArticleResult result = new ArticleResult("1", "没有获取到信息");
+				pw.write(new Gson().toJson(result));
+			}
+			pw.close();
+		}catch(Exception e){
+			e.printStackTrace();
+			if(pw != null){
+				pw.close();
+			}
 		}
 	}
 	
@@ -317,6 +349,14 @@ public class AppController {
 
 	public void setCommendDao(CommendDao commendDao) {
 		this.commendDao = commendDao;
+	}
+
+	public AppVersionDao getVersionDao() {
+		return versionDao;
+	}
+
+	public void setVersionDao(AppVersionDao versionDao) {
+		this.versionDao = versionDao;
 	}
 	
 	
