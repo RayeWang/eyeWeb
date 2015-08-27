@@ -69,6 +69,12 @@ create table if not exists commend(
 	commend varchar(500) not null, -- 建议的详细
 	createtime timestamp not null default CURRENT_TIMESTAMP
 );
+--APP版本记录
+create table if not exists appversion(
+	id integer  primary key auto_increment, -- 主键
+	version integer, -- app最新的版本
+	nametype integer -- 名称，Android，IOS
+);
 
 ---添加文章的存储过程
 CREATE  PROCEDURE `alertPro`(in title varchar(80),in desc1 varchar(500),in content text,
