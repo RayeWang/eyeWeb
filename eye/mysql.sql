@@ -75,6 +75,8 @@ create table if not exists appversion(
 	version integer, -- app最新的版本
 	url varchar(500) not null, -- 新版本的下载地址
 	des varchar(500) not null, -- 新版本描述
+	size varchar(20) not null, -- apk大小
+	versionName varchar(20) not null, -- 新版本名称
 	nametype integer -- 名称，Android，IOS
 );
 
