@@ -454,6 +454,146 @@ public class AppversionCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andSizeIsNull() {
+            addCriterion("size is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeIsNotNull() {
+            addCriterion("size is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeEqualTo(String value) {
+            addCriterion("size =", value, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeNotEqualTo(String value) {
+            addCriterion("size <>", value, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeGreaterThan(String value) {
+            addCriterion("size >", value, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeGreaterThanOrEqualTo(String value) {
+            addCriterion("size >=", value, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeLessThan(String value) {
+            addCriterion("size <", value, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeLessThanOrEqualTo(String value) {
+            addCriterion("size <=", value, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeLike(String value) {
+            addCriterion("size like", value, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeNotLike(String value) {
+            addCriterion("size not like", value, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeIn(List<String> values) {
+            addCriterion("size in", values, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeNotIn(List<String> values) {
+            addCriterion("size not in", values, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeBetween(String value1, String value2) {
+            addCriterion("size between", value1, value2, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andSizeNotBetween(String value1, String value2) {
+            addCriterion("size not between", value1, value2, "size");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameIsNull() {
+            addCriterion("versionName is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameIsNotNull() {
+            addCriterion("versionName is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameEqualTo(String value) {
+            addCriterion("versionName =", value, "versionname");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameNotEqualTo(String value) {
+            addCriterion("versionName <>", value, "versionname");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameGreaterThan(String value) {
+            addCriterion("versionName >", value, "versionname");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameGreaterThanOrEqualTo(String value) {
+            addCriterion("versionName >=", value, "versionname");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameLessThan(String value) {
+            addCriterion("versionName <", value, "versionname");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameLessThanOrEqualTo(String value) {
+            addCriterion("versionName <=", value, "versionname");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameLike(String value) {
+            addCriterion("versionName like", value, "versionname");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameNotLike(String value) {
+            addCriterion("versionName not like", value, "versionname");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameIn(List<String> values) {
+            addCriterion("versionName in", values, "versionname");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameNotIn(List<String> values) {
+            addCriterion("versionName not in", values, "versionname");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameBetween(String value1, String value2) {
+            addCriterion("versionName between", value1, value2, "versionname");
+            return (Criteria) this;
+        }
+
+        public Criteria andVersionnameNotBetween(String value1, String value2) {
+            addCriterion("versionName not between", value1, value2, "versionname");
+            return (Criteria) this;
+        }
+
         public Criteria andNametypeIsNull() {
             addCriterion("nametype is null");
             return (Criteria) this;

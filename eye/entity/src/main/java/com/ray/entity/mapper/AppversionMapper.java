@@ -55,9 +55,11 @@ public interface AppversionMapper {
      */
     @Insert({
         "insert into appversion (id, version, ",
-        "url, des, nametype)",
+        "url, des, size, ",
+        "versionName, nametype)",
         "values (#{id,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, ",
-        "#{url,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, #{nametype,jdbcType=INTEGER})"
+        "#{url,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, #{size,jdbcType=VARCHAR}, ",
+        "#{versionname,jdbcType=VARCHAR}, #{nametype,jdbcType=INTEGER})"
     })
     int insert(Appversion record);
 
@@ -82,6 +84,8 @@ public interface AppversionMapper {
         @Result(column="version", property="version", jdbcType=JdbcType.INTEGER),
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="des", property="des", jdbcType=JdbcType.VARCHAR),
+        @Result(column="size", property="size", jdbcType=JdbcType.VARCHAR),
+        @Result(column="versionName", property="versionname", jdbcType=JdbcType.VARCHAR),
         @Result(column="nametype", property="nametype", jdbcType=JdbcType.INTEGER)
     })
     List<Appversion> selectByExample(AppversionCriteria example);
@@ -94,7 +98,7 @@ public interface AppversionMapper {
      */
     @Select({
         "select",
-        "id, version, url, des, nametype",
+        "id, version, url, des, size, versionName, nametype",
         "from appversion",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -103,6 +107,8 @@ public interface AppversionMapper {
         @Result(column="version", property="version", jdbcType=JdbcType.INTEGER),
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="des", property="des", jdbcType=JdbcType.VARCHAR),
+        @Result(column="size", property="size", jdbcType=JdbcType.VARCHAR),
+        @Result(column="versionName", property="versionname", jdbcType=JdbcType.VARCHAR),
         @Result(column="nametype", property="nametype", jdbcType=JdbcType.INTEGER)
     })
     Appversion selectByPrimaryKey(Integer id);
@@ -145,6 +151,8 @@ public interface AppversionMapper {
         "set version = #{version,jdbcType=INTEGER},",
           "url = #{url,jdbcType=VARCHAR},",
           "des = #{des,jdbcType=VARCHAR},",
+          "size = #{size,jdbcType=VARCHAR},",
+          "versionName = #{versionname,jdbcType=VARCHAR},",
           "nametype = #{nametype,jdbcType=INTEGER}",
         "where id = #{id,jdbcType=INTEGER}"
     })

@@ -37,6 +37,18 @@
 							data-options="required:true"></input></td>
 					</tr>
 					<tr>
+						<td>APP版本名称:</td>
+						<td style="width: 500px;"><input class="easyui-textbox" 
+							missingMessage="必须输入版本名称" type="text" id="app_versionname" value="${version.versionname }"
+							data-options="required:true"></input></td>
+					</tr>
+					<tr>
+						<td>APP版本大小:</td>
+						<td style="width: 500px;"><input class="easyui-textbox" 
+							missingMessage="必须输入版本大小" type="text" id="app_versionsize" value="${version.size }"
+							data-options="required:true"></input></td>
+					</tr>
+					<tr>
 						<td>更新描述:</td>
 						<td style="width: 500px;"><input class="easyui-textbox" value="${version.des }" 
 						missingMessage="必须输入新版本描述" type="text" id="app_des" ></input></td>
@@ -62,6 +74,8 @@
 	            		  version:$("#app_version").val(),
 	            		  des:$("#app_des").val(),
 	            		  url:$("#app_url").val(),
+	            		  size:$("#app_versionsize").val(),
+	            		  versionname:$("#app_versionname").val(),
 	            		  ${_csrf.parameterName}:'${_csrf.token}'
 	            	  },
 	            	  success: function(data){

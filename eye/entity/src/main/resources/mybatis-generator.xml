@@ -47,6 +47,7 @@
 	</javaClientGenerator>
 	<table tableName="tem" ></table>
 	
+	<table tableName="appversion" ></table>
 <!-- 
 
 	<table tableName="appversion" ></table>

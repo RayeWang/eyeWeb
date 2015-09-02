@@ -19,6 +19,13 @@
 							missingMessage="必须输入版本号" type="text" id="add_app_version"
 							data-options="required:true"></input></td>
 					</tr>
+					
+					<tr>
+						<td>APP版本名称:</td>
+						<td style="width: 500px;"><input class="easyui-textbox" 
+							missingMessage="必须输入版本名称" type="text" id="add_app_versionname"
+							data-options="required:true"></input></td>
+					</tr>
 					<tr>
 						<td>平台：</td>
 						<td>
@@ -27,6 +34,11 @@
 								<option value="2">IOS</option>
 							</select>
 						</td>
+					</tr>
+					<tr>
+						<td>APK大小:</td>
+						<td style="width: 500px;"><input class="easyui-textbox" 
+						missingMessage="必须输入新版本描述" type="text" id="add_app_size" ></input></td>
 					</tr>
 					<tr>
 						<td>更新描述:</td>
@@ -52,7 +64,9 @@
 	            		  version:$("#add_app_version").val(),
 	            		  nametype:$("[name=add_app_nametype]").val(),
 	            		  des:$("#add_app_des").val(),
+	            		  size:$("#add_app_size").val(),
 	            		  url:$("#add_app_url").val(),
+	            		  versionname:$("#add_app_versionname").val(),
 	            		  ${_csrf.parameterName}:'${_csrf.token}'
 	            	  },
 	            	  success: function(data){

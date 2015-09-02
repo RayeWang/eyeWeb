@@ -75,6 +75,14 @@ public class AppversionSqlProvider {
             VALUES("des", "#{des,jdbcType=VARCHAR}");
         }
         
+        if (record.getSize() != null) {
+            VALUES("size", "#{size,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getVersionname() != null) {
+            VALUES("versionName", "#{versionname,jdbcType=VARCHAR}");
+        }
+        
         if (record.getNametype() != null) {
             VALUES("nametype", "#{nametype,jdbcType=INTEGER}");
         }
@@ -98,6 +106,8 @@ public class AppversionSqlProvider {
         SELECT("version");
         SELECT("url");
         SELECT("des");
+        SELECT("size");
+        SELECT("versionName");
         SELECT("nametype");
         FROM("appversion");
         applyWhere(example, false);
@@ -138,6 +148,14 @@ public class AppversionSqlProvider {
             SET("des = #{record.des,jdbcType=VARCHAR}");
         }
         
+        if (record.getSize() != null) {
+            SET("size = #{record.size,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getVersionname() != null) {
+            SET("versionName = #{record.versionname,jdbcType=VARCHAR}");
+        }
+        
         if (record.getNametype() != null) {
             SET("nametype = #{record.nametype,jdbcType=INTEGER}");
         }
@@ -160,6 +178,8 @@ public class AppversionSqlProvider {
         SET("version = #{record.version,jdbcType=INTEGER}");
         SET("url = #{record.url,jdbcType=VARCHAR}");
         SET("des = #{record.des,jdbcType=VARCHAR}");
+        SET("size = #{record.size,jdbcType=VARCHAR}");
+        SET("versionName = #{record.versionname,jdbcType=VARCHAR}");
         SET("nametype = #{record.nametype,jdbcType=INTEGER}");
         
         AppversionCriteria example = (AppversionCriteria) parameter.get("example");
@@ -187,6 +207,14 @@ public class AppversionSqlProvider {
         
         if (record.getDes() != null) {
             SET("des = #{des,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getSize() != null) {
+            SET("size = #{size,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getVersionname() != null) {
+            SET("versionName = #{versionname,jdbcType=VARCHAR}");
         }
         
         if (record.getNametype() != null) {

@@ -32,7 +32,9 @@
             <tr>
             	<th field="id" width="5">ID</th>
                 <th field="version" width="8">版本号</th>
+                <th field="versionname" width="15">版本名称</th>
                 <th field="nametype" width="8" formatter="formName">平台</th>
+                <th field="size" width="8" formatter="formName">大小</th>
                 <th field="des" editor="text" width="40">描述</th>
                 <th field="url" width="40">url</th>
                 <th field="edit" editor="type:text"  formatter="formatVersionEdit" width="10">编辑</th>
