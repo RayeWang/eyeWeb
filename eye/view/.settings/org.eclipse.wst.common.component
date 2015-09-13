@@ -7,7 +7,7 @@
         <dependent-module archiveName="controller-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/controller/controller">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="eye-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/eyeCrawler/eyeCrawler">
+        <dependent-module archiveName="eye-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/eyebug/eyebug">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="entity-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/entity/entity">

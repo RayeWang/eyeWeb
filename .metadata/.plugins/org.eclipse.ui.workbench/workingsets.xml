@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1442127207931_0" label="eye" name="eye">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/eye" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/entity" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/controller" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/view" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/eyebug" type="4"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1442129016391_1" label="Window Working Set" name="Aggregate for window 1442129016390"/>
+</workingSetManager>
