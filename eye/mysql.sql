@@ -61,6 +61,24 @@ create table if not exists userlog(
 	ip varchar(20) not null, -- 登陆的IP
 	issuccess integer not null -- 时候登陆成功
 );
+--意见与建议的表
+create table if not exists commend(
+	id integer primary key auto_increment, -- 主键
+	email varchar(30) not null, -- 建议者邮箱
+	nickname varchar(20) , -- 建议者昵称
+	commend varchar(500) not null, -- 建议的详细
+	createtime timestamp not null default CURRENT_TIMESTAMP
+);
+--APP版本记录
+create table if not exists appversion(
+	id integer  primary key auto_increment, -- 主键
+	version integer, -- app最新的版本
+	url varchar(500) not null, -- 新版本的下载地址
+	des varchar(500) not null, -- 新版本描述
+	size varchar(20) not null, -- apk大小
+	versionName varchar(20) not null, -- 新版本名称
+	nametype integer -- 名称，Android，IOS
+);
 
 ---添加文章的存储过程
 CREATE  PROCEDURE `alertPro`(in title varchar(80),in desc1 varchar(500),in content text,
@@ -85,3 +103,4 @@ drop table if exists alertType;
 drop table if exists css;
 drop table if exists users;
 drop table if exists userlog;
+drop table if exists commend;

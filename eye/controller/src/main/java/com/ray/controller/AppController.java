@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
 import com.ray.dao.AlertDao;
+import com.ray.dao.AppVersionDao;
+import com.ray.dao.CommendDao;
 import com.ray.dao.TypeDao;
 import com.ray.entity.Alert;
 import com.ray.entity.AlertType;
+import com.ray.entity.Appversion;
 import com.ray.entity.ArticleResult;
+import com.ray.entity.Commend;
 import com.ray.entity.JsonResult;
 import com.ray.util.MD5Util;
 
@@ -39,7 +43,10 @@ public class AppController {
 	
 	@Autowired
 	private TypeDao typeDao;
-	
+	@Autowired
+	private CommendDao commendDao;
+	@Autowired
+	private AppVersionDao versionDao;
 	/**
 	 * 获取文章接口（未进行加密判断，最初测试的接口）
 	 * @param page 当前页的索引
@@ -56,7 +63,7 @@ public class AppController {
 			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
 
-			if(count > 10){
+			if(count > 500){
 				ArticleResult result = new ArticleResult("2", "接口调用超过当日次数限制");
 				pw.write(new Gson().toJson(result));
 				pw.close();
@@ -97,21 +104,34 @@ public class AppController {
 	public void getAlert1(@RequestParam(defaultValue="1")int page,
 			@RequestParam(defaultValue="20")int rows,
 			@RequestParam(defaultValue="0")int type,
-			@RequestParam(defaultValue="")String key,HttpServletResponse response){
+			@RequestParam(defaultValue="")String key,
+			@RequestParam(defaultValue="")String token,HttpServletResponse response){
 		PrintWriter pw = null;
 		try {
 			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
-
 			
-			//查询出数据
-			List<Alert> list = alertDao.findByAlertNoId(page, rows, type, key);
-			int count = alertDao.findCount(type, key);
+			if(!"".equals(token)){
+				//验证是否正确的md5
+				String temp = token.substring(0, 24);
+				//随机数的md5值
+				String rand = token.substring(24);
+				if(MD5Util.md5(rand+"typeid="+type+"&page="+page).substring(0, 24).equals(temp.toUpperCase())){
+					//验证成功
+					//查询出数据
+					List<Alert> list = alertDao.findByAlertNoId(page, rows, type, key);
+					int count = alertDao.findCount(type, key);
 
-			ArticleResult result = new ArticleResult();
-			result.setCount(count);
-			result.setData(list);
-			
+					ArticleResult result = new ArticleResult();
+					result.setCount(count);
+					result.setData(list);
+					
+					pw.write(new Gson().toJson(result));
+					pw.close();
+					return;
+				}
+			}
+			ArticleResult result = new ArticleResult("2", "请不要尝试破解接口，谢谢");
 			pw.write(new Gson().toJson(result));
 			pw.close();
 			return;
@@ -137,13 +157,7 @@ public class AppController {
 		try {
 			response.setContentType("application/json;charset=UTF-8");
 			pw = response.getWriter();
-			if(count > 10){
-				ArticleResult result = new ArticleResult("2", "接口调用超过当日次数限制");
-				pw.write(new Gson().toJson(result));
-				pw.close();
-				return;
-			}
-			count++;
+			
 			List<AlertType> types = typeDao.findAll();
 			JsonResult result = new JsonResult(types);
 			pw.write(new Gson().toJson(result));
@@ -166,13 +180,16 @@ public class AppController {
 	 * @return
 	 */
 	@RequestMapping("/getalert.do")
-	public String getAlertByUrl(String url,HttpServletRequest request){
-		if(count > 10){
+	public String getAlertByUrl(@RequestParam(defaultValue="")String url,
+			HttpServletRequest request,@RequestParam(defaultValue="false")boolean isBlack){
+		if(count > 500){
 			return "alert";
 		}
 		count++;
 		Alert alert = alertDao.findByUrl(url);
 		request.setAttribute("alert", alert);
+
+		request.setAttribute("isblack", isBlack);
 		return "alert";
 	}
 	
@@ -185,16 +202,18 @@ public class AppController {
 	@RequestMapping("/getalert1.do")
 	public String getAlertByUrl1(@RequestParam(defaultValue="")String url,
 			HttpServletRequest request,@RequestParam(defaultValue="")String token,
-			HttpServletResponse response){
+			HttpServletResponse response,
+			@RequestParam(defaultValue="false")boolean isBlack){
 		if(!"".equals(token)){
 			//验证是否正确的md5
 			String temp = token.substring(0, 24);
 			//随机数的md5值
 			String rand = token.substring(24);
-			if(MD5Util.md5(rand+url).substring(0, 24).equals(temp.toLowerCase())){
+			if(MD5Util.md5(rand+url).substring(0, 24).equals(temp.toUpperCase())){
 				//验证成功
 				Alert alert = alertDao.findByUrl(url);
 				request.setAttribute("alert", alert);
+				request.setAttribute("isblack", isBlack);
 				return "alert";
 			}
 		}
@@ -203,6 +222,110 @@ public class AppController {
 		
 		return "tokenerror";
 	}
+	
+	
+	/**
+	 * 开放的意见与建议接口
+	 * @param commend
+	 * @param response
+	 */
+	@RequestMapping("/commend.do")
+	public void commend(Commend commend,HttpServletResponse response){
+		PrintWriter pw = null;
+
+		response.setContentType("application/json;charset=UTF-8");
+		try{
+			pw = response.getWriter();
+			if(count >= 500){
+				ArticleResult result = new ArticleResult("2", "接口调用超过当日次数限制");
+				pw.write(new Gson().toJson(result));
+				pw.close();
+				return;
+			}
+			if(commend != null && commend.getEmail() != null && !commend.getEmail().isEmpty()
+					&& commend.getCommend() != null && !commend.getCommend().isEmpty()){
+				commendDao.add(commend);
+				JsonResult jsonResult = new JsonResult("","建议成功");
+				pw.write(new Gson().toJson(jsonResult));
+				pw.close();
+			}else{
+				JsonResult jsonResult = new JsonResult("1","建议失败");
+				pw.write(new Gson().toJson(jsonResult));
+				pw.close();
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 开放的意见与建议接口
+	 * @param commend
+	 * @param response
+	 */
+	@RequestMapping("/commend1.do")
+	public void commend1(Commend commend,HttpServletResponse response,
+			@RequestParam(defaultValue="")String token){
+		PrintWriter pw = null;
+		response.setContentType("application/json;charset=UTF-8");
+		try{
+			pw = response.getWriter();
+			
+			if(!"".equals(token)&& commend != null && commend.getEmail() != null && !commend.getEmail().isEmpty()
+					&& commend.getCommend() != null && !commend.getCommend().isEmpty()){
+				//验证是否正确的md5
+				String temp = token.substring(0, 24);
+				//随机数的md5值
+				String rand = token.substring(24);
+				if(MD5Util.md5(rand+"email="+commend.getEmail()).substring(0, 24).equals(temp.toUpperCase())){
+					commendDao.add(commend);
+					JsonResult jsonResult = new JsonResult("","建议成功");
+					pw.write(new Gson().toJson(jsonResult));
+					pw.close();
+					return;
+				}
+				
+			}
+			ArticleResult result = new ArticleResult("2", "请不要尝试破解接口，谢谢");
+			pw.write(new Gson().toJson(result));
+			pw.close();
+			return;
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			if(pw != null){
+				pw.close();
+			}
+		}
+	}
+	
+	@RequestMapping("/checkVersion.do")
+	public void getNewVersion(@RequestParam(defaultValue="1")int type,
+			HttpServletResponse response){
+
+		PrintWriter pw = null;
+		response.setContentType("application/json;charset=UTF-8");
+		try{
+			pw = response.getWriter();
+			Appversion appversion = versionDao.findByType(type);
+			if(appversion != null){
+				JsonResult jsonResult = new JsonResult("","获取成功");
+				jsonResult.setData(appversion);
+				pw.write(new Gson().toJson(jsonResult));
+			}else{
+				ArticleResult result = new ArticleResult("1", "没有获取到信息");
+				pw.write(new Gson().toJson(result));
+			}
+			pw.close();
+		}catch(Exception e){
+			e.printStackTrace();
+			if(pw != null){
+				pw.close();
+			}
+		}
+	}
+	
 
 	public AlertDao getAlertDao() {
 		return alertDao;
@@ -218,6 +341,22 @@ public class AppController {
 
 	public void setTypeDao(TypeDao typeDao) {
 		this.typeDao = typeDao;
+	}
+
+	public CommendDao getCommendDao() {
+		return commendDao;
+	}
+
+	public void setCommendDao(CommendDao commendDao) {
+		this.commendDao = commendDao;
+	}
+
+	public AppVersionDao getVersionDao() {
+		return versionDao;
+	}
+
+	public void setVersionDao(AppVersionDao versionDao) {
+		this.versionDao = versionDao;
 	}
 	
 	
