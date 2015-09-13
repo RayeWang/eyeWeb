@@ -14,16 +14,16 @@ import org.springframework.stereotype.Service;
 
 import com.ray.entity.Alert;
 /**
- * InfoQçš„çˆ¬å»ä¸»ç±»
+ * InfoQµÄÅÀÈ¥Ö÷Àà
  * @author Ray Wang
- * @date 2015å¹´5æœˆ16æ—¥23:03:11
+ * @date 2015Äê5ÔÂ16ÈÕ23:03:11
  * @version 1.0
  */
 @Service("InfoqMain")
 public class InfoqMain {
 
 	/**
-	 * è·å–å†…å®¹
+	 * »ñÈ¡ÄÚÈİ
 	 * @param urlstr
 	 * @return
 	 */
@@ -35,7 +35,7 @@ public class InfoqMain {
 			StringBuffer sb = new StringBuffer();
 			for(int i = 0; i < element.childNodeSize();i++){
 				Node node = element.childNode(i);
-				if(node.outerHtml().indexOf("ç»™InfoQä¸­æ–‡ç«™æŠ•ç¨¿æˆ–è€…å‚ä¸") >= 0){
+				if(node.outerHtml().indexOf("¸øInfoQÖĞÎÄÕ¾Í¶¸å»òÕß²ÎÓë") >= 0){
 					break;
 				}
 				if(node.attr("class").equals("related_sponsors visible stacked")){
@@ -57,7 +57,7 @@ public class InfoqMain {
 	}
 	
 	/**
-	 * çˆ¬å–æ–‡ç« 
+	 * ÅÀÈ¡ÎÄÕÂ
 	 * @return
 	 */
 	public static ArrayList<Alert> infoqArticle(){
@@ -73,19 +73,19 @@ public class InfoqMain {
 				Element temp = es.get(i);
 				
 				q.setTitle(temp.getElementsByTag("a").get(0).html());
-				//ç§»é™¤æ—¶é—´é‡Œé¢çš„<a>æ ‡ç­¾
+				//ÒÆ³ıÊ±¼äÀïÃæµÄ<a>±êÇ©
 				temp.getElementsByClass("author").get(0).select("a").remove();
 				
 				String time = temp.getElementsByClass("author").get(0).html();
-				q.setAlerttime(time.substring(time.indexOf("å‘å¸ƒäº")+3));
+				q.setAlerttime(time.substring(time.indexOf("·¢²¼ÓÚ")+3));
 				q.setImg(temp.getElementsByTag("p").get(0).getElementsByTag("img").attr("src"));
-				//ç§»é™¤æè¿°é‡Œé¢çš„<a>æ ‡ç­¾
+				//ÒÆ³ıÃèÊöÀïÃæµÄ<a>±êÇ©
 				temp.getElementsByTag("p").get(0).select("a").remove();
 				q.setDesc1(temp.getElementsByTag("p").get(0).html());
 				q.setAtypeId(1);
 				q.setResLinkId(1);
 				q.setResId(1);
-				//è·å–ç±»å®¹
+				//»ñÈ¡ÀàÈİ
 				q.setContent(infoqwz("http://www.infoq.com"+
 						temp.getElementsByTag("a").get(0).attr("href")));
 				q.setUrl("http://www.infoq.com"+
@@ -101,11 +101,11 @@ public class InfoqMain {
 				Element temp = es1.get(i);
 				
 				q.setTitle(temp.getElementsByTag("a").get(0).html());
-				//ç§»é™¤æ—¶é—´é‡Œé¢çš„<a>æ ‡ç­¾
+				//ÒÆ³ıÊ±¼äÀïÃæµÄ<a>±êÇ©
 				temp.getElementsByClass("author").get(0).select("a").remove();
 				
 				String time = temp.getElementsByClass("author").get(0).html();
-				q.setAlerttime(time.substring(time.indexOf("å‘å¸ƒäº")+3));
+				q.setAlerttime(time.substring(time.indexOf("·¢²¼ÓÚ")+3));
 				
 				q.setImg(temp.getElementsByClass("pic").get(0).getElementsByTag("img").attr("src"));
 				temp.getElementsByTag("p").get(0).select("a").remove();
@@ -113,7 +113,7 @@ public class InfoqMain {
 				q.setAtypeId(1);
 				q.setResId(1);
 				q.setResLinkId(1);
-				//è·å–ç±»å®¹
+				//»ñÈ¡ÀàÈİ
 				q.setContent(infoqwz("http://www.infoq.com"+
 						temp.getElementsByTag("a").get(0).attr("href")));
 				q.setUrl("http://www.infoq.com"+

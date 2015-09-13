@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import com.ray.entity.Alert;
 import com.ray.entity.ResLink;
 /**
- * çˆ¬è™«å·¥å‚ç±»
+ * ÅÀ³æ¹¤³§Àà
  * @author Ray Wang
- * @date 2015å¹´5æœˆ20æ—¥11:16:01
+ * @date 2015Äê5ÔÂ20ÈÕ11:16:01
  * @version 1.0
  */
 public class CrawlerFactory {
 
 	/**
-	 * æ ¹æ®ä¸åŒçš„URLåˆ›å»ºä¸åŒçš„çˆ¬è™«ç±»
-	 * @param link åˆ†ç±»æ¥æºå¯¹è±¡
-	 * @return æ–‡ç« é›†åˆ
+	 * ¸ù¾İ²»Í¬µÄURL´´½¨²»Í¬µÄÅÀ³æÀà
+	 * @param link ·ÖÀàÀ´Ô´¶ÔÏó
+	 * @return ÎÄÕÂ¼¯ºÏ
 	 */
 	public ArrayList<Alert> crawlerFactory(ResLink link){
 		Crawler crawler = null;

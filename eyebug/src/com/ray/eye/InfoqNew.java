@@ -14,14 +14,14 @@ import org.jsoup.select.Elements;
 import com.ray.entity.Alert;
 import com.ray.entity.ResLink;
 /**
- * InfoQçš„æ–°é—»çˆ¬å–ç±»
+ * InfoQµÄĞÂÎÅÅÀÈ¡Àà
  * @author Ray Wang
- * @date 2015å¹´5æœˆ20æ—¥10:34:38
+ * @date 2015Äê5ÔÂ20ÈÕ10:34:38
  * @version 1.0
  */
 public class InfoqNew implements Crawler {
 
-	/** ç”¨äºå·¥å‚åˆ¤æ–­ä½¿ç”¨å“ªä¸ªç±»æ¥å®ç°çš„ä¸»è¦æ˜¯çœ‹çœ‹åœ¨ç½‘ç«™æ”¹ç‰ˆåï¼Œåªæ›´æ–°çˆ¬è™«çš„jarèƒ½ä¸èƒ½ä½¿ç”¨*/
+	/** ÓÃÓÚ¹¤³§ÅĞ¶ÏÊ¹ÓÃÄÄ¸öÀàÀ´ÊµÏÖµÄÖ÷ÒªÊÇ¿´¿´ÔÚÍøÕ¾¸Ä°æºó£¬Ö»¸üĞÂÅÀ³æµÄjarÄÜ²»ÄÜÊ¹ÓÃ*/
 	public static final String NOWURL = "http://www.infoq.com/cn/news";
 	
 	public ArrayList<Alert> crawlerList(ResLink link) {
@@ -29,7 +29,7 @@ public class InfoqNew implements Crawler {
 		try {
 			URL url = new URL(link.getUrl());
 			Document document = Jsoup.parse(url, TIMEOUT);
-			//è·å–æ‰€æœ‰æ–‡ç« çš„div
+			//»ñÈ¡ËùÓĞÎÄÕÂµÄdiv
 			Elements elements = document.getElementsByClass("news_type_block");
 			
 			for(int i = 0;i < elements.size();i++){
@@ -42,14 +42,14 @@ public class InfoqNew implements Crawler {
 				}
 				e.getElementsByClass("author").select("a").remove();
 				String time = e.getElementsByClass("author").get(0).html();
-				temp.setAlerttime(time.substring(time.indexOf("å‘å¸ƒäº")+3));
+				temp.setAlerttime(time.substring(time.indexOf("·¢²¼ÓÚ")+3));
 				
 				temp.setDesc1(e.getElementsByTag("p").html());
 				
 				temp.setAtypeId(link.getTypeid());
 				temp.setResLinkId(link.getId());
 				temp.setResId(link.getResid());
-				//è·å–å†…å®¹
+				//»ñÈ¡ÄÚÈİ
 				temp.setUrl("http://www.infoq.com"+
 						e.getElementsByTag("a").get(0).attr("href"));
 				
@@ -67,7 +67,7 @@ public class InfoqNew implements Crawler {
 
 	public boolean crawlerAlert(Alert alert) {
 		try {
-			//æš‚åœ1åˆ†é’Ÿ
+			//ÔİÍ£1·ÖÖÓ
 			Thread.sleep(60000);
 			URL url = new URL(alert.getUrl());
 			Document document = Jsoup.parse(url, TIMEOUT);
@@ -75,7 +75,7 @@ public class InfoqNew implements Crawler {
 			StringBuffer sb = new StringBuffer();
 			for(int i = 0; i < element.childNodeSize();i++){
 				Node node = element.childNode(i);
-				if(node.outerHtml().indexOf("ç»™InfoQä¸­æ–‡ç«™æŠ•ç¨¿æˆ–è€…å‚ä¸") >= 0){
+				if(node.outerHtml().indexOf("¸øInfoQÖĞÎÄÕ¾Í¶¸å»òÕß²ÎÓë") >= 0){
 					break;
 				}
 				if(node.attr("class").equals("related_sponsors visible stacked")){
