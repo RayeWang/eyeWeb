@@ -80,6 +80,14 @@ create table if not exists appversion(
 	nametype integer -- 名称，Android，IOS
 );
 
+-- favorites table
+create table if not exists favorites(
+	id integer primary key auto_increment,-- 主键
+	openid varchar(40) not null,-- 用户的openid
+	articleid integer not null,-- 文章的id
+	createtime timestamp not null default CURRENT_TIMESTAMP-- 创建时间
+);
+
 ---添加文章的存储过程
 CREATE  PROCEDURE `alertPro`(in title varchar(80),in desc1 varchar(500),in content text,
 in url varchar(200),in res_link_id integer,in res_id integer,in atype_id integer,
@@ -95,6 +103,20 @@ select '已经存在';
 END IF;
 END
 
+--- add favorites procedure
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_favorites`(IN openid VARCHAR(40),IN url VARCHAR(200))
+BEGIN
+DECLARE tempid INT DEFAULT 0;
+DECLARE count INT DEFAULT 0 ;
+SELECT id INTO  tempid FROM alert a WHERE a.url=url;
+
+SELECT COUNT(id) INTO count FROM favorites WHERE openid=openid AND articleid=tempid;
+IF count = 0 THEN
+INSERT INTO favorites(openid,articleid) VALUES(openid,tempid);
+ELSE
+SELECT '已经收藏';
+END IF;
+END
 
 drop table if exists res;
 drop table if exists res_link;
