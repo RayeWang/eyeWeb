@@ -111,7 +111,7 @@ DECLARE count INT DEFAULT 0 ;
 SELECT id INTO  tempid FROM alert a WHERE a.url=url;
 
 SELECT COUNT(id) INTO count FROM favorites WHERE openid=openid AND articleid=tempid;
-IF count = 0 THEN
+IF count = 0 AND tempid>0 THEN
 INSERT INTO favorites(openid,articleid) VALUES(openid,tempid);
 ELSE
 SELECT '已经收藏';
