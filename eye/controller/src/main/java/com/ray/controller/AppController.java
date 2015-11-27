@@ -2,6 +2,7 @@ package com.ray.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,12 +17,14 @@ import com.google.gson.Gson;
 import com.ray.dao.AlertDao;
 import com.ray.dao.AppVersionDao;
 import com.ray.dao.CommendDao;
+import com.ray.dao.FavoritesDao;
 import com.ray.dao.TypeDao;
 import com.ray.entity.Alert;
 import com.ray.entity.AlertType;
 import com.ray.entity.Appversion;
 import com.ray.entity.ArticleResult;
 import com.ray.entity.Commend;
+import com.ray.entity.Favorites;
 import com.ray.entity.JsonResult;
 import com.ray.util.MD5Util;
 
@@ -47,6 +50,8 @@ public class AppController {
 	private CommendDao commendDao;
 	@Autowired
 	private AppVersionDao versionDao;
+	@Autowired
+	private FavoritesDao favoritesDao;
 	/**
 	 * 获取文章接口（未进行加密判断，最初测试的接口）
 	 * @param page 当前页的索引
@@ -326,6 +331,96 @@ public class AppController {
 		}
 	}
 	
+	/**
+	 * 获取收藏列表
+	 * @param page
+	 * @param rows
+	 * @param openid
+	 * @param response
+	 */
+	@RequestMapping("/getfavorites.do")
+	public void getFavorites(@RequestParam(defaultValue="1")int page,
+			@RequestParam(defaultValue="20")int rows,@RequestParam(defaultValue="")String openid,
+			HttpServletResponse response){
+		PrintWriter pw = null;
+		response.setContentType("application/json;charset=UTF-8");
+		if(!"".equals(openid)){
+			try {
+				pw = response.getWriter();
+				List<Favorites> favorites = favoritesDao.findFavorites(page, rows, openid);
+				if(favorites != null){
+					ArticleResult result = new ArticleResult();
+					result.setCount(count);
+					result.setData(favorites);
+					pw.write(new Gson().toJson(result));
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}finally{
+				if(pw != null){
+					pw.close();
+				}
+			}
+		}
+	}
+	/**
+	 * 删除收藏
+	 * @param id
+	 * @param openid
+	 * @param response
+	 */
+	@RequestMapping("/delfavorites.do")
+	public void deleteFavorites(@RequestParam(defaultValue="0")int id,
+			@RequestParam(defaultValue="")String openid,
+			HttpServletResponse response){
+		PrintWriter pw = null;
+		try {
+			pw = response.getWriter();
+			if("".equals(openid) || id == 0){
+				ArticleResult result = new ArticleResult("1", "删除失败");
+				pw.write(new Gson().toJson(result));
+			}else{
+				favoritesDao.deleteFavorite(id, openid);
+				ArticleResult result = new ArticleResult("", "删除成功");
+				pw.write(new Gson().toJson(result));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			if(pw != null){
+				pw.close();
+			}
+		}
+	}
+	
+	/**
+	 * 添加收藏
+	 * @param openid
+	 * @param url
+	 * @param response
+	 */
+	@RequestMapping("/addfavorites.do")
+	public void addFavorites(@RequestParam(defaultValue="")String openid,
+			@RequestParam(defaultValue="")String url,HttpServletResponse response){
+		PrintWriter pw = null;
+		try {
+			if("".equals(openid) || "".equals(url)){
+				ArticleResult result = new ArticleResult("1", "收藏失败");
+				pw.write(new Gson().toJson(result));
+			}else{
+				favoritesDao.addFavorite(openid, url);
+				ArticleResult result = new ArticleResult("", "收藏成功");
+				pw.write(new Gson().toJson(result));
+			}
+			pw = response.getWriter();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			if(pw != null){
+				pw.close();
+			}
+		}
+	}
 
 	public AlertDao getAlertDao() {
 		return alertDao;
