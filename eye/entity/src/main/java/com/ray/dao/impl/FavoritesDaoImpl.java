@@ -41,12 +41,11 @@ public class FavoritesDaoImpl implements FavoritesDao {
 		return mapper.countByExample(criteria);
 	}
 
-	public List<Favorites> findFavorites(int page, int rows,String openid) {
+	public List<Favorites> findFavorites(int id,String openid) {
 		String sql = "SELECT F.ID,A.TITLE,A.DESC1,A.URL,A.IMG,A.PARAM1"
 				+ " FROM FAVORITES F LEFT JOIN ALERT A ON F.ARTICLEID=A.ID "
 				+ " WHERE A.OPENID='"+openid+
-				"' ORDER BY CREATETIME DESC LIMIT "+
-				(page - 1)*rows+","+rows;
+				"' AND F.ID>+"+id+" ORDER BY CREATETIME DESC ";
 		new DynamicSql().setSql(sql);
 		return mapper.findByDynamic();
 	}

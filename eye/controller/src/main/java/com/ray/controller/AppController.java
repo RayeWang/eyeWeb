@@ -339,15 +339,14 @@ public class AppController {
 	 * @param response
 	 */
 	@RequestMapping("/getfavorites.do")
-	public void getFavorites(@RequestParam(defaultValue="1")int page,
-			@RequestParam(defaultValue="20")int rows,@RequestParam(defaultValue="")String openid,
+	public void getFavorites(@RequestParam(defaultValue="1")int id,@RequestParam(defaultValue="")String openid,
 			HttpServletResponse response){
 		PrintWriter pw = null;
 		response.setContentType("application/json;charset=UTF-8");
 		if(!"".equals(openid)){
 			try {
 				pw = response.getWriter();
-				List<Favorites> favorites = favoritesDao.findFavorites(page, rows, openid);
+				List<Favorites> favorites = favoritesDao.findFavorites(id, openid);
 				if(favorites != null){
 					ArticleResult result = new ArticleResult();
 					result.setCount(count);

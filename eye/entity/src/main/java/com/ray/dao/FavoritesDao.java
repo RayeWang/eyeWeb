@@ -35,5 +35,5 @@ public interface FavoritesDao {
 	 * @param rows 每页的数量
 	 * @return 
 	 */
-	public List<Favorites> findFavorites(int page,int rows,String openid);
+	public List<Favorites> findFavorites(int id,String openid);
 }
