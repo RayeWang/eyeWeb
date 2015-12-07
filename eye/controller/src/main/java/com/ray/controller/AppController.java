@@ -374,6 +374,7 @@ public class AppController {
 			@RequestParam(defaultValue="")String openid,
 			HttpServletResponse response){
 		PrintWriter pw = null;
+		response.setContentType("application/json;charset=UTF-8");
 		try {
 			pw = response.getWriter();
 			if("".equals(openid) || id == 0){
@@ -403,6 +404,7 @@ public class AppController {
 	public void addFavorites(@RequestParam(defaultValue="")String openid,
 			@RequestParam(defaultValue="")String url,HttpServletResponse response){
 		PrintWriter pw = null;
+		response.setContentType("application/json;charset=UTF-8");
 		try {
 			pw = response.getWriter();
 			if("".equals(openid) || "".equals(url)){
