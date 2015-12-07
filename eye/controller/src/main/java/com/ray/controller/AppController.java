@@ -404,6 +404,7 @@ public class AppController {
 			@RequestParam(defaultValue="")String url,HttpServletResponse response){
 		PrintWriter pw = null;
 		try {
+			pw = response.getWriter();
 			if("".equals(openid) || "".equals(url)){
 				ArticleResult result = new ArticleResult("1", "收藏失败");
 				pw.write(new Gson().toJson(result));
@@ -412,7 +413,7 @@ public class AppController {
 				ArticleResult result = new ArticleResult("", "收藏成功");
 				pw.write(new Gson().toJson(result));
 			}
-			pw = response.getWriter();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
