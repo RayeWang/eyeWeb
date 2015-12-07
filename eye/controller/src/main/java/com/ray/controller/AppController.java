@@ -373,6 +373,7 @@ public class AppController {
 			@RequestParam(defaultValue="")String openid,
 			HttpServletResponse response){
 		PrintWriter pw = null;
+		response.setContentType("application/json;charset=UTF-8");
 		try {
 			pw = response.getWriter();
 			if("".equals(openid) || id == 0){
@@ -402,7 +403,9 @@ public class AppController {
 	public void addFavorites(@RequestParam(defaultValue="")String openid,
 			@RequestParam(defaultValue="")String url,HttpServletResponse response){
 		PrintWriter pw = null;
+		response.setContentType("application/json;charset=UTF-8");
 		try {
+			pw = response.getWriter();
 			if("".equals(openid) || "".equals(url)){
 				ArticleResult result = new ArticleResult("1", "收藏失败");
 				pw.write(new Gson().toJson(result));
@@ -411,7 +414,7 @@ public class AppController {
 				ArticleResult result = new ArticleResult("", "收藏成功");
 				pw.write(new Gson().toJson(result));
 			}
-			pw = response.getWriter();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
