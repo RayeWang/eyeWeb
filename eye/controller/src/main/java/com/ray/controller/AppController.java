@@ -349,8 +349,10 @@ public class AppController {
 				List<Favorites> favorites = favoritesDao.findFavorites(id, openid);
 				if(favorites != null){
 					ArticleResult result = new ArticleResult();
-					result.setCount(count);
 					result.setData(favorites);
+					pw.write(new Gson().toJson(result));
+				}else{
+					ArticleResult result = new ArticleResult("", "没有数据");
 					pw.write(new Gson().toJson(result));
 				}
 			} catch (IOException e) {
