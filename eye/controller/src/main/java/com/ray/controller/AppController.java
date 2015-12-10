@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
+import com.ray.dao.APPUserDao;
 import com.ray.dao.AlertDao;
 import com.ray.dao.AppVersionDao;
 import com.ray.dao.CommendDao;
@@ -21,6 +22,7 @@ import com.ray.dao.FavoritesDao;
 import com.ray.dao.TypeDao;
 import com.ray.entity.Alert;
 import com.ray.entity.AlertType;
+import com.ray.entity.Appusers;
 import com.ray.entity.Appversion;
 import com.ray.entity.ArticleResult;
 import com.ray.entity.Commend;
@@ -52,6 +54,9 @@ public class AppController {
 	private AppVersionDao versionDao;
 	@Autowired
 	private FavoritesDao favoritesDao;
+	
+	@Autowired
+	private APPUserDao appuserDao;
 	/**
 	 * 获取文章接口（未进行加密判断，最初测试的接口）
 	 * @param page 当前页的索引
@@ -425,6 +430,73 @@ public class AppController {
 			}
 		}
 	}
+	
+	/**
+	 * APP用户登陆
+	 * @param appusers
+	 * @param response
+	 */
+	@RequestMapping("/login.do")
+	public void appLogin(Appusers appusers,HttpServletResponse response){
+		PrintWriter pw = null;
+		response.setContentType("application/json;charset=UTF-8");
+		try {
+			pw = response.getWriter();
+			if(appusers == null || "".equals(appusers.getOpenid()) ||
+					"".equals(appusers.getAccesstoken()) ||
+					"".equals(appusers.getExpiresin())){
+				ArticleResult result = new ArticleResult("1", "登陆失败");
+				pw.write(new Gson().toJson(result));
+			}else{
+				appuserDao.insert(appusers);
+				ArticleResult result = new ArticleResult("", "登陆成功");
+				pw.write(new Gson().toJson(result));
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(pw != null){
+				pw.close();
+			}
+		}
+	}
+	
+	/**
+	 * 获取用户信息
+	 * @param openid
+	 * @param response
+	 */
+	@RequestMapping("/getappuser.do")
+	public void getAppUser(@RequestParam(defaultValue="")String openid,
+			HttpServletResponse response){
+		PrintWriter pw = null;
+		response.setContentType("application/json;charset=UTF-8");
+		try{
+			pw = response.getWriter();
+			if("".equals(openid)){
+				JsonResult result = new JsonResult("1", "参数不确");
+				pw.write(new Gson().toJson(result));
+			}else{
+				Appusers appusers = appuserDao.selectByOpenid(openid);
+				JsonResult result = null;
+				if(appusers != null){
+					result = new JsonResult("", "获取成功");
+					result.setData(appusers);
+				}else{
+					result = new JsonResult("2", "获取用户资料失败");
+				}
+				pw.write(new Gson().toJson(result));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			if(pw != null){
+				pw.close();
+			}
+		}
+	}
+	
 
 	public AlertDao getAlertDao() {
 		return alertDao;

@@ -47,9 +47,9 @@
 	</javaClientGenerator>
 	<table tableName="tem" ></table>
 	
-	<table tableName="appversion" ></table>
+	
 <!-- 
-
+<table tableName="appusers" ></table>
 	<table tableName="appversion" ></table>
 	<table tableName="commend" ></table>
 	<table tableName="userlog" domainObjectName="UserLog"></table>
