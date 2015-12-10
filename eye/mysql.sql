@@ -102,6 +102,7 @@ create table if not exists message(
 	toopenid varchar(40) not null,
 	msgtype integer not null default 0, -- 0 text,其他以后再说
 	content text not null,
+	state integer not null default 0, -- 0 未读  1 已读
 	createtime timestamp not null default CURRENT_TIMESTAMP-- 创建时间
 );
 ---添加文章的存储过程
