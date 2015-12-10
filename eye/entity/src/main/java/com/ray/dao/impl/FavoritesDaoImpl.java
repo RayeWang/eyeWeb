@@ -42,8 +42,9 @@ public class FavoritesDaoImpl implements FavoritesDao {
 	}
 
 	public List<Favorites> findFavorites(int id,String openid) {
-		String sql = "SELECT F.ID,A.TITLE,A.DESC1,A.URL,A.IMG,A.PARAM1"
+		String sql = "SELECT F.ID,A.TITLE,A.DESC1,A.URL,A.IMG,R.NAME"
 				+ " FROM FAVORITES F LEFT JOIN ALERT A ON F.ARTICLEID=A.ID "
+				+ " LEFT JOIN RES R ON R.ID=A.RES_ID"
 				+ " WHERE F.OPENID='"+openid+
 				"' AND F.ID>"+id+" ORDER BY F.CREATETIME DESC ";
 		new DynamicSql().setSql(sql);

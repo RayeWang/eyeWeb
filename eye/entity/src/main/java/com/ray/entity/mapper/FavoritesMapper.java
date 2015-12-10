@@ -161,7 +161,7 @@ public interface FavoritesMapper {
         @Result(column="desc1", property="desc1", jdbcType=JdbcType.VARCHAR),
         @Result(column="url", property="url", jdbcType=JdbcType.VARCHAR),
         @Result(column="img", property="img", jdbcType=JdbcType.VARCHAR),
-        @Result(column="param1", property="param1", jdbcType=JdbcType.VARCHAR)
+        @Result(column="name", property="param1", jdbcType=JdbcType.VARCHAR)
     })
     List<Favorites> findByDynamic();
 }
