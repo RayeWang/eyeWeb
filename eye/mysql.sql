@@ -87,7 +87,13 @@ create table if not exists favorites(
 	articleid integer not null,-- 文章的id
 	createtime timestamp not null default CURRENT_TIMESTAMP-- 创建时间
 );
-
+-- appuser table
+create table if not exists appusers(
+	id integer primary key auto_increment,-- 主键
+	openid varchar(40) not null,
+	AccessToken varchar(40) not null,
+	ExpiresIn varchar(40) not null
+);
 ---添加文章的存储过程
 CREATE  PROCEDURE `alertPro`(in title varchar(80),in desc1 varchar(500),in content text,
 in url varchar(200),in res_link_id integer,in res_id integer,in atype_id integer,
@@ -116,6 +122,18 @@ INSERT INTO favorites(openid,articleid) VALUES(openid,tempid);
 ELSE
 SELECT '已经收藏';
 END IF;
+END
+
+-- create appuser procedure
+CREATE PROCEDURE `create_user`(openid VARCHAR(40),AccessToken VARCHAR(40),
+	ExpiresIn VARCHAR(40))
+BEGIN
+	DECLARE count INT DEFAULT 0;
+    SELECT COUNT(OPENID) INTO count FROM appusers WHERE OPENID=openid;
+    IF COUNT=0 THEN
+    INSERT INTO appusers(openid,accesstoken,expiresIn) values(openid,AccessToken,ExpiresIn);
+    END IF;
+
 END
 
 drop table if exists res;
