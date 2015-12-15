@@ -6,22 +6,24 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
+import javax.websocket.SendResult;
 import javax.websocket.RemoteEndpoint.Async;
+import javax.websocket.SendHandler;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
+import com.google.gson.Gson;
 import com.ray.dao.MessageDao;
-import com.ray.dao.impl.MessageDaoImpl;
-import com.ray.entity.Appusers;
 import com.ray.entity.Message;
 
 /**
  * 聊天的webSocket
  * 协议openid:xxxxxx  用户登陆并开始获取消息 xxxxx是用户的openid
- * msg:{xxxxx} 发送消息，后面是消息具体内容json
+ * msg:{xxxxx} 发送消息，后面是消息具体内容json   toopenid=0是聊天室消息
  * @author Raye
  * 
  */
@@ -29,16 +31,20 @@ import com.ray.entity.Message;
 public class EyeWebSocket {
 	private static ConcurrentHashMap<String, Async> sessions = new ConcurrentHashMap<String, Async>();
 	private static ConcurrentHashMap<Session, String> openids = new ConcurrentHashMap<Session, String>();
-	
+	private Gson gson;
 	@Autowired
 	private MessageDao dao;
+	private SendHandler handler = new SendHandler() {
+		
+		public void onResult(SendResult result) {
+			System.out.println(result.isOK());
+		}
+	};
 	
-	@Bean
-	public MessageDao getMessageDao(){
-		return new MessageDaoImpl();
-	}
-	{
-		dao = getMessageDao();
+	public EyeWebSocket(){
+		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+	  	dao = (MessageDao) context.getBean("messageDao");
+	  	gson = new Gson();
 	}
 	@OnMessage
 	public void onMessage(String message, Session session){
@@ -46,17 +52,30 @@ public class EyeWebSocket {
 			String openid = message.substring(7);
 			openids.put(session,openid);
 			sessions.put(openid, session.getAsyncRemote());
+			List<Message> messages = dao.selectByNoRead(openid);
+			session.getAsyncRemote().sendText("msg:"+new Gson().toJson(messages), handler);
+		}else if(message.indexOf("msg:") == 0){
+			String msg = message.substring(4);
+			Message message2 = gson.fromJson(msg, Message.class);
+			if(message2.getToopenid().equals("0")){
+				//群消息
+				for(Async async : sessions.values()){
+					async.sendText(message);
+				}
+			}else{
+				if(sessions.containsKey(message2.getToopenid())){
+					sessions.get(message2.getToopenid()).sendText(message);
+				}else{
+					//不在线
+					dao.insert(message2);
+				}
+			}
 		}
 	}
 	
 	@OnOpen
 	public void onOpen(Session session) {
-		if(dao == null){
-			System.out.println("dao is null");
-		}else{
-			List<Message> messages = dao.selectByNoRead("DBE21903EC14D5E89A4DB60D9F6FBF70");
-			session.getAsyncRemote().sendText("message size :" +messages.size());
-		}
+		
 	}
 	
 	@OnClose
@@ -67,13 +86,7 @@ public class EyeWebSocket {
 		}
 	}
 
-	public MessageDao getDao() {
-		return dao;
-	}
-
-	public void setDao(MessageDao dao) {
-		this.dao = dao;
-	}
+	
 	
 	
 	

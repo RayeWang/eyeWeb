@@ -15,7 +15,7 @@ import com.ray.entity.mapper.MessageMapper;
  * @author Raye
  * 
  */
-@Service
+@Service("messageDao")
 public class MessageDaoImpl implements MessageDao {
 
 	@Autowired
