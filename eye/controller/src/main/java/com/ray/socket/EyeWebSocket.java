@@ -63,11 +63,12 @@ public class EyeWebSocket {
 					async.sendText(message);
 				}
 			}else{
+
+				dao.insert(message2);
 				if(sessions.containsKey(message2.getToopenid())){
+					//在线，发送消息过去
+					List<Message> messages = dao.selectByNoRead(message2.getToopenid());
 					sessions.get(message2.getToopenid()).sendText(message);
-				}else{
-					//不在线
-					dao.insert(message2);
 				}
 			}
 		}

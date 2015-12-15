@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ray.dao.MessageDao;
 import com.ray.entity.Message;
 import com.ray.entity.MessageCriteria;
+import com.ray.entity.mapper.DynamicSql;
 import com.ray.entity.mapper.MessageMapper;
 
 /**
@@ -29,7 +30,20 @@ public class MessageDaoImpl implements MessageDao {
 		MessageCriteria criteria = new MessageCriteria();
 		criteria.createCriteria().andToopenidEqualTo(openid).
 			andStateEqualTo(0);
-		return mapper.selectByExample(criteria);
+		List<Message> list = mapper.selectByExample(criteria);
+		if(list.size() > 0){
+			StringBuffer sb = new StringBuffer("update message set state = 1 where id in(");
+			for(int i = 0; i < list.size() ; i++){
+				if(i !=  0){
+					sb.append(",");
+				}
+				sb.append(list.get(i).getId());
+			}
+			sb.append(")");
+			new DynamicSql().setSql(sb.toString());
+			mapper.updateByDynamic();
+		}
+		return list;
 	}
 
 	public void deleteMsg(String openid, int id) {
