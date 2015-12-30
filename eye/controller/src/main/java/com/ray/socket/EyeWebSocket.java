@@ -53,7 +53,9 @@ public class EyeWebSocket {
 			openids.put(session,openid);
 			sessions.put(openid, session.getAsyncRemote());
 			List<Message> messages = dao.selectByNoRead(openid);
-			session.getAsyncRemote().sendText("msg:"+new Gson().toJson(messages), handler);
+			if(messages.size() > 0){
+				session.getAsyncRemote().sendText("msg:"+new Gson().toJson(messages), handler);
+			}
 		}else if(message.indexOf("msg:") == 0){
 			String msg = message.substring(4);
 			Message message2 = gson.fromJson(msg, Message.class);
