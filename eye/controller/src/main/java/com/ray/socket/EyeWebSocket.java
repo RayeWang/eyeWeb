@@ -55,6 +55,12 @@ public class EyeWebSocket {
 		System.out.println("onMessage size:"+sessions.size());
 		if(message.indexOf("openid:") == 0){
 			String openid = message.substring(7);
+			if(openids.contains(openid)){
+				openids.remove(openid);
+			}
+			if(sessions.containsKey(openid)){
+				sessions.remove(openid);
+			}
 			openids.put(session,openid);
 			sessions.put(openid, session.getAsyncRemote());
 			List<Message> messages = dao.selectByNoRead(openid);
@@ -88,6 +94,8 @@ public class EyeWebSocket {
 			} catch (JsonSyntaxException e) {
 				e.printStackTrace();
 			}
+		}else{
+			session.getAsyncRemote().sendText("0");
 		}
 	}
 	
@@ -99,6 +107,7 @@ public class EyeWebSocket {
 	@OnClose
 	public void onClose(Session session){
 		if(sessions.containsKey(session)){
+			System.out.println("remove");
 			System.out.println("onClose");
 			sessions.remove(openids.get(session));
 			openids.remove(session);
