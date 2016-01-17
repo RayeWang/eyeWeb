@@ -106,7 +106,8 @@ public class EyeWebSocket {
 	}
 
 	@OnError
-	public void onError(Session session){
+	public void onError(Session session, Throwable error){
+		error.printStackTrace();
 		System.out.println("onError size:"+sessions.size());
 		if(sessions.containsKey(session)){
 			System.out.println("onClose");
