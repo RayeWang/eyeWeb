@@ -63,8 +63,10 @@ public class EyeWebSocket {
 			}
 		}else if(message.indexOf("msg:") == 0){
 			try {
+
 				String msg = message.substring(4);
 				Message message2 = gson.fromJson(msg, Message.class);
+				session.getAsyncRemote().sendText("succuess:"+message2.getId());
 				if(message2.getToopenid().equals("0")){
 					//群消息
 
@@ -83,7 +85,6 @@ public class EyeWebSocket {
 					}
 				}
 
-				session.getAsyncRemote().sendText("succuess:"+message2.getId());
 			} catch (JsonSyntaxException e) {
 				e.printStackTrace();
 			}
@@ -97,23 +98,24 @@ public class EyeWebSocket {
 	
 	@OnClose
 	public void onClose(Session session){
-		System.out.println("onClose size:"+sessions.size());
 		if(sessions.containsKey(session)){
 			System.out.println("onClose");
 			sessions.remove(openids.get(session));
 			openids.remove(session);
 		}
+		System.out.println("onClose size:"+sessions.size());
 	}
 
 	@OnError
 	public void onError(Session session, Throwable error){
 		error.printStackTrace();
-		System.out.println("onError size:"+sessions.size());
 		if(sessions.containsKey(session)){
 			System.out.println("onClose");
 			sessions.remove(openids.get(session));
 			openids.remove(session);
 		}
+		System.out.println("onError size:"+sessions.size());
+		
 	}
 	
 	
