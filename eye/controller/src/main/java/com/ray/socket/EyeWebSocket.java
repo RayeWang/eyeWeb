@@ -1,6 +1,7 @@
 package com.ray.socket;
 
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.websocket.OnClose;
@@ -17,6 +18,7 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.ray.dao.MessageDao;
 import com.ray.entity.Message;
 
@@ -24,6 +26,7 @@ import com.ray.entity.Message;
  * 聊天的webSocket
  * 协议openid:xxxxxx  用户登陆并开始获取消息 xxxxx是用户的openid
  * msg:{xxxxx} 发送消息，后面是消息具体内容json   toopenid=0是聊天室消息
+ * succuess:xxxx 返回客户端消息发送成功，后面xxx是消息id
  * @author Raye
  * 
  */
@@ -48,6 +51,7 @@ public class EyeWebSocket {
 	}
 	@OnMessage
 	public void onMessage(String message, Session session){
+		System.out.println("size:"+sessions.size());
 		if(message.indexOf("openid:") == 0){
 			String openid = message.substring(7);
 			openids.put(session,openid);
@@ -57,21 +61,30 @@ public class EyeWebSocket {
 				session.getAsyncRemote().sendText("msg:"+new Gson().toJson(messages), handler);
 			}
 		}else if(message.indexOf("msg:") == 0){
-			String msg = message.substring(4);
-			Message message2 = gson.fromJson(msg, Message.class);
-			if(message2.getToopenid().equals("0")){
-				//群消息
-				for(Async async : sessions.values()){
-					async.sendText(message);
-				}
-			}else{
+			try {
+				String msg = message.substring(4);
+				Message message2 = gson.fromJson(msg, Message.class);
+				if(message2.getToopenid().equals("0")){
+					//群消息
 
-				dao.insert(message2);
-				if(sessions.containsKey(message2.getToopenid())){
-					//在线，发送消息过去
-					List<Message> messages = dao.selectByNoRead(message2.getToopenid());
-					sessions.get(message2.getToopenid()).sendText(message);
+					for(Entry<String, Async> entry: sessions.entrySet()){
+						if(!entry.getKey().equals(message2.getFromopenid())){
+							entry.getValue().sendText(message);
+						}
+					}
+				}else{
+
+					dao.insert(message2);
+					if(sessions.containsKey(message2.getToopenid())){
+						//在线，发送消息过去
+						List<Message> messages = dao.selectByNoRead(message2.getToopenid());
+						sessions.get(message2.getToopenid()).sendText(message);
+					}
 				}
+
+				session.getAsyncRemote().sendText("succuess:"+message2.getId());
+			} catch (JsonSyntaxException e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -84,6 +97,7 @@ public class EyeWebSocket {
 	@OnClose
 	public void onClose(Session session){
 		if(sessions.containsKey(session)){
+			System.out.println("onClose");
 			sessions.remove(openids.get(session));
 			openids.remove(session);
 		}
