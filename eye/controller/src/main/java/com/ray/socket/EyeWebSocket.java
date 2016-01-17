@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.SendResult;
@@ -51,7 +52,7 @@ public class EyeWebSocket {
 	}
 	@OnMessage
 	public void onMessage(String message, Session session){
-		System.out.println("size:"+sessions.size());
+		System.out.println("onMessage size:"+sessions.size());
 		if(message.indexOf("openid:") == 0){
 			String openid = message.substring(7);
 			openids.put(session,openid);
@@ -96,6 +97,7 @@ public class EyeWebSocket {
 	
 	@OnClose
 	public void onClose(Session session){
+		System.out.println("onClose size:"+sessions.size());
 		if(sessions.containsKey(session)){
 			System.out.println("onClose");
 			sessions.remove(openids.get(session));
@@ -103,7 +105,15 @@ public class EyeWebSocket {
 		}
 	}
 
-	
+	@OnError
+	public void onError(Session session){
+		System.out.println("onError size:"+sessions.size());
+		if(sessions.containsKey(session)){
+			System.out.println("onClose");
+			sessions.remove(openids.get(session));
+			openids.remove(session);
+		}
+	}
 	
 	
 	
